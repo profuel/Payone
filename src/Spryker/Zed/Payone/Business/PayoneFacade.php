@@ -28,12 +28,13 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer)
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createOrderManager()->saveOrder($quoteTransfer);
+        $this->getFactory()->createOrderManager()->saveOrder($quoteTransfer, $checkoutResponse);
     }
 
     /**

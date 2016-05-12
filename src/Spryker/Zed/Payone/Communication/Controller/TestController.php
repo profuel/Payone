@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CaptureTransfer;
 use Generated\Shared\Transfer\CreditCardTransfer;
 use Generated\Shared\Transfer\DebitTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Generated\Shared\Transfer\PersonalDataTransfer;
@@ -39,13 +40,17 @@ class TestController extends AbstractController
     {
         $order = $this->getOrder();
 
-        $authorization = new AuthorizationTransfer();
+//        $authorization = new AuthorizationTransfer();
+        $authorization = new PayoneAuthorizationTransfer();
+
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
         $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
-        $result = $this->getFacade()->preAuthorize($authorization);
+//        $result = $this->getFacade()->preAuthorize($authorization);
+
+        $result = $this->getFacade()->preAuthorizePayment(1);
 
         dump($result);
         die;

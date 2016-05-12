@@ -7,16 +7,18 @@
 
 namespace Spryker\Zed\Payone\Business\Order;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface OrderManagerInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransger
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransger);
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
 }

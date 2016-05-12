@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payone\Business\Order;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -33,15 +34,16 @@ class OrderManager implements OrderManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer)
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         Propel::getConnection()->beginTransaction();
 
-        $paymentTransfer = $quoteTransfer->getPayonePayment();
-        $paymentTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
+        $paymentTransfer = $quoteTransfer->getPayment()->getPayone();
+        $paymentTransfer->setFkSalesOrder($checkoutResponse->getSaveOrder()->getIdSalesOrder());
         $payment = $this->savePayment($paymentTransfer);
 
         $paymentDetailTransfer = $paymentTransfer->getPaymentDetail();

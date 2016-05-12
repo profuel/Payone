@@ -71,6 +71,15 @@ interface PayoneQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $paymentId
+     *
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
+     */
+    public function createPaymentById($paymentId);
+
+    /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog[]

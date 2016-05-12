@@ -186,6 +186,8 @@ class PaymentManager implements PaymentManagerInterface
         $this->setStandardParameter($requestContainer);
 
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
+        // TODO: remove this debug output
+        dump($requestContainer);die;
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new AuthorizationResponseContainer($rawResponse);
         $this->updatePaymentAfterAuthorization($paymentEntity, $responseContainer);
@@ -211,7 +213,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     protected function getPaymentEntity($idPayment)
     {
-        return $this->queryContainer->getPaymentById($idPayment)->findOne();
+        return $this->queryContainer->createPaymentById($idPayment)->findOne();
     }
 
     /**

@@ -27,7 +27,7 @@ class CheckoutSaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrde
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFacade()->saveOrder($quoteTransfer);
+        $this->getFacade()->saveOrder($quoteTransfer, $checkoutResponse);
     }
 
 }
