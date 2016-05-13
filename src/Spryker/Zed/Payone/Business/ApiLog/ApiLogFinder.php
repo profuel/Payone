@@ -180,7 +180,7 @@ class ApiLogFinder
     protected function hasApiLogStatus(OrderTransfer $orderTransfer, $request, $status)
     {
         $idSalesOrder = $orderTransfer->getIdSalesOrder();
-        $apiLog = $this->queryContainer->getApiLogsByOrderIdAndRequest($idSalesOrder, $request)->findOne();
+        $apiLog = $this->queryContainer->createApiLogsByOrderIdAndRequest($idSalesOrder, $request)->findOne();
 
         if ($apiLog === null) {
             return false;
@@ -265,7 +265,7 @@ class ApiLogFinder
      */
     protected function findPaymentByTransactionId($transactionId)
     {
-        return $this->queryContainer->getPaymentByTransactionIdQuery($transactionId)->findOne();
+        return $this->queryContainer->createPaymentByTransactionIdQuery($transactionId)->findOne();
     }
 
     /**
@@ -275,7 +275,7 @@ class ApiLogFinder
      */
     protected function findPaymentByOrder(OrderTransfer $orderTransfer)
     {
-        return $this->queryContainer->getPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
+        return $this->queryContainer->createPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
     }
 
     /**
@@ -286,7 +286,7 @@ class ApiLogFinder
      */
     protected function findApiLog(SpyPaymentPayone $payment, $authorizationType)
     {
-        return $this->queryContainer->getApiLogByPaymentAndRequestTypeQuery(
+        return $this->queryContainer->createApiLogByPaymentAndRequestTypeQuery(
             $payment->getPrimaryKey(),
             $authorizationType
         )->findOne();

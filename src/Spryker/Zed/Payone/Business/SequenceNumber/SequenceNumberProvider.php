@@ -56,7 +56,7 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
     public function getCurrentSequenceNumber($transactionId)
     {
         $transactionEntity = $this->queryContainer
-            ->getCurrentSequenceNumberQuery($transactionId)
+            ->createCurrentSequenceNumberQuery($transactionId)
             ->findOne();
 
         // If we have a transactionId but no status log we return the configured default

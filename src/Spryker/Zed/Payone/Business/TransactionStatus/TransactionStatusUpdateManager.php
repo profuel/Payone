@@ -177,7 +177,7 @@ class TransactionStatusUpdateManager
      */
     protected function findPaymentByTransactionId($transactionId)
     {
-        return $this->queryContainer->getPaymentByTransactionIdQuery($transactionId)->findOne();
+        return $this->queryContainer->createPaymentByTransactionIdQuery($transactionId)->findOne();
     }
 
     /**
@@ -358,7 +358,7 @@ class TransactionStatusUpdateManager
      */
     private function getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem)
     {
-        $transactionStatusLogs = $this->queryContainer->getTransactionStatusLogsBySalesOrder($idSalesOrder)->find();
+        $transactionStatusLogs = $this->queryContainer->createTransactionStatusLogsBySalesOrder($idSalesOrder)->find();
 
         $ids = [];
 
@@ -368,7 +368,7 @@ class TransactionStatusUpdateManager
         }
 
         $relations = $this->queryContainer
-            ->getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, array_keys($ids))
+            ->createTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, array_keys($ids))
             ->find();
 
         /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem $relation */

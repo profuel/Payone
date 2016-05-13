@@ -35,22 +35,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @api
      *
-     * @deprecated use createCurrentSequenceNumberQuery instead
-     *
-     * @param int $transactionId
-     *
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
-     */
-    public function getCurrentSequenceNumberQuery($transactionId)
-    {
-        trigger_error('Deprecated, use createCurrentSequenceNumberQuery() instead', E_USER_DEPRECATED);
-
-        return $this->createCurrentSequenceNumberQuery($transactionId);
-    }
-
-    /**
-     * @api
-     *
      * @param int $transactionId
      *
      * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
@@ -61,22 +45,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
         $query->filterByTransactionId($transactionId);
 
         return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated use createPaymentByTransactionIdQuery() instead
-     *
-     * @param int $transactionId
-     *
-     * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
-     */
-    public function getPaymentByTransactionIdQuery($transactionId)
-    {
-        trigger_error('Deprecated use createPaymentByTransactionIdQuery() instead', E_USER_DEPRECATED);
-
-        return $this->createPaymentByTransactionIdQuery($transactionId);
     }
 
     /**
@@ -99,23 +67,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @api
      *
-     * @deprecated use createApiLogByPaymentAndRequestTypeQuery() instead
-     *
-     * @param int $fkPayment
-     * @param string $requestName
-     *
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
-     */
-    public function getApiLogByPaymentAndRequestTypeQuery($fkPayment, $requestName)
-    {
-        trigger_error('Deprecated use createApiLogByPaymentAndRequestTypeQuery() instead', E_USER_DEPRECATED);
-
-        return $this->createApiLogByPaymentAndRequestTypeQuery($fkPayment, $requestName);
-    }
-
-    /**
-     * @api
-     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
@@ -126,22 +77,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
         $query->findByFkSalesOrder($idOrder);
 
         return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated use createPaymentByOrderId() instead
-     *
-     * @param int $idOrder
-     *
-     * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
-     */
-    public function getPaymentByOrderId($idOrder)
-    {
-        trigger_error('Deprecated use createPaymentByOrderId() instead', E_USER_DEPRECATED);
-
-        return $this->createPaymentByOrderId($idOrder);
     }
 
     /**
@@ -168,23 +103,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @api
      *
-     * @deprecated use createApiLogsByOrderIdAndRequest() instead
-     *
-     * @param int $orderId
-     * @param string $request
-     *
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
-     */
-    public function getApiLogsByOrderIdAndRequest($orderId, $request)
-    {
-        trigger_error('Deprecated use createApiLogsByOrderIdAndRequest() instead', E_USER_DEPRECATED);
-
-        return $this->createApiLogsByOrderIdAndRequest($orderId, $request);
-    }
-
-    /**
-     * @api
-     *
      * @param int $paymentId
      *
      * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
@@ -195,22 +113,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
         $query->findByFkSalesOrder($paymentId);
 
         return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated use createPaymentById() instead
-     *
-     * @param int $paymentId
-     *
-     * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
-     */
-    public function getPaymentById($paymentId)
-    {
-        trigger_error('Deprecated use createPaymentById() instead', E_USER_DEPRECATED);
-
-        return $this->createPaymentById($paymentId);
     }
 
     /**
@@ -234,22 +136,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @api
      *
-     * @deprecated use createTransactionStatusLogsBySalesOrder() instead
-     *
-     * @param int $idIdSalesOrder
-     *
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog[]
-     */
-    public function getTransactionStatusLogsBySalesOrder($idIdSalesOrder)
-    {
-        trigger_error('Deprecated use createTransactionStatusLogsBySalesOrder() instead', E_USER_DEPRECATED);
-
-        return $this->createTransactionStatusLogsBySalesOrder($idIdSalesOrder);
-    }
-
-    /**
-     * @api
-     *
      * @param int $idSalesOrderItem
      * @param array $ids
      *
@@ -262,23 +148,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
             ->filterByIdSalesOrderItem($idSalesOrderItem);
 
         return $relations;
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated use createTransactionStatusLogOrderItemsByLogIds() instead
-     *
-     * @param int $idSalesOrderItem
-     * @param array $ids
-     *
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem[]
-     */
-    public function getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids)
-    {
-        trigger_error('Deprecated use createTransactionStatusLogOrderItemsByLogIds() instead', E_USER_DEPRECATED);
-
-        return $this->createTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids);
     }
 
     /**
@@ -298,22 +167,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
             ->orderByIdPaymentPayoneApiLog(Criteria::DESC);
 
         return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated use createLastApiLogsByOrderId() instead
-     *
-     * @param int $idSalesOrder
-     *
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
-     */
-    public function getLastApiLogsByOrderId($idSalesOrder)
-    {
-        trigger_error('Deprecated use createLastApiLogsByOrderId() instead', E_USER_DEPRECATED);
-
-        return $this->createLastApiLogsByOrderId($idSalesOrder);
     }
 
     /**
@@ -343,22 +196,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @api
      *
-     * @deprecated use createApiLogsByOrderIds() instead
-     *
-     * @param \Propel\Runtime\Collection\ObjectCollection $orders
-     *
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
-     */
-    public function getApiLogsByOrderIds($orders)
-    {
-        trigger_error('Deprecated use createApiLogsByOrderIds() instead', E_USER_DEPRECATED);
-
-        return $this->createApiLogsByOrderIds($orders);
-    }
-
-    /**
-     * @api
-     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orders
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
@@ -377,22 +214,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
             ->orderByCreatedAt();
 
         return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated use createTransactionStatusLogsByOrderIds() instead
-     *
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orders
-     *
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
-     */
-    public function getTransactionStatusLogsByOrderIds($orders)
-    {
-        trigger_error('Deprecated, use createTransactionStatusLogsByOrderIds() instead', E_USER_DEPRECATED);
-
-        return $this->createTransactionStatusLogsByOrderIds($orders);
     }
 
 }

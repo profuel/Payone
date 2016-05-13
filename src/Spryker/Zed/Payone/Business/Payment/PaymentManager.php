@@ -186,8 +186,6 @@ class PaymentManager implements PaymentManagerInterface
         $this->setStandardParameter($requestContainer);
 
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
-        // TODO: remove this debug output
-        dump($requestContainer);die;
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new AuthorizationResponseContainer($rawResponse);
         $this->updatePaymentAfterAuthorization($paymentEntity, $responseContainer);
@@ -312,7 +310,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     protected function getPayment(OrderTransfer $orderTransfer)
     {
-        $payment = $this->queryContainer->getPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
+        $payment = $this->queryContainer->createPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
         $paymentDetail = $payment->getSpyPaymentPayoneDetail();
 
         $paymentDetailTransfer = new PaymentDetailTransfer();
@@ -346,7 +344,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     protected function findPaymentByTransactionId($transactionId)
     {
-        return $this->queryContainer->getPaymentByTransactionIdQuery($transactionId)->findOne();
+        return $this->queryContainer->createPaymentByTransactionIdQuery($transactionId)->findOne();
     }
 
     /**
@@ -469,7 +467,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function getPaymentData($idOrder)
     {
-        $paymentEntity = $this->queryContainer->getPaymentByOrderId($idOrder)->findOne();
+        $paymentEntity = $this->queryContainer->createPaymentByOrderId($idOrder)->findOne();
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
         $paymentDataTransfer = new PaymentDataTransfer();
         $paymentDataTransfer->fromArray($paymentDetailEntity->toArray(), true);
@@ -486,9 +484,9 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function getPaymentLogs(ObjectCollection $orders)
     {
-        $apiLogs = $this->queryContainer->getApiLogsByOrderIds($orders)->find()->getData();
+        $apiLogs = $this->queryContainer->createApiLogsByOrderIds($orders)->find()->getData();
 
-        $transactionStatusLogs = $this->queryContainer->getTransactionStatusLogsByOrderIds($orders)->find()->getData();
+        $transactionStatusLogs = $this->queryContainer->createTransactionStatusLogsByOrderIds($orders)->find()->getData();
 
         $logs = [];
         /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLog */
@@ -578,7 +576,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $apiLogsQuery = $this->queryContainer->getLastApiLogsByOrderId($quoteTransfer->getIdSalesOrder());
+        $apiLogsQuery = $this->queryContainer->createLastApiLogsByOrderId($quoteTransfer->getIdSalesOrder());
         $apiLog = $apiLogsQuery->findOne();
 
         if ($apiLog) {
@@ -601,7 +599,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function updatePaymentDetail(PaymentDataTransfer $paymentDataTransfer, $idOrder)
     {
-        $paymentEntity = $this->queryContainer->getPaymentByOrderId($idOrder)->findOne();
+        $paymentEntity = $this->queryContainer->createPaymentByOrderId($idOrder)->findOne();
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
         $paymentDetailEntity->fromArray($paymentDataTransfer->toArray());

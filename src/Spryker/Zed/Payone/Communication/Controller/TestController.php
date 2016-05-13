@@ -40,7 +40,6 @@ class TestController extends AbstractController
     {
         $order = $this->getOrder();
 
-//        $authorization = new AuthorizationTransfer();
         $authorization = new PayoneAuthorizationTransfer();
 
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT);
@@ -48,9 +47,7 @@ class TestController extends AbstractController
         $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
-//        $result = $this->getFacade()->preAuthorize($authorization);
-
-        $result = $this->getFacade()->preAuthorizePayment(1);
+        $result = $this->getFacade()->preAuthorizePayment($authorization->getOrder()->getIdSalesOrder());
 
         dump($result);
         die;
