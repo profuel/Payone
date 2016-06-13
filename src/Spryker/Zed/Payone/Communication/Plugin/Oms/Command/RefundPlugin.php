@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Payone\Communication\Plugin\Command;
+namespace Spryker\Zed\Payone\Communication\Plugin\Oms\Command;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;

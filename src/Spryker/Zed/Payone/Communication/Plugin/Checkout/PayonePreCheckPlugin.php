@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class CheckoutPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionInterface
+class PayonePreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionInterface
 {
 
     /**

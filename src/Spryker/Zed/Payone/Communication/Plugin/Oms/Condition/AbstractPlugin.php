@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
+namespace Spryker\Zed\Payone\Communication\Plugin\Oms\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;

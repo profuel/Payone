@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Payone\Communication\Plugin\Command;
+namespace Spryker\Zed\Payone\Communication\Plugin\Oms\Command;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -16,7 +16,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
+class CapturePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
     /**
@@ -30,7 +30,7 @@ class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
     {
         /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity */
         $paymentEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
-        $this->getFacade()->authorizePayment($paymentEntity->getFkSalesOrder());
+        $this->getFacade()->capturePayment($paymentEntity->getFkSalesOrder());
 
         return [];
     }

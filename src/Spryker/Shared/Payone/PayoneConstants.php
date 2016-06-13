@@ -10,6 +10,7 @@ namespace Spryker\Shared\Payone;
 interface PayoneConstants
 {
 
+    const PROVIDER_NAME = 'Payone';
     const PAYONE = 'PAYONE';
     const PAYONE_CREDENTIALS = 'PAYONE_CREDENTIALS';
     const PAYONE_CREDENTIALS_ENCODING = 'PAYONE_CREDENTIALS_ENCODING';
