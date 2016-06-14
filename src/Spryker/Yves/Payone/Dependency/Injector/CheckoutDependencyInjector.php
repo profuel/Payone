@@ -30,6 +30,7 @@ class CheckoutDependencyInjector extends AbstractDependencyInjector
     {
         $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) {
             $paymentSubForms->add($this->getFactory()->createPrePaymentSubFormPlugin());
+            $paymentSubForms->add($this->getFactory()->createCreditCardSubFormPlugin());
 
             return $paymentSubForms;
         });

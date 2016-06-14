@@ -1,0 +1,36 @@
+<div class="payone-form payone-credit-card-form payment-form" id="payoneCreditCard">
+    <h3>{{ 'payment.payone.credit-card' | trans }}</h3>
+
+    <label>{{ 'Payone_credit_card.cardtype' | trans }}</label>
+    <div class="field">
+        {{ form_widget(form.Payone_credit_card.cardtype, { 'attr': {'placeholder': 'Payone_credit_card.cardtype' | trans } }) }}
+        {{ form_errors(form.Payone_credit_card.cardtype) }}
+    </div>
+
+    <label>{{ 'Payone_credit_card.cardpan' | trans }}</label>
+    <div class="field">
+        {{ form_widget(form.Payone_credit_card.cardpan, { 'attr': {'placeholder': 'Payone_credit_card.cardpan' | trans } }) }}
+        {{ form_errors(form.Payone_credit_card.cardpan) }}
+    </div>
+
+    <label>{{ 'Payone_credit_card.cardholder' | trans }}</label>
+    <div class="field">
+        {{ form_widget(form.Payone_credit_card.cardholder, { 'attr': {'placeholder': 'Payone_credit_card.cardholder' | trans } }) }}
+        {{ form_errors(form.Payone_credit_card.cardholder) }}
+    </div>
+
+    <label>{{ 'Payone_credit_card.cardexpiredate' | trans }}</label>
+    <div class="field">
+        {{ form_widget(form.Payone_credit_card.cardexpiredate_month) }}
+        {{ form_errors(form.Payone_credit_card.cardexpiredate_month) }}
+
+        {{ form_widget(form.Payone_credit_card.cardexpiredate_year) }}
+        {{ form_errors(form.Payone_credit_card.cardexpiredate_year) }}
+    </div>
+
+    <label>{{ 'Payone_credit_card.cardcvc2' | trans }}</label>
+    <div class="field">
+        {{ form_widget(form.Payone_credit_card.cardcvc2, { 'attr': {'placeholder': 'Payone_credit_card.cardcvc25' | trans } }) }}
+        {{ form_errors(form.Payone_credit_card.cardcvc2) }}
+    </div>
+</div>

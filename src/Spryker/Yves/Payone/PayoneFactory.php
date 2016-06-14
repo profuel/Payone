@@ -8,9 +8,12 @@
 namespace Spryker\Yves\Payone;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Payone\Form\CreditCardSubForm;
+use Spryker\Yves\Payone\Form\DataProvider\CreditCardDataProvider;
 use Spryker\Yves\Payone\Form\DataProvider\PrePaymentDataProvider;
 use Spryker\Yves\Payone\Form\PrePaymentForm;
 use Spryker\Yves\Payone\Handler\PayoneHandler;
+use Spryker\Yves\Payone\Plugin\PayoneCreditCardSubFormPlugin;
 use Spryker\Yves\Payone\Plugin\PayonePrePaymentSubFormPlugin;
 
 class PayoneFactory extends AbstractFactory
@@ -46,6 +49,30 @@ class PayoneFactory extends AbstractFactory
     public function createPrePaymentSubFormPlugin()
     {
         return new PayonePrePaymentSubFormPlugin();
+    }
+
+    /**
+     * @return \Spryker\Yves\Payone\Plugin\PayoneCreditCardSubFormPlugin
+     */
+    public function createCreditCardSubFormPlugin()
+    {
+        return new PayoneCreditCardSubFormPlugin();
+    }
+
+    /**
+     * @return \Spryker\Yves\Payone\Form\CreditCardSubForm
+     */
+    public function createCreditCardSubForm()
+    {
+        return new CreditCardSubForm();
+    }
+
+    /**
+     * @return \Spryker\Yves\Payone\Form\DataProvider\CreditCardDataProvider
+     */
+    public function createCreditCardSubFormDataProvider()
+    {
+        return new CreditCardDataProvider();
     }
 
 }

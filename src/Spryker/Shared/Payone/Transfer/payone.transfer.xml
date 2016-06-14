@@ -184,5 +184,6 @@
 
     <transfer name="Payment">
         <property name="payone" type="PayonePayment"/>
+        <property name="payoneCreditCard" type="PayoneCreditCard"/>
     </transfer>
 </transfers>

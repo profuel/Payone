@@ -7,13 +7,16 @@
 
 namespace Spryker\Yves\Payone\Form;
 
+use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\AbstractSubFormType;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubFormInterface
 {
 
+    const PAYMENT_PROVIDER = PayoneConstants::PROVIDER_NAME;
     const FIELD_PRE_PAYMENT_METHOD = 'paymentMethod';
 
     /**
@@ -36,6 +39,14 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
         );
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createNotBlankConstraint()
+    {
+        return new NotBlank(['groups' => $this->getPropertyPath()]);
     }
 
 }
