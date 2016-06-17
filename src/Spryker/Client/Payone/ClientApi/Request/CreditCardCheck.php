@@ -20,7 +20,7 @@ class CreditCardCheck extends AbstractRequest
     /**
      * @var string
      */
-    protected $storecarddata;
+    protected $storecarddata = PayoneApiConstants::STORE_CARD_DATA_YES;
 
     /**
      * @var string

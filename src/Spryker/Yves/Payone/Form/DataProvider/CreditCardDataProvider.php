@@ -41,7 +41,7 @@ class CreditCardDataProvider implements StepEngineFormDataProviderInterface
     {
         return [
             CreditCardSubForm::OPTION_CARD_EXPIRES_CHOICES_MONTH => $this->getMonthChoices(),
-            CreditCardSubForm::OPTION_CARD_EXPIRES_CHOICES_YEAR => $this->getYearChoices(),
+            CreditCardSubForm::OPTION_CARD_EXPIRES_CHOICES_YEAR => $this->getYearChoices()
         ];
     }
 

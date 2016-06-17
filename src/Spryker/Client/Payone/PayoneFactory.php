@@ -13,6 +13,9 @@ use Spryker\Client\Payone\ClientApi\Call\CreditCardCheck;
 use Spryker\Client\Payone\ClientApi\HashGenerator;
 use Spryker\Client\Payone\ClientApi\HashProvider;
 use Spryker\Client\Payone\ClientApi\Mode\ModeDetector;
+use Spryker\Shared\Config;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Shared\Payone\PayoneConstants;
 
 class PayoneFactory extends AbstractFactory
 {
@@ -70,6 +73,13 @@ class PayoneFactory extends AbstractFactory
         /********************************
          * @todo get params from config (like in PayoneConfig zed bundle)
          ********************************/
+        $payoneConfig = Config::get(PayoneConstants::PAYONE);
+        $standardParameterTransfer->setAid($payoneConfig[PayoneConstants::PAYONE_CREDENTIALS_AID]);
+        $standardParameterTransfer->setMid($payoneConfig[PayoneConstants::PAYONE_CREDENTIALS_MID]);
+        $standardParameterTransfer->setPortalId($payoneConfig[PayoneConstants::PAYONE_CREDENTIALS_PORTAL_ID]);
+        $standardParameterTransfer->setKey($payoneConfig[PayoneConstants::PAYONE_CREDENTIALS_KEY]);
+        $standardParameterTransfer->setEncoding($payoneConfig[PayoneConstants::PAYONE_CREDENTIALS_ENCODING]);
+        $standardParameterTransfer->setResponseType(PayoneApiConstants::RESPONSE_TYPE_JSON);
 
         return $standardParameterTransfer;
     }

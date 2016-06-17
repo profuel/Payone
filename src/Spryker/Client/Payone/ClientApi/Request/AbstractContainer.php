@@ -45,4 +45,12 @@ abstract class AbstractContainer implements ContainerInterface
         return $result;
     }
 
+    /**
+     * @return string
+     */
+    public function toJson()
+    {
+        return json_encode($this->toArray());
+    }
+
 }

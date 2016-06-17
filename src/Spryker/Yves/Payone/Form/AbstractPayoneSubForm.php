@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Payone\Form;
 
+use Spryker\Client\Payone\PayoneClientInterface;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\AbstractSubFormType;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
@@ -17,7 +18,26 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
 {
 
     const PAYMENT_PROVIDER = PayoneConstants::PROVIDER_NAME;
+
     const FIELD_PRE_PAYMENT_METHOD = 'paymentMethod';
+    const FIELD_PAYONE_CREDENTIALS_MID = 'payone_mid';
+    const FIELD_PAYONE_CREDENTIALS_AID = 'payone_aid';
+    const FIELD_PAYONE_CREDENTIALS_PORTAL_ID = 'payone_portal_id';
+    const FIELD_PAYONE_HASH = 'payone_hash';
+    const FIELD_CLIENT_API_CONFIG = 'payone_client_api_config';
+
+    /**
+     * @var \Spryker\Client\Payolution\PayolutionClientInterface
+     */
+    protected $payoneClient;
+
+    /**
+     * @param \Spryker\Client\Payone\PayoneClientInterface $payoneClient
+     */
+    public function __construct(PayoneClientInterface $payoneClient)
+    {
+        $this->payoneClient = $payoneClient;
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -40,6 +60,13 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
 
         return $this;
     }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    abstract protected function addHiddenInputs(FormBuilderInterface $builder);
 
     /**
      * @return \Symfony\Component\Validator\Constraint

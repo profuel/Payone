@@ -70,6 +70,9 @@ abstract class AbstractCall
         if ($container->getLanguage() === null) {
             $container->setLanguage($this->standardParameter->getLanguage());
         }
+        if ($container->getResponseType() === null) {
+            $container->setResponseType($this->standardParameter->getResponseType());
+        }
     }
 
     /**

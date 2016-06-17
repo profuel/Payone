@@ -211,7 +211,7 @@ abstract class AbstractRequest extends AbstractContainer
      *
      * @return void
      */
-    public function setResponsetype($responseType)
+    public function setResponseType($responseType)
     {
         $this->responsetype = $responseType;
     }

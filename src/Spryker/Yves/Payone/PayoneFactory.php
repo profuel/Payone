@@ -24,7 +24,7 @@ class PayoneFactory extends AbstractFactory
      */
     public function createPrePaymentForm()
     {
-        return new PrePaymentForm();
+        return new PrePaymentForm($this->getPayoneClient());
     }
 
     /**
@@ -64,7 +64,7 @@ class PayoneFactory extends AbstractFactory
      */
     public function createCreditCardSubForm()
     {
-        return new CreditCardSubForm();
+        return new CreditCardSubForm($this->getPayoneClient());
     }
 
     /**
@@ -73,6 +73,14 @@ class PayoneFactory extends AbstractFactory
     public function createCreditCardSubFormDataProvider()
     {
         return new CreditCardDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Client\Payone\PayoneClientInterface
+     */
+    public function getPayoneClient()
+    {
+        return $this->getProvidedDependency(PayoneDependencyProvider::CLIENT_PAYONE);
     }
 
 }
