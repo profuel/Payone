@@ -66,7 +66,18 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
      *
      * @return $this
      */
-    abstract protected function addHiddenInputs(FormBuilderInterface $builder);
+    protected function addHiddenInputs(FormBuilderInterface $builder)
+    {
+        $formData = $this->payoneClient->getCreditCardCheckRequest();
+        $builder->add(
+            self::FIELD_CLIENT_API_CONFIG,
+            'hidden',
+            [
+                'label' => false,
+                'data' => $formData->toJson()
+            ]
+        );
+    }
 
     /**
      * @return \Symfony\Component\Validator\Constraint

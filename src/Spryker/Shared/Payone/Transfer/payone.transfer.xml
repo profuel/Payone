@@ -52,6 +52,17 @@
         <property name="paymentDetail" type="PaymentDetail" />
     </transfer>
 
+    <transfer name="PayonePaymentCreditCard">
+        <property name="reference" type="string" />
+
+        <property name="cardtype" type="string" />
+        <property name="cardholder" type="string" />
+        <property name="cardexpiredateMonth" type="string" />
+        <property name="cardexpiredateYear" type="string" />
+        <property name="pseudocardpan" type="string" />
+        <property name="payoneClientApiConfig" type="string" />
+    </transfer>
+
     <transfer name="PaymentDetail">
         <property name="amount" type="int" />
         <property name="currency" type="string" />
@@ -184,6 +195,7 @@
 
     <transfer name="Payment">
         <property name="payone" type="PayonePayment"/>
-        <property name="payoneCreditCard" type="PayoneCreditCard"/>
+        <property name="payoneCreditCard" type="PayonePaymentCreditCard"/>
+        <property name="payonePrePayment" type="PayonePayment"/>
     </transfer>
 </transfers>

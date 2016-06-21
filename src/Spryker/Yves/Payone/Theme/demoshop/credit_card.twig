@@ -11,8 +11,7 @@
 
     <label>{{ 'Payone_credit_card.cardpan' | trans }}</label>
     <div class="field">
-        {{ form_widget(form.Payone_credit_card.cardpan, { 'attr': {'placeholder': 'Payone_credit_card.cardpan' | trans } }) }}
-        {{ form_errors(form.Payone_credit_card.cardpan) }}
+        <input type="text" id="Payone_credit_card_cardpan" name="cardpan" placeholder="Payone_credit_card.cardpan" value="">
     </div>
 
     <label>{{ 'Payone_credit_card.cardholder' | trans }}</label>
@@ -32,7 +31,7 @@
 
     <label>{{ 'Payone_credit_card.cardcvc2' | trans }}</label>
     <div class="field">
-        {{ form_widget(form.Payone_credit_card.cardcvc2, { 'attr': {'placeholder': 'Payone_credit_card.cardcvc25' | trans } }) }}
-        {{ form_errors(form.Payone_credit_card.cardcvc2) }}
+        <input type="text" id="Payone_credit_card_cardcvc2" name="cardcvc2" placeholder="Payone_credit_card.cardcvc2" value="">
     </div>
+
 </div>

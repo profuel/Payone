@@ -29,14 +29,15 @@ class CheckoutDependencyInjector extends AbstractDependencyInjector
     public function inject(ContainerInterface $container)
     {
         $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) {
-            $paymentSubForms->add($this->getFactory()->createPrePaymentSubFormPlugin());
             $paymentSubForms->add($this->getFactory()->createCreditCardSubFormPlugin());
 
             return $paymentSubForms;
         });
 
         $container->extend(CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER, function (StepHandlerPluginCollection $paymentMethodHandler) {
-            $paymentMethodHandler->add(new PayoneHandlerPlugin(), PaymentTransfer::PAYONE_PRE_PAYMENT);
+            $payoneHandlerPlugin = new PayoneHandlerPlugin();
+
+            $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_CREDIT_CARD);
 
             return $paymentMethodHandler;
         });

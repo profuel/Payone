@@ -38,7 +38,7 @@ class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
 
         $checkoutStepHandlerPluginCollection = $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER];
 
-        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_PRE_PAYMENT));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_CREDIT_CARD));
     }
 
     /**

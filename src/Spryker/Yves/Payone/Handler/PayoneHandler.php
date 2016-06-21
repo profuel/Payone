@@ -9,6 +9,7 @@ namespace Spryker\Yves\Payone\Handler;
 
 use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Payone\PayoneApiConstants;
@@ -23,14 +24,14 @@ class PayoneHandler
      * @var array
      */
     protected static $paymentMethods = [
-        PaymentTransfer::PAYONE_PRE_PAYMENT => 'prepayment',
+        PaymentTransfer::PAYONE_CREDIT_CARD => 'credit_card'
     ];
 
     /**
      * @var array
      */
     protected static $payonePaymentMethodMapper = [
-        PaymentTransfer::PAYONE_PRE_PAYMENT => PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT,
+        PaymentTransfer::PAYONE_CREDIT_CARD => PayoneApiConstants::PAYMENT_METHOD_CREDITCARD
     ];
 
     /**
@@ -68,7 +69,7 @@ class PayoneHandler
     {
         $quoteTransfer->getPayment()
             ->setPaymentProvider(self::PAYMENT_PROVIDER)
-            ->setPaymentMethod(self::$paymentMethods[$paymentSelection]);
+            ->setPaymentMethod(self::$payonePaymentMethodMapper[$paymentSelection]);
     }
 
     /**
@@ -82,19 +83,16 @@ class PayoneHandler
     {
         $payonePaymentTransfer = $this->getPayonePaymentTransfer($quoteTransfer, $paymentSelection);
 
-        $billingAddress = $quoteTransfer->getBillingAddress();
-
         $paymentDetailTransfer = new PaymentDetailTransfer();
         // get it from quotaTransfer
         $paymentDetailTransfer->setAmount($quoteTransfer->getTotals()->getGrandTotal());
         $paymentDetailTransfer->setCurrency($this->getCurrency());
+        $paymentDetailTransfer->setPseudoCardPan($payonePaymentTransfer->getPseudocardpan());
 
-        $payonePaymentTransfer
-            ->setPaymentMethod(self::$payonePaymentMethodMapper[$paymentSelection])
-            ->setReference('TX1000' . rand(0, 10000))
-            ->setPaymentDetail($paymentDetailTransfer);
-
-        $quoteTransfer->getPayment()->setPayone(clone $payonePaymentTransfer);
+        $quoteTransfer->getPayment()->setPayone(new PayonePaymentTransfer());
+        $quoteTransfer->getPayment()->getPayone()->setReference('TX1000' . rand(0, 10000));
+        $quoteTransfer->getPayment()->getPayone()->setPaymentDetail($paymentDetailTransfer);
+        $quoteTransfer->getPayment()->getPayone()->setPaymentMethod($quoteTransfer->getPayment()->getPaymentMethod());
     }
 
 

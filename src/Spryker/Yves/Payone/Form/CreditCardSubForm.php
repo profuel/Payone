@@ -8,7 +8,7 @@
 namespace Spryker\Yves\Payone\Form;
 
 use Generated\Shared\Transfer\PaymentTransfer;
-use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Generated\Shared\Transfer\PayonePaymentCreditCardTransfer;
 use Spryker\Shared\Payone\PayoneConstants;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -65,7 +65,7 @@ class CreditCardSubForm extends AbstractPayoneSubForm
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class' => PayonePaymentTransfer::class
+            'data_class' => PayonePaymentCreditCardTransfer::class
         ])->setRequired(self::OPTIONS_FIELD_NAME);
     }
 
@@ -78,11 +78,9 @@ class CreditCardSubForm extends AbstractPayoneSubForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addCardType($builder)
-            ->addCardNumber($builder)
             ->addNameOnCard($builder)
             ->addCardExpiresMonth($builder, $options)
             ->addCardExpiresYear($builder, $options)
-            ->addCardSecurityCode($builder)
             ->addHiddenInputs($builder);
     }
 
@@ -134,10 +132,7 @@ class CreditCardSubForm extends AbstractPayoneSubForm
             'text',
             [
                 'label' => false,
-                'required' => true,
-                'constraints' => [
-                    $this->createNotBlankConstraint(),
-                ],
+                'required' => false
             ]
         );
 
@@ -229,10 +224,7 @@ class CreditCardSubForm extends AbstractPayoneSubForm
             'text',
             [
                 'label' => false,
-                'required' => true,
-                'constraints' => [
-                    $this->createNotBlankConstraint(),
-                ],
+                'required' => false
             ]
         );
 
@@ -246,15 +238,9 @@ class CreditCardSubForm extends AbstractPayoneSubForm
      */
     protected function addHiddenInputs(FormBuilderInterface $builder)
     {
-        $formData = $this->payoneClient->getCreditCardCheckRequest();
+        parent::addHiddenInputs($builder);
+
         $builder->add(
-            self::FIELD_CLIENT_API_CONFIG,
-            'hidden',
-            [
-                'label' => false,
-                'data' => $formData->toJson()
-            ]
-        )->add(
             self::FIELD_PSEUDO_CARD_NUMBER,
             'hidden',
             [

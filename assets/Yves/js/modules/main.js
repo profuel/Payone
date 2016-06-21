@@ -13,11 +13,11 @@ $(document).ready(function() {
         paymentMethodSelector: '#paymentForm_paymentSelection input[type="radio"]',
         currentPaymentMethodSelector: '#paymentForm_paymentSelection input[type="radio"]:checked',
         cardholderInput: '#paymentForm_Payone_credit_card_cardholder',
-        cardpanInput: '#paymentForm_Payone_credit_card_cardpan',
+        cardpanInput: '#Payone_credit_card_cardpan',
         cardtypeInput: '#paymentForm_Payone_credit_card_cardtype',
         cardexpiremonthInput: '#paymentForm_Payone_credit_card_cardexpiredate_month',
         cardexpireyearInput: '#paymentForm_Payone_credit_card_cardexpiredate_year',
-        cardcvc2Input: '#paymentForm_Payone_credit_card_cardcvc2',
+        cardcvc2Input: '#Payone_credit_card_cardcvc2',
         clientApiConfigInput: '#paymentForm_Payone_credit_card_payone_client_api_config',
         pseudocardpanInput: '#paymentForm_Payone_credit_card_pseudocardpan',
     });
