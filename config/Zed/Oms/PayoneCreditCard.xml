@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<statemachine
+        xmlns="https://static.spryker.com"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://static.spryker.com https://static.spryker.com/oms-01.xsd">
+
+    <process name="PayoneCreditCard" main="true">
+        <states>
+            <state name="new" reserved="true"/>
+            <state name="invalid"/>
+            <state name="ready for shipment" />
+            <state name="cancelled" />
+            <state name="shipped" />
+            <state name="clarify capture failed" />
+            <state name="clarify refund failed" />
+            <state name="captured" />
+            <state name="closed" />
+            <state name="returned" />
+            <state name="refunded" />
+        </states>
+
+        <transitions>
+            <transition condition="Payone/PreauthorizationIsApprovedPlugin" happy="true">
+                <source>new</source>
+                <target>ready for shipment</target>
+                <event>pre-authorize</event>
+            </transition>
+
+            <transition>
+                <source>new</source>
+                <target>invalid</target>
+                <event>pre-authorize</event>
+            </transition>
+
+            <transition>
+                <source>ready for shipment</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+
+            <transition happy="true">
+                <source>ready for shipment</source>
+                <target>shipped</target>
+                <event>ship</event>
+            </transition>
+
+            <transition condition="Payone/CaptureIsApprovedPlugin" happy="true">
+                <source>shipped</source>
+                <target>captured</target>
+                <event>capture</event>
+            </transition>
+
+            <transition>
+                <source>shipped</source>
+                <target>clarify capture failed</target>
+                <event>capture</event>
+            </transition>
+
+            <transition>
+                <source>clarify capture failed</source>
+                <target>shipped</target>
+                <event>retry capture</event>
+            </transition>
+
+            <transition>
+                <source>clarify capture failed</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+
+            <transition happy="true">
+                <source>captured</source>
+                <target>closed</target>
+                <event>item not returned</event>
+            </transition>
+
+            <transition>
+                <source>captured</source>
+                <target>returned</target>
+                <event>return</event>
+            </transition>
+
+            <transition condition="Payone/RefundIsApprovedPlugin">
+                <source>returned</source>
+                <target>refunded</target>
+                <event>refund</event>
+            </transition>
+
+            <transition>
+                <source>returned</source>
+                <target>clarify refund failed</target>
+                <event>refund</event>
+            </transition>
+
+            <transition>
+                <source>clarify refund failed</source>
+                <target>refunded</target>
+                <event>manual refund</event>
+            </transition>
+
+        </transitions>
+
+        <events>
+            <event name="pre-authorize" onEnter="true" command="Payone/PreAuthorize"/>
+            <event name="ship" manual="true" />
+            <event name="refunded"  onEnter="true" />
+            <event name="item not returned" timeout="14days" />
+            <event name="cancel" manual="true" />
+            <event name="capture" onEnter="true" command="Payone/Capture"/>
+            <event name="return" manual="true" />
+            <event name="refund" onEnter="true" command="Payone/Refund" />
+            <event name="retry capture" manual="true" />
+            <event name="manual refund" manual="true" />
+        </events>
+
+    </process>
+</statemachine>

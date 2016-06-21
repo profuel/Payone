@@ -19,6 +19,9 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 class PayoneConfig extends AbstractBundleConfig
 {
 
+    const PROVIDER_NAME = 'Payone';
+    const PAYMENT_METHOD_CREDIT_CARD = 'payoneCreditCard';
+
     /**
      * @return string
      */

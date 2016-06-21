@@ -9,8 +9,9 @@ namespace Spryker\Yves\Payone\Dependency\Injector;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Shared\Kernel\ContainerInterface;
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
-use Spryker\Yves\Kernel\Dependency\Injector\AbstractDependencyInjector;
+use Spryker\Yves\Payone\Plugin\PayoneCreditCardSubFormPlugin;
 use Spryker\Yves\Payone\Plugin\PayoneHandlerPlugin;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
@@ -18,7 +19,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
 /**
  * @method \Spryker\Yves\Payone\PayoneFactory getFactory()
  */
-class CheckoutDependencyInjector extends AbstractDependencyInjector
+class CheckoutDependencyInjector implements DependencyInjectorInterface
 {
 
     /**
@@ -29,7 +30,7 @@ class CheckoutDependencyInjector extends AbstractDependencyInjector
     public function inject(ContainerInterface $container)
     {
         $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) {
-            $paymentSubForms->add($this->getFactory()->createCreditCardSubFormPlugin());
+            $paymentSubForms->add(new PayoneCreditCardSubFormPlugin());
 
             return $paymentSubForms;
         });
