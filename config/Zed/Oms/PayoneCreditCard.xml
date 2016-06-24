@@ -7,6 +7,7 @@
     <process name="PayoneCreditCard" main="true">
         <states>
             <state name="new" reserved="true"/>
+            <state name="check redirect"/>
             <state name="invalid"/>
             <state name="ready for shipment" />
             <state name="cancelled" />
@@ -20,16 +21,22 @@
         </states>
 
         <transitions>
-            <transition condition="Payone/PreauthorizationIsApprovedPlugin" happy="true">
+            <transition happy="true">
                 <source>new</source>
-                <target>ready for shipment</target>
+                <target>check redirect</target>
                 <event>pre-authorize</event>
             </transition>
 
-            <transition>
-                <source>new</source>
+            <transition condition="Payone/PaymentIsAppointed" happy="true">
+                <source>check redirect</source>
+                <target>ready for shipment</target>
+                <event>pre-authorize check</event>
+            </transition>
+
+            <transition condition="Payone/PreauthorizationIsErrorPlugin">
+                <source>check redirect</source>
                 <target>invalid</target>
-                <event>pre-authorize</event>
+                <event>pre-authorize check</event>
             </transition>
 
             <transition>
@@ -102,6 +109,7 @@
 
         <events>
             <event name="pre-authorize" onEnter="true" command="Payone/PreAuthorize"/>
+            <event name="pre-authorize check" manual="true"/>
             <event name="ship" manual="true" />
             <event name="refunded"  onEnter="true" />
             <event name="item not returned" timeout="14days" />

@@ -16,7 +16,9 @@ use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CapturePlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\PreAuthorizePlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\RefundPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\CaptureIsApprovedPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsAppointed;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreauthorizationIsApprovedPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreauthorizationIsErrorPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsApprovedPlugin;
 
 class OmsDependencyInjector extends AbstractDependencyInjector
@@ -65,7 +67,10 @@ class OmsDependencyInjector extends AbstractDependencyInjector
             $conditionCollection
                 ->add(new PreauthorizationIsApprovedPlugin(), 'Payone/PreauthorizationIsApprovedPlugin')
                 ->add(new CaptureIsApprovedPlugin(), 'Payone/CaptureIsApprovedPlugin')
-                ->add(new RefundIsApprovedPlugin(), 'Payone/RefundIsApprovedPlugin');
+                ->add(new RefundIsApprovedPlugin(), 'Payone/RefundIsApprovedPlugin')
+                ->add(new PreauthorizationIsErrorPlugin(), 'Payone/PreauthorizationIsErrorPlugin')
+                ->add(new PreauthorizationIsErrorPlugin(), 'Payone/PreauthorizationIsRedirectPlugin')
+                ->add(new PaymentIsAppointed(), 'Payone/PaymentIsAppointed');
 
             return $conditionCollection;
         });

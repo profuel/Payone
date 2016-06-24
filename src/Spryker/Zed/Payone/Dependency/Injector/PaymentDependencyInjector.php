@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
+use Spryker\Zed\Payone\Communication\Plugin\Checkout\PayonePostSaveHookPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Checkout\PayonePreCheckPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Checkout\PayoneSaveOrderPlugin;
 use Spryker\Zed\Payone\PayoneConfig;
@@ -40,6 +41,7 @@ class PaymentDependencyInjector extends AbstractDependencyInjector
         $container->extend(PaymentDependencyProvider::CHECKOUT_PLUGINS, function (CheckoutPluginCollection $pluginCollection) {
             $pluginCollection->add(new PayonePreCheckPlugin(), PayoneConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
             $pluginCollection->add(new PayoneSaveOrderPlugin(), PayoneConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS);
+            $pluginCollection->add(new PayonePostSaveHookPlugin(), PayoneConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS);
 
             return $pluginCollection;
         });

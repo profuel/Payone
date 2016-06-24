@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Payone;
 
+use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -26,6 +27,18 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
     {
         $defaults = [];
         return $this->getFactory()->createCreditCardCheckCall($defaults)->mapCreditCardCheckData();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $statusUpdateTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer
+     */
+    public function updateStatus(PayoneTransactionStatusUpdateTransfer $statusUpdateTransfer)
+    {
+        return $this->getFactory()->createZedStub()->updateStatus($statusUpdateTransfer);
     }
 
 }

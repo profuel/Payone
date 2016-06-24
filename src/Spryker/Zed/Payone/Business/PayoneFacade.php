@@ -157,7 +157,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      */
     public function isPreauthorizationApproved(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createApiLogFinder()->isPreauthorizationApproved($orderTransfer);
+        return $this->getFactory()->createApiLogFinder()->isPreAuthorizationApproved($orderTransfer);
     }
 
     /**
@@ -169,7 +169,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      */
     public function isPreauthorizationRedirect(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createApiLogFinder()->isPreauthorizationRedirect($orderTransfer);
+        return $this->getFactory()->createApiLogFinder()->isPreAuthorizationApproved($orderTransfer);
     }
 
     /**

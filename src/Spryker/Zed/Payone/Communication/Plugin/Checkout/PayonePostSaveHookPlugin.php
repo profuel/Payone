@@ -9,14 +9,14 @@ namespace Spryker\Zed\Payone\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 
 /**
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class PayonePostSaveHookPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface
+class PayonePostSaveHookPlugin extends AbstractPlugin implements CheckoutPostCheckPluginInterface
 {
 
     /**
@@ -25,7 +25,7 @@ class PayonePostSaveHookPlugin extends AbstractPlugin implements CheckoutPostSav
      *
      * @return void
      */
-    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $this->getFacade()->postSaveHook($quoteTransfer, $checkoutResponse);
     }

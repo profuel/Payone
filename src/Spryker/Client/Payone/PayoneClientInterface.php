@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Payone;
 
+use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+
 interface PayoneClientInterface
 {
 
@@ -16,5 +18,14 @@ interface PayoneClientInterface
      * @return \Spryker\Client\Payone\ClientApi\Request\CreditCardCheck
      */
     public function getCreditCardCheckRequest();
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $statusUpdateTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer
+     */
+    public function updateStatus(PayoneTransactionStatusUpdateTransfer $statusUpdateTransfer);
 
 }

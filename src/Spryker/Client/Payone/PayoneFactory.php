@@ -13,6 +13,8 @@ use Spryker\Client\Payone\ClientApi\Call\CreditCardCheck;
 use Spryker\Client\Payone\ClientApi\HashGenerator;
 use Spryker\Client\Payone\ClientApi\HashProvider;
 use Spryker\Client\Payone\ClientApi\Mode\ModeDetector;
+use Spryker\Client\Payone\PayoneDependencyProvider;
+use Spryker\Client\Payone\Zed\PayoneStub;
 use Spryker\Shared\Config;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Shared\Payone\PayoneConstants;
@@ -82,6 +84,15 @@ class PayoneFactory extends AbstractFactory
         $standardParameterTransfer->setResponseType(PayoneApiConstants::RESPONSE_TYPE_JSON);
 
         return $standardParameterTransfer;
+    }
+
+    /**
+     * @return \Spryker\Client\Payone\Zed\PayoneStub
+     */
+    public function createZedStub()
+    {
+        $zedStub = $this->getProvidedDependency(PayoneDependencyProvider::SERVICE_ZED);
+        return new PayoneStub($zedStub);
     }
 
 }
