@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Payone\Communication\Plugin\Oms\Command;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -34,13 +33,9 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
     {
         $refundTransfer = new PayoneRefundTransfer();
 
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($orderEntity->toArray(), true);
+        $orderTransfer = $this->getOrderTransfer($orderEntity);
 
-        $amount = $this->getFactory()
-            ->getRefundFacade()
-            ->calculateRefundableAmount($orderTransfer);
-        $refundTransfer->setAmount($amount * -1);
+        $refundTransfer->setAmount($orderTransfer->getTotals()->getGrandTotal() * -1);
 
         $paymentPayoneEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
 
@@ -54,8 +49,21 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
         $refundTransfer->setNarrativeText($narrativeText);
 
         $this->getFacade()->refundPayment($refundTransfer);
-
         return [];
+
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getOrderTransfer(SpySalesOrder $orderEntity)
+    {
+        return $this
+            ->getFactory()
+            ->getSalesAggregator()
+            ->getOrderTotalsByIdSalesOrder($orderEntity->getIdSalesOrder());
     }
 
 }

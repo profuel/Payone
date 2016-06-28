@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payone\Business\Payment;
 
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
@@ -27,6 +28,7 @@ use Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payone\Business\Api\Call\CreditCardCheck;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
@@ -363,7 +365,7 @@ class PaymentManager implements PaymentManagerInterface
         $entity->setMode($container->getMode());
         $entity->setMerchantId($container->getMid());
         $entity->setPortalId($container->getPortalid());
-        if ($container instanceof RefundContainer || $container instanceof DebitContainer) {
+        if ($container instanceof CaptureContainer || $container instanceof RefundContainer || $container instanceof DebitContainer) {
             $entity->setSequenceNumber($container->getSequenceNumber());
         }
         $entity->save();
@@ -388,6 +390,7 @@ class PaymentManager implements PaymentManagerInterface
         $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
         $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
         $apiLogEntity->setRedirectUrl($responseContainer->getRedirecturl());
+        $apiLogEntity->setSequenceNumber(0);
         $apiLogEntity->save();
     }
 
@@ -585,6 +588,16 @@ class PaymentManager implements PaymentManagerInterface
             if ($redirectUrl !== null) {
                 $checkoutResponse->setIsExternalRedirect(true);
                 $checkoutResponse->setRedirectUrl($redirectUrl);
+            }
+
+            $errorCode = $apiLog->getErrorCode();
+
+            if ($errorCode) {
+                $error = new CheckoutErrorTransfer();
+                $error->setMessage($apiLog->getErrorMessageUser());
+                $error->setErrorCode($errorCode);
+                $checkoutResponse->addError($error);
+                $checkoutResponse->setIsSuccess(false);
             }
         }
 

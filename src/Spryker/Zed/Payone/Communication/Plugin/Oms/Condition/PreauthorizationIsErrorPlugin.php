@@ -25,7 +25,7 @@ class PreauthorizationIsErrorPlugin extends AbstractPlugin
      */
     protected function callFacade(OrderTransfer $orderTransfer)
     {
-        return $this->getFacade()->isAuthorizationError($orderTransfer);
+        return $this->getFacade()->isPreAuthorizationError($orderTransfer);
     }
 
 }
