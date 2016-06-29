@@ -24,14 +24,16 @@ class PayoneHandler
      * @var array
      */
     protected static $paymentMethods = [
-        PaymentTransfer::PAYONE_CREDIT_CARD => 'credit_card'
+        PaymentTransfer::PAYONE_CREDIT_CARD => 'credit_card',
+        PaymentTransfer::PAYONE_E_WALLET => 'e_wallet',
     ];
 
     /**
      * @var array
      */
     protected static $payonePaymentMethodMapper = [
-        PaymentTransfer::PAYONE_CREDIT_CARD => PayoneApiConstants::PAYMENT_METHOD_CREDITCARD
+        PaymentTransfer::PAYONE_CREDIT_CARD => PayoneApiConstants::PAYMENT_METHOD_CREDITCARD,
+        PaymentTransfer::PAYONE_E_WALLET => PayoneApiConstants::PAYMENT_METHOD_E_WALLET,
     ];
 
     /**
@@ -87,7 +89,9 @@ class PayoneHandler
         // get it from quotaTransfer
         $paymentDetailTransfer->setAmount($quoteTransfer->getTotals()->getGrandTotal());
         $paymentDetailTransfer->setCurrency($this->getCurrency());
-        $paymentDetailTransfer->setPseudoCardPan($payonePaymentTransfer->getPseudocardpan());
+        if ($paymentSelection == PaymentTransfer::PAYONE_CREDIT_CARD) {
+            $paymentDetailTransfer->setPseudoCardPan($payonePaymentTransfer->getPseudocardpan());
+        }
 
         $quoteTransfer->getPayment()->setPayone(new PayonePaymentTransfer());
         $quoteTransfer->getPayment()->getPayone()->setReference('TX1000' . rand(0, 10000));

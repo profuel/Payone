@@ -197,5 +197,6 @@
         <property name="payone" type="PayonePayment"/>
         <property name="payoneCreditCard" type="PayonePaymentCreditCard"/>
         <property name="payonePrePayment" type="PayonePayment"/>
+        <property name="payoneEWallet" type="PayonePayment"/>
     </transfer>
 </transfers>

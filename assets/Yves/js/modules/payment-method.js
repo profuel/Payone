@@ -9,8 +9,6 @@ function init(config) {
     var $form = $(config.formSelector);
 
     $form.submit(function(ev) {
-        ev.preventDefault();
-
         window.processPayoneResponse = function(response) {
             console.log(response);
             if (response.status == 'VALID') {
@@ -25,6 +23,7 @@ function init(config) {
         };
 
         if ($(config.currentPaymentMethodSelector).val() === 'payoneCreditCard') {
+            ev.preventDefault();
             var clientApiConfig = JSON.parse($form.find(config.clientApiConfigInput).val());
             var data = $.extend({}, clientApiConfig, {
                 cardcvc2 : $form.find(config.cardcvc2Input).val(),

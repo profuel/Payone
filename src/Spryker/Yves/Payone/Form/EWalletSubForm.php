@@ -1,0 +1,106 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Yves\Payone\Form;
+
+use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Spryker\Shared\Payone\PayoneConstants;
+use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+class EWalletSubForm extends AbstractPayoneSubForm
+{
+
+    const PAYMENT_METHOD = 'e_wallet';
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return self::PAYMENT_PROVIDER . '_' . self::PAYMENT_METHOD;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPropertyPath()
+    {
+        return PaymentTransfer::PAYONE_E_WALLET;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplatePath()
+    {
+        return PayoneConstants::PROVIDER_NAME . '/' . self::PAYMENT_METHOD;
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults([
+            'data_class' => PayonePaymentTransfer::class,
+            SubFormInterface::OPTIONS_FIELD_NAME => [],
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $this->addLabel($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addHiddenInputs(FormBuilderInterface $builder)
+    {
+        // TODO: provide implementation
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLabel(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            self::FIELD_PRE_PAYMENT_METHOD,
+            'choice',
+            [
+                'label'    => false,
+                'required' => true,
+                'choices' => [
+                    'PPE' => 'PayPal'
+                ]
+            ]
+        );
+
+        return $this;
+    }
+
+}

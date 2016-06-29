@@ -10,7 +10,9 @@ namespace Spryker\Yves\Payone;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Payone\Form\CreditCardSubForm;
 use Spryker\Yves\Payone\Form\DataProvider\CreditCardDataProvider;
+use Spryker\Yves\Payone\Form\DataProvider\EWalletDataProvider;
 use Spryker\Yves\Payone\Form\DataProvider\PrePaymentDataProvider;
+use Spryker\Yves\Payone\Form\EWalletSubForm;
 use Spryker\Yves\Payone\Form\PrePaymentForm;
 use Spryker\Yves\Payone\Handler\PayoneHandler;
 use Spryker\Yves\Payone\Plugin\PayoneCreditCardSubFormPlugin;
@@ -73,6 +75,22 @@ class PayoneFactory extends AbstractFactory
     public function createCreditCardSubFormDataProvider()
     {
         return new CreditCardDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Yves\Payone\Form\EWalletSubForm
+     */
+    public function createEWalletSubForm()
+    {
+        return new EWalletSubForm($this->getPayoneClient());
+    }
+
+    /**
+     * @return \Spryker\Yves\Payone\Form\DataProvider\EWalletDataProvider
+     */
+    public function createEWalletSubFormDataProvider()
+    {
+        return new EWalletDataProvider();
     }
 
     /**
