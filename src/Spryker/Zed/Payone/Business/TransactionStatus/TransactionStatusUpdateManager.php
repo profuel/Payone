@@ -256,6 +256,19 @@ class TransactionStatusUpdateManager
      *
      * @return bool
      */
+    public function isPaymentRefund($idSalesOrder, $idSalesOrderItem)
+    {
+        $status = PayoneTransactionStatusConstants::TXACTION_REFUND;
+
+        return $this->isPayment($idSalesOrder, $idSalesOrderItem, $status);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentAppointed($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_APPOINTED;

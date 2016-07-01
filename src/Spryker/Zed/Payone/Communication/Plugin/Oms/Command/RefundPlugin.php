@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Shared\Payone\PayoneApiConstants;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 
@@ -19,7 +18,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
+class RefundPlugin extends AbstractPayonePlugin implements CommandByOrderInterface
 {
 
     /**
@@ -33,9 +32,12 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
     {
         $refundTransfer = new PayoneRefundTransfer();
 
-        $orderTransfer = $this->getOrderTransfer($orderEntity);
+        $refundAmount = 0;
+        foreach ($orderItems as $orderItem) {
+            $refundAmount -= $this->getItemTransfer($orderItem)->getRefundableAmount();
+        }
 
-        $refundTransfer->setAmount($orderTransfer->getTotals()->getGrandTotal() * -1);
+        $refundTransfer->setAmount($refundAmount);
 
         $paymentPayoneEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
 
@@ -49,21 +51,8 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
         $refundTransfer->setNarrativeText($narrativeText);
 
         $this->getFacade()->refundPayment($refundTransfer);
+
         return [];
-
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function getOrderTransfer(SpySalesOrder $orderEntity)
-    {
-        return $this
-            ->getFactory()
-            ->getSalesAggregator()
-            ->getOrderTotalsByIdSalesOrder($orderEntity->getIdSalesOrder());
     }
 
 }

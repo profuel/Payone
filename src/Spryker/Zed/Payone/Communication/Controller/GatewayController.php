@@ -21,9 +21,9 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatus
      *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     * @return \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer
      */
     public function statusUpdateAction(PayoneTransactionStatusUpdateTransfer $transactionStatus)
     {
@@ -31,6 +31,7 @@ class GatewayController extends AbstractGatewayController
 
         $transactionId = $transactionStatus->getTxid();
         $this->triggerEventsOnSuccess($response, $transactionId, $transactionStatus->toArray());
+        $transactionStatus->setResponse($response->getStatus());
 
         return $transactionStatus;
     }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Payone\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
+use Generated\Shared\Transfer\PayoneCaptureTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
@@ -64,13 +65,13 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * @api
      *
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\PayoneCaptureTransfer $captureTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer
+     * @return Api\Response\Container\CaptureResponseContainer
      */
-    public function capturePayment($idPayment)
+    public function capturePayment(PayoneCaptureTransfer $captureTransfer)
     {
-        return $this->getFactory()->createPaymentManager()->capturePayment($idPayment);
+        return $this->getFactory()->createPaymentManager()->capturePayment($captureTransfer);
     }
 
     /**
@@ -338,6 +339,21 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
         return $this->getFactory()
             ->createTransactionStatusManager()
             ->isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
+    public function isPaymentRefund($idSalesOrder, $idSalesOrderItem)
+    {
+        return $this->getFactory()
+            ->createTransactionStatusManager()
+            ->isPaymentRefund($idSalesOrder, $idSalesOrderItem);
     }
 
     /**

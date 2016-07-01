@@ -180,7 +180,7 @@ class ApiLogFinder
     protected function hasApiLogStatus(OrderTransfer $orderTransfer, $request, $status)
     {
         $idSalesOrder = $orderTransfer->getIdSalesOrder();
-        $apiLog = $this->queryContainer->createApiLogsByOrderIdAndRequest($idSalesOrder, $request)->findOne();
+        $apiLog = $this->queryContainer->createApiLogsByOrderIdAndRequest($idSalesOrder, $request)->filterByStatus($status)->findOne();
 
         if ($apiLog === null) {
             return false;

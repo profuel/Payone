@@ -10,6 +10,7 @@ namespace Spryker\Yves\Payone\Controller;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Spryker\Yves\Application\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @method \Spryker\Client\Payone\PayoneClientInterface getClient()
@@ -26,7 +27,28 @@ class IndexController extends AbstractController
         $statusUpdateTranfer = new PayoneTransactionStatusUpdateTransfer();
         $statusUpdateTranfer->fromArray($request->query->all(), true);
 
-        return $this->jsonResponse(['response' => $this->getClient()->updateStatus($statusUpdateTranfer)]);
+        $response = $this->getClient()->updateStatus($statusUpdateTranfer)->getResponse();
+
+        $callback = function () use ($response) {
+            echo $response;
+        };
+
+        return $this->streamedResponse($callback);
+    }
+
+    /**
+     * @param callable|null $callback
+     * @param int $status
+     * @param array $headers
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    protected function streamedResponse($callback = null, $status = 200, $headers = [])
+    {
+        $streamedResponse = new StreamedResponse($callback, $status, $headers);
+        $streamedResponse->send();
+
+        return $streamedResponse;
     }
 
 }

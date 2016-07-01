@@ -17,7 +17,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class CapturePlugin extends AbstractPayonePlugin implements CommandByOrderInterface
+class CancelPlugin extends AbstractPayonePlugin implements CommandByOrderInterface
 {
 
     /**
@@ -35,17 +35,7 @@ class CapturePlugin extends AbstractPayonePlugin implements CommandByOrderInterf
         $paymentTransfer = new PayonePaymentTransfer();
         $paymentTransfer->setFkSalesOrder($orderEntity->getSpyPaymentPayones()->getFirst()->getFkSalesOrder());
         $captureTransfer->setPayment($paymentTransfer);
-
-        $captureAmount = 0;
-        foreach ($orderItems as $orderItem) {
-            $itemTransfer = $this->getItemTransfer($orderItem);
-            $captureAmount += $itemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts();
-        }
-        if (!$this->getFacade()->isCaptureApproved($this->getOrderTransfer($orderEntity))) {
-            $captureAmount += $this->getOrderTransfer($orderEntity)->getTotals()->getExpenseTotal();
-        }
-
-        $captureTransfer->setAmount($captureAmount);
+        $captureTransfer->setAmount(0);
 
         $this->getFacade()->capturePayment($captureTransfer);
 

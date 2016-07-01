@@ -177,6 +177,7 @@
         <property name="clearingtype" type="string" />
         <property name="reference" type="string" />
         <property name="reminderlevel" type="string" />
+        <property name="response" type="string" />
     </transfer>
 
 

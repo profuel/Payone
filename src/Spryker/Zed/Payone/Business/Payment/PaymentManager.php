@@ -217,16 +217,18 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\PayoneCaptureTransfer $captureTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer
      */
-    public function capturePayment($idPayment)
+    public function capturePayment($captureTransfer)
     {
-        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $paymentEntity = $this->getPaymentEntity($captureTransfer->getPayment()->getFkSalesOrder());
         $paymentMethodMapper = $this->getPaymentMethodMapper($paymentEntity);
 
         $requestContainer = $paymentMethodMapper->mapPaymentToCapture($paymentEntity);
+        $requestContainer->setAmount($captureTransfer->getAmount());
+
         $this->setStandardParameter($requestContainer);
 
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);

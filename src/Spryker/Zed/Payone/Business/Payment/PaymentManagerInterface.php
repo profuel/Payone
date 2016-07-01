@@ -55,11 +55,11 @@ interface PaymentManagerInterface
     public function preAuthorizePayment($idPayment);
 
     /**
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\PayoneCaptureTransfer $captureTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer
      */
-    public function capturePayment($idPayment);
+    public function capturePayment($captureTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $creditCardData

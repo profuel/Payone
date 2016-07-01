@@ -9,6 +9,7 @@ namespace Spryker\Zed\Payone\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
+use Generated\Shared\Transfer\PayoneCaptureTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
@@ -53,11 +54,11 @@ interface PayoneFacadeInterface
     /**
      * @api
      *
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\PayoneCaptureTransfer $captureTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer
+     * @return Api\Response\Container\CaptureResponseContainer
      */
-    public function capturePayment($idPayment);
+    public function capturePayment(PayoneCaptureTransfer $captureTransfer);
 
     /**
      * @api

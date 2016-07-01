@@ -7,52 +7,78 @@
     <process name="PayoneCreditCard" main="true">
         <states>
             <state name="new" reserved="true"/>
-            <state name="preauthorized"/>
+            <state name="3D secure verification"/>
+            <state name="preauthorization pending"/>
+            <state name="preauthorization appointed"/>
             <state name="invalid"/>
-            <state name="ready for shipment" />
+            <state name="cancel reservation pending"/>
             <state name="cancelled" />
             <state name="shipped" />
             <state name="clarify capture failed" />
             <state name="clarify refund failed" />
+            <state name="capture pending" />
             <state name="captured" />
             <state name="closed" />
             <state name="returned" />
+            <state name="refund pending" />
             <state name="refunded" />
         </states>
 
         <transitions>
-            <transition happy="true">
+            <transition happy="true" condition="Payone/PreauthorizationIsApprovedPlugin">
                 <source>new</source>
-                <target>preauthorized</target>
+                <target>preauthorization pending</target>
                 <event>pre-authorize</event>
             </transition>
 
             <transition condition="Payone/PaymentIsAppointed" happy="true">
-                <source>preauthorized</source>
-                <target>ready for shipment</target>
+                <source>preauthorization pending</source>
+                <target>preauthorization appointed</target>
             </transition>
 
             <transition condition="Payone/PreauthorizationIsErrorPlugin">
-                <source>preauthorized</source>
+                <source>new</source>
                 <target>invalid</target>
+                <event>pre-authorize</event>
             </transition>
 
-            <transition>
-                <source>ready for shipment</source>
+            <transition condition="Payone/PreauthorizationIsRedirectPlugin">
+                <source>new</source>
+                <target>3D secure verification</target>
+                <event>pre-authorize</event>
+            </transition>
+
+            <transition condition="Payone/PaymentIsAppointed" happy="true">
+                <source>3D secure verification</source>
+                <target>preauthorization appointed</target>
+            </transition>
+
+            <transition condition="Payone/CaptureIsApprovedPlugin">
+                <source>preauthorization appointed</source>
+                <target>cancel reservation pending</target>
+                <event>cancel reservation</event>
+            </transition>
+
+            <transition condition="Payone/PaymentIsCapture">
+                <source>cancel reservation pending</source>
                 <target>cancelled</target>
-                <event>cancel</event>
             </transition>
 
             <transition happy="true">
-                <source>ready for shipment</source>
+                <source>preauthorization appointed</source>
                 <target>shipped</target>
                 <event>ship</event>
             </transition>
 
             <transition condition="Payone/CaptureIsApprovedPlugin" happy="true">
                 <source>shipped</source>
-                <target>captured</target>
+                <target>capture pending</target>
                 <event>capture</event>
+            </transition>
+
+            <transition condition="Payone/PaymentIsCapture" happy="true">
+                <source>capture pending</source>
+                <target>captured</target>
             </transition>
 
             <transition>
@@ -87,8 +113,13 @@
 
             <transition condition="Payone/RefundIsApprovedPlugin">
                 <source>returned</source>
-                <target>refunded</target>
+                <target>refund pending</target>
                 <event>refund</event>
+            </transition>
+
+            <transition condition="Payone/PaymentIsRefund">
+                <source>refund pending</source>
+                <target>refunded</target>
             </transition>
 
             <transition>
@@ -109,7 +140,8 @@
             <event name="pre-authorize" onEnter="true" command="Payone/PreAuthorize"/>
             <event name="ship" manual="true" />
             <event name="item not returned" timeout="14days" />
-            <event name="cancel" manual="true" />
+            <event name="cancel reservation" manual="true" command="Payone/Cancel"/>
+            <event name="cancel" manual="true"/>
             <event name="capture" onEnter="true" command="Payone/Capture"/>
             <event name="return" manual="true" />
             <event name="refund" onEnter="true" command="Payone/Refund" />
