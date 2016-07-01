@@ -8,7 +8,7 @@
 namespace Spryker\Yves\Payone\Form;
 
 use Generated\Shared\Transfer\PaymentTransfer;
-use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Generated\Shared\Transfer\PayonePaymentEWalletTransfer;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,6 +18,7 @@ class EWalletSubForm extends AbstractPayoneSubForm
 {
 
     const PAYMENT_METHOD = 'e_wallet';
+    const FIELD_WALLET_TYPE = 'wallettype';
 
     /**
      * @return string
@@ -53,7 +54,7 @@ class EWalletSubForm extends AbstractPayoneSubForm
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class' => PayonePaymentTransfer::class,
+            'data_class' => PayonePaymentEWalletTransfer::class,
             SubFormInterface::OPTIONS_FIELD_NAME => [],
         ]);
     }
@@ -66,7 +67,7 @@ class EWalletSubForm extends AbstractPayoneSubForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addLabel($builder);
+        $this->addWalletType($builder);
     }
 
     /**
@@ -86,10 +87,10 @@ class EWalletSubForm extends AbstractPayoneSubForm
      *
      * @return $this
      */
-    protected function addLabel(FormBuilderInterface $builder)
+    protected function addWalletType(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_PRE_PAYMENT_METHOD,
+            self::FIELD_WALLET_TYPE,
             'choice',
             [
                 'label'    => false,

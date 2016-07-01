@@ -91,6 +91,8 @@ class PayoneHandler
         $paymentDetailTransfer->setCurrency($this->getCurrency());
         if ($paymentSelection == PaymentTransfer::PAYONE_CREDIT_CARD) {
             $paymentDetailTransfer->setPseudoCardPan($payonePaymentTransfer->getPseudocardpan());
+        } elseif ($paymentSelection == PaymentTransfer::PAYONE_E_WALLET) {
+            $paymentDetailTransfer->setType($payonePaymentTransfer->getWallettype());
         }
 
         $quoteTransfer->getPayment()->setPayone(new PayonePaymentTransfer());

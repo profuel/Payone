@@ -56,6 +56,7 @@ class EWallet extends AbstractMapper
         $captureContainer->setAmount($paymentDetailEntity->getAmount());
         $captureContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $captureContainer->setTxid($paymentEntity->getTransactionId());
+        $captureContainer->setSequenceNumber($this->getNextSequenceNumber($paymentEntity->getTransactionId()));
 
         return $captureContainer;
     }

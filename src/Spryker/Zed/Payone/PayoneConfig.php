@@ -21,6 +21,7 @@ class PayoneConfig extends AbstractBundleConfig
 
     const PROVIDER_NAME = 'Payone';
     const PAYMENT_METHOD_CREDIT_CARD = 'payoneCreditCard';
+    const PAYMENT_METHOD_E_WALLET = 'payoneEWallet';
 
     /**
      * @return string
@@ -60,9 +61,9 @@ class PayoneConfig extends AbstractBundleConfig
         $standardParameter->setCurrency(Store::getInstance()->getCurrencyIsoCode());
         $standardParameter->setLanguage(Store::getInstance()->getCurrentLanguage());
 
-        $standardParameter->setRedirectSuccessUrl($this->getYvesBaseUrl() . $settings[PayoneConstants::PAYONE_REDIRECT_SUCCESS_URL]);
-        $standardParameter->setRedirectBackUrl($this->getYvesBaseUrl() . $settings[PayoneConstants::PAYONE_REDIRECT_BACK_URL]);
-        $standardParameter->setRedirectErrorUrl($this->getYvesBaseUrl() . $settings[PayoneConstants::PAYONE_REDIRECT_ERROR_URL]);
+        $standardParameter->setRedirectSuccessUrl($settings[PayoneConstants::PAYONE_REDIRECT_SUCCESS_URL]);
+        $standardParameter->setRedirectBackUrl($settings[PayoneConstants::PAYONE_REDIRECT_BACK_URL]);
+        $standardParameter->setRedirectErrorUrl($settings[PayoneConstants::PAYONE_REDIRECT_ERROR_URL]);
 
         return $standardParameter;
     }

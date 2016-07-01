@@ -63,6 +63,10 @@
         <property name="payoneClientApiConfig" type="string" />
     </transfer>
 
+    <transfer name="PayonePaymentEWallet">
+        <property name="wallettype" type="string" />
+    </transfer>
+
     <transfer name="PaymentDetail">
         <property name="amount" type="int" />
         <property name="currency" type="string" />
@@ -198,6 +202,6 @@
         <property name="payone" type="PayonePayment"/>
         <property name="payoneCreditCard" type="PayonePaymentCreditCard"/>
         <property name="payonePrePayment" type="PayonePayment"/>
-        <property name="payoneEWallet" type="PayonePayment"/>
+        <property name="payoneEWallet" type="PayonePaymentEWallet"/>
     </transfer>
 </transfers>
