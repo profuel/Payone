@@ -1,9 +1,11 @@
 payment.payone.e_wallet
   translations:
-    en_US: 'Payone eWallet'
+    en_US: 'Payone E-wallet'
+    de_DE: 'Payone E-wallet'
 payment.payone.credit-card
   translations:
     en_US: 'Payone Credit Card'
+    de_DE: 'Payone Kreditkarte'
 Payone_credit_card.cardtype
   translations:
     en_US: 'Card Type'
