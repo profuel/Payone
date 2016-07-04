@@ -7,7 +7,7 @@
     <process name="PayoneEWallet" main="true">
         <states>
             <state name="new" reserved="true"/>
-            <state name="3D secure verification"/>
+            <state name="PayPal checkout"/>
             <state name="preauthorization pending"/>
             <state name="preauthorization appointed"/>
             <state name="invalid"/>
@@ -44,12 +44,12 @@
 
             <transition condition="Payone/PreauthorizationIsRedirectPlugin">
                 <source>new</source>
-                <target>3D secure verification</target>
+                <target>PayPal checkout</target>
                 <event>pre-authorize</event>
             </transition>
 
             <transition condition="Payone/PaymentIsAppointed" happy="true">
-                <source>3D secure verification</source>
+                <source>PayPal checkout</source>
                 <target>preauthorization appointed</target>
             </transition>
 

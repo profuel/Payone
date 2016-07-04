@@ -99,4 +99,12 @@ class PayoneConfig extends AbstractBundleConfig
         return $this->get(ApplicationConstants::HOST_YVES);
     }
 
+    /**
+     * @return string
+     */
+    public function getTranslationFilePath()
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR . PayoneConstants::GLOSSARY_FILE_PATH;
+    }
+
 }

@@ -1,0 +1,21 @@
+payment.payone.e_wallet
+  translations:
+    en_US: 'Payone eWallet'
+payment.payone.credit-card
+  translations:
+    en_US: 'Payone Credit Card'
+Payone_credit_card.cardtype
+  translations:
+    en_US: 'Card Type'
+Payone_credit_card.cardpan
+  translations:
+    en_US: 'Card Number'
+Payone_credit_card.cardholder
+  translations:
+    en_US: 'Card Holder'
+Payone_credit_card.cardexpiredate
+  translations:
+    en_US: 'Expiration Date'
+Payone_credit_card.cardcvc2
+  translations:
+    en_US: 'CVC2 Code'

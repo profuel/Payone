@@ -69,6 +69,10 @@ class ApiLogFinder
             $orderTransfer,
             PayoneApiConstants::REQUEST_TYPE_PREAUTHORIZATION,
             PayoneApiConstants::RESPONSE_TYPE_ERROR
+        ) || $this->hasApiLogStatus(
+            $orderTransfer,
+            PayoneApiConstants::REQUEST_TYPE_PREAUTHORIZATION,
+            PayoneApiConstants::RESPONSE_TYPE_TIMEOUT
         );
     }
 

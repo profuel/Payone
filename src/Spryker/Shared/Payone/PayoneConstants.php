@@ -30,4 +30,9 @@ interface PayoneConstants
     const PAYONE_MODE_TEST = 'test';
     const PAYONE_MODE_LIVE = 'live';
 
+    /**
+     * Path to bundle glossary file.
+     */
+    const GLOSSARY_FILE_PATH = 'Business/Internal/glossary.yml';
+
 }

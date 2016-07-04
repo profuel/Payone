@@ -124,6 +124,7 @@ interface PayoneApiConstants
     const RESPONSE_TYPE_BLOCKED = 'BLOCKED';
     const RESPONSE_TYPE_ENROLLED = 'ENROLLED';
     const RESPONSE_TYPE_ERROR = 'ERROR';
+    const RESPONSE_TYPE_TIMEOUT = 'TIMEOUT';
 
     // REQUEST ENCODING
 
