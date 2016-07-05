@@ -77,6 +77,8 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
                 'data' => $formData->toJson()
             ]
         );
+
+        return $this;
     }
 
     /**
