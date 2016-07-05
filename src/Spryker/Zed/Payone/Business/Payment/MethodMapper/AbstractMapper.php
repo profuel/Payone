@@ -112,28 +112,9 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
      */
     protected function mapBillingAddressToPersonalContainer(PersonalContainer $personalContainer, SpySalesOrderAddress $billingAddressEntity)
     {
-        //dump($billingAddressEntity);die();
         $personalContainer->setCountry($billingAddressEntity->getCountry()->getIso2Code());
-        $personalContainer->setLastName($billingAddressEntity->getLastName());
-        //$personalContainer->setCustomerId($billingAddressEntity->getM);
-        $personalContainer->setSalutation($billingAddressEntity->getSalutation());
-        //$personalContainer->setTitle($billingAddressEntity->getTitle());
         $personalContainer->setFirstName($billingAddressEntity->getFirstName());
         $personalContainer->setLastName($billingAddressEntity->getLastName());
-        $personalContainer->setCompany($billingAddressEntity->getCompany());
-        $personalContainer->setStreet($billingAddressEntity->getAddress1() . ' ' . $billingAddressEntity->getAddress2());
-        $personalContainer->setAddressAddition($billingAddressEntity->getAddress3());
-        $personalContainer->setZip($billingAddressEntity->getZipCode());
-        $personalContainer->setCity($billingAddressEntity->getCity());
-        //$personalContainer->setState($billingAddressEntity->getState());
-        $personalContainer->setEmail($billingAddressEntity->getEmail());
-        //$personalContainer->setBirthday($billingAddressEntity->getBirthday());
-        $personalContainer->setTelephoneNumber($billingAddressEntity->getPhone());
-        //$personalContainer->setLanguage($billingAddressEntity->getLanguage());
-        //$personalContainer->setVatId($billingAddressEntity->getVatId());
-        //$personalContainer->setGender($billingAddressEntity->getGender());
-        //$personalContainer->setPersonalid($billingAddressEntity->getPersonalId());
-        //$personalContainer->setIp($billingAddressEntity->getIp());
     }
 
 }
