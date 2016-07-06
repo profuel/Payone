@@ -96,7 +96,7 @@ class PayoneHandler
         }
 
         $quoteTransfer->getPayment()->setPayone(new PayonePaymentTransfer());
-        $quoteTransfer->getPayment()->getPayone()->setReference('TX1000' . rand(0, 10000));
+        $quoteTransfer->getPayment()->getPayone()->setReference(uniqid('TX1'));
         $quoteTransfer->getPayment()->getPayone()->setPaymentDetail($paymentDetailTransfer);
         $quoteTransfer->getPayment()->getPayone()->setPaymentMethod($quoteTransfer->getPayment()->getPaymentMethod());
     }
