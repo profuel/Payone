@@ -32,12 +32,9 @@ class RefundPlugin extends AbstractPayonePlugin implements CommandByOrderInterfa
     {
         $refundTransfer = new PayoneRefundTransfer();
 
-        $refundAmount = 0;
-        foreach ($orderItems as $orderItem) {
-            $refundAmount -= $this->getItemTransfer($orderItem)->getRefundableAmount();
-        }
+        $orderTransfer = $this->getOrderTransfer($orderEntity);
 
-        $refundTransfer->setAmount($refundAmount);
+        $refundTransfer->setAmount($orderTransfer->getTotals()->getGrandTotal() * -1);
 
         $paymentPayoneEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
 
