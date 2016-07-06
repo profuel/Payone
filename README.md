@@ -12,7 +12,7 @@ composer require spryker/payone
 
 ### How to configure Payone bundle for Spryker Demoshop
 
-1. Add configurations on project level:
+#### Add configurations on project level:
 * Add Payone controller provider to Yves bootstrap (this is required to provide endpoint url for transaction status callbacks):
 in **src/Pyz/Yves/Application/YvesBootstrap.php**
 ```
@@ -93,14 +93,14 @@ $config[OmsConstants::ACTIVE_PROCESSES] = [ 
     'PayoneCreditCard',
 ];
 ```
-2. Configure URLs in Payone Merchant Portal:
+#### Configure URLs in Payone Merchant Portal:
 * Navigate to Configuration -> Payment Portals, click [Edit] next to Zahlungsportal Typ Shop, then open Extended tab
 * Set Success URL, e.g. http://www.de.spryker.dev/checkout/success
 * Set Back URL, e.g. http://www.de.spryker.dev/checkout/payment
 * Set /payone route for TransactionStatus URL if your website is available online, e.g. http://www.de.spryker.dev/payone
   * Otherwise (for local testing) create new bin on http://mockbin.org/ , set “TSOK” as default response and provide it’s url
 
-3. Testing Payone integration locally
+#### Testing Payone integration locally
 * For testing in local environment, you will have to check new requests on Mockbin after order placement as well as on further order processing (cancellation, shipping and refunds). Request body should be copied and pasted as url params for http://www.de.spryker.dev/payone in browser. After that, console command should be engaged in order to update state machine status:
 ```
 vendor/bin/console oms:check-condition
