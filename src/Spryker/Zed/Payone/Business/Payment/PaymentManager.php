@@ -370,6 +370,8 @@ class PaymentManager implements PaymentManagerInterface
         if ($container instanceof CaptureContainer || $container instanceof RefundContainer || $container instanceof DebitContainer) {
             $entity->setSequenceNumber($container->getSequenceNumber());
         }
+        // Logging request data for debug
+        $entity->setRawRequest(json_encode($container->toArray()));
         $entity->save();
 
         return $entity;

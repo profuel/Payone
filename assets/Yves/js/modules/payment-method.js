@@ -26,7 +26,7 @@ function init(config) {
             ev.preventDefault();
             var clientApiConfig = JSON.parse($form.find(config.clientApiConfigInput).val());
             var data = $.extend({}, clientApiConfig, {
-                cardcvc2 : $form.find(config.cardcvc2Input).val(),
+                cardcvc2 : $form.find(config.cardcvc2Input).val() || 'wrong_value_empty_cvc2',
                 cardexpiremonth : $form.find(config.cardexpiremonthInput).val(),
                 cardexpireyear : $form.find(config.cardexpireyearInput).val(),
                 cardholder : $form.find(config.cardholderInput).val(),
