@@ -61,10 +61,16 @@
         <property name="cardexpiredateYear" type="string" />
         <property name="pseudocardpan" type="string" />
         <property name="payoneClientApiConfig" type="string" />
+        <property name="payoneClientLangCode" type="string" />
     </transfer>
 
     <transfer name="PayonePaymentEWallet">
         <property name="wallettype" type="string" />
+    </transfer>
+
+    <transfer name="PayonePaymentDirectDebit">
+        <property name="iban" type="string" />
+        <property name="bic" type="string" />
     </transfer>
 
     <transfer name="PaymentDetail">
@@ -201,7 +207,7 @@
     <transfer name="Payment">
         <property name="payone" type="PayonePayment"/>
         <property name="payoneCreditCard" type="PayonePaymentCreditCard"/>
-        <property name="payonePrePayment" type="PayonePayment"/>
+        <property name="payoneDirectDebit" type="PayonePaymentDirectDebit"/>
         <property name="payoneEWallet" type="PayonePaymentEWallet"/>
     </transfer>
 </transfers>

@@ -31,7 +31,8 @@ function init(config) {
                 cardexpireyear : $form.find(config.cardexpireyearInput).val(),
                 cardholder : $form.find(config.cardholderInput).val(),
                 cardpan : $form.find(config.cardpanInput).val(),
-                cardtype : $form.find(config.cardtypeInput).val()
+                cardtype : $form.find(config.cardtypeInput).val(),
+                language: $form.find(config.languageInput).val().substr(0,2),
             });
 
             var options = {

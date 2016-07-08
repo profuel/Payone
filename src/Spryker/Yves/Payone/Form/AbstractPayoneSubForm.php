@@ -25,6 +25,7 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
     const FIELD_PAYONE_CREDENTIALS_PORTAL_ID = 'payone_portal_id';
     const FIELD_PAYONE_HASH = 'payone_hash';
     const FIELD_CLIENT_API_CONFIG = 'payone_client_api_config';
+    const FIELD_CLIENT_LANG_CODE = 'payone_client_lang_code';
 
     /**
      * @var \Spryker\Client\Payolution\PayolutionClientInterface

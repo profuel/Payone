@@ -26,7 +26,6 @@ class CreditCardDataProvider implements StepEngineFormDataProviderInterface
         if ($quoteTransfer->getPayment() === null) {
             $paymentTransfer = new PaymentTransfer();
             $paymentTransfer->setPayone(new PayonePaymentTransfer());
-            $paymentTransfer->setPayonePrePayment(new PayonePaymentTransfer());
             $quoteTransfer->setPayment($paymentTransfer);
         }
         return $quoteTransfer;
