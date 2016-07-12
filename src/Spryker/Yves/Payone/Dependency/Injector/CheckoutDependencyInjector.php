@@ -32,7 +32,6 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
     {
         $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) {
             $paymentSubForms->add(new PayoneCreditCardSubFormPlugin());
-            $paymentSubForms->add(new PayoneEWalletSubFormPlugin());
 
             return $paymentSubForms;
         });
@@ -41,7 +40,6 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
             $payoneHandlerPlugin = new PayoneHandlerPlugin();
 
             $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_CREDIT_CARD);
-            $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_E_WALLET);
 
             return $paymentMethodHandler;
         });
