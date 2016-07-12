@@ -13,6 +13,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CapturePlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CancelPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\PreAuthorizePlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\RefundPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\CaptureIsApprovedPlugin;
@@ -50,7 +51,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
         $container->extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
             $commandCollection
                 ->add(new PreAuthorizePlugin(), 'Payone/PreAuthorize')
-                ->add(new CapturePlugin(), 'Payone/Cancel')
+                ->add(new CancelPlugin(), 'Payone/Cancel')
                 ->add(new CapturePlugin(), 'Payone/Capture')
                 ->add(new RefundPlugin(), 'Payone/Refund');
 
