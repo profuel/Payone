@@ -40,7 +40,8 @@ class CreditCardDataProvider implements StepEngineFormDataProviderInterface
     {
         return [
             CreditCardSubForm::OPTION_CARD_EXPIRES_CHOICES_MONTH => $this->getMonthChoices(),
-            CreditCardSubForm::OPTION_CARD_EXPIRES_CHOICES_YEAR => $this->getYearChoices()
+            CreditCardSubForm::OPTION_CARD_EXPIRES_CHOICES_YEAR => $this->getYearChoices(),
+            CreditCardSubForm::OPTION_CARD_TYPES => $this->getCardTypes(),
         ];
     }
 
@@ -78,6 +79,24 @@ class CreditCardDataProvider implements StepEngineFormDataProviderInterface
             ++$currentYear => $currentYear,
             ++$currentYear => $currentYear,
             ++$currentYear => $currentYear,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCardTypes()
+    {
+        return [
+            'V' => 'Visa',
+            'M' => 'Master Card',
+            'A' => 'American Express',
+            'D' => 'Diners',
+            'J' => 'JCB',
+            'O' => 'Maestro International',
+            'U' => 'Maestro UK',
+            'C' => 'Discover',
+            'B' => 'Carte Bleue'
         ];
     }
 

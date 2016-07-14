@@ -28,6 +28,7 @@ class CreditCardSubForm extends AbstractPayoneSubForm
 
     const OPTION_CARD_EXPIRES_CHOICES_MONTH = 'month choices';
     const OPTION_CARD_EXPIRES_CHOICES_YEAR = 'year choices';
+    const OPTION_CARD_TYPES = 'card types';
 
     const OPTION_PAYONE_SETTINGS = 'payone settings';
 
@@ -77,7 +78,7 @@ class CreditCardSubForm extends AbstractPayoneSubForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addCardType($builder)
+        $this->addCardType($builder, $options)
             ->addNameOnCard($builder)
             ->addCardExpiresMonth($builder, $options)
             ->addCardExpiresYear($builder, $options)
@@ -89,23 +90,13 @@ class CreditCardSubForm extends AbstractPayoneSubForm
      *
      * @return \Spryker\Yves\Payone\Form\CreditCardSubForm
      */
-    public function addCardType(FormBuilderInterface $builder)
+    public function addCardType(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             self::FIELD_CARD_TYPE,
             'choice',
             [
-                'choices' => [
-                    'V' => 'Visa',
-                    'M' => 'Master Card',
-                    'A' => 'American Express',
-                    'D' => 'Diners',
-                    'J' => 'JCB',
-                    'O' => 'Maestro International',
-                    'U' => 'Maestro UK',
-                    'C' => 'Discover',
-                    'B' => 'Carte Bleue'
-                ],
+                'choices' => $options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_TYPES],
                 'label' => false,
                 'required' => true,
                 'expanded' => false,
