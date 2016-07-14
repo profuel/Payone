@@ -14,6 +14,7 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\EWalletContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
@@ -92,11 +93,14 @@ class EWallet extends AbstractMapper
         $authorizationContainer->setPaymentMethod($this->createPaymentMethodContainerFromPayment($paymentEntity));
 
         $billingAddressEntity = $paymentEntity->getSpySalesOrder()->getBillingAddress();
-
         $personalContainer = new PersonalContainer();
         $this->mapBillingAddressToPersonalContainer($personalContainer, $billingAddressEntity);
-
         $authorizationContainer->setPersonalData($personalContainer);
+
+        $shippingAddressEntity = $paymentEntity->getSpySalesOrder()->getShippingAddress();
+        $shippingContainer = new ShippingContainer();
+        $this->mapShippingAddressToShippingContainer($shippingContainer, $shippingAddressEntity);
+        $authorizationContainer->setShippingData($shippingContainer);
 
         return $authorizationContainer;
     }

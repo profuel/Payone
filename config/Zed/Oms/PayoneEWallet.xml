@@ -48,6 +48,12 @@
                 <event>pre-authorize</event>
             </transition>
 
+            <transition>
+                <source>PayPal checkout</source>
+                <target>invalid</target>
+                <event>redirect timeout</event>
+            </transition>
+
             <transition condition="Payone/PaymentIsAppointed" happy="true">
                 <source>PayPal checkout</source>
                 <target>preauthorization appointed</target>
@@ -138,6 +144,7 @@
 
         <events>
             <event name="pre-authorize" onEnter="true" command="Payone/PreAuthorize"/>
+            <event name="redirect timeout" timeout="1hour" />
             <event name="ship" manual="true" />
             <event name="item not returned" timeout="14days" />
             <event name="cancel reservation" manual="true" command="Payone/Cancel"/>

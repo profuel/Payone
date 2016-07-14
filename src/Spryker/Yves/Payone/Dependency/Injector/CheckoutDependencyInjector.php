@@ -12,6 +12,7 @@ use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Payone\Plugin\PayoneCreditCardSubFormPlugin;
+use Spryker\Yves\Payone\Plugin\PayoneEWalletSubFormPlugin;
 use Spryker\Yves\Payone\Plugin\PayoneHandlerPlugin;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
@@ -31,6 +32,7 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
     {
         $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) {
             $paymentSubForms->add(new PayoneCreditCardSubFormPlugin());
+            $paymentSubForms->add(new PayoneEWalletSubFormPlugin());
 
             return $paymentSubForms;
         });
@@ -39,6 +41,7 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
             $payoneHandlerPlugin = new PayoneHandlerPlugin();
 
             $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_CREDIT_CARD);
+            $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_E_WALLET);
 
             return $paymentMethodHandler;
         });

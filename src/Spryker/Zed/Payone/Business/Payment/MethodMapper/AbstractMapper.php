@@ -12,6 +12,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;
 use Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 
@@ -115,6 +116,23 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
         $personalContainer->setCountry($billingAddressEntity->getCountry()->getIso2Code());
         $personalContainer->setFirstName($billingAddressEntity->getFirstName());
         $personalContainer->setLastName($billingAddressEntity->getLastName());
+    }
+
+    /**
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer $shippingContainer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $shippingAddressEntity
+     * @return void
+     */
+    protected function mapShippingAddressToShippingContainer(ShippingContainer $shippingContainer, SpySalesOrderAddress $shippingAddressEntity)
+    {
+        $shippingContainer->setShippingFirstName($shippingAddressEntity->getFirstName());
+        $shippingContainer->setShippingLastName($shippingAddressEntity->getLastName());
+        $shippingContainer->setShippingCompany($shippingAddressEntity->getCompany());
+        $shippingContainer->setShippingStreet($shippingAddressEntity->getAddress1());
+        $shippingContainer->setShippingZip($shippingAddressEntity->getZipCode());
+        $shippingContainer->setShippingCity($shippingAddressEntity->getCity());
+        $shippingContainer->setShippingState($shippingAddressEntity->getRegion());
+        $shippingContainer->setShippingCountry($shippingAddressEntity->getCountry()->getIso2Code());
     }
 
 }
