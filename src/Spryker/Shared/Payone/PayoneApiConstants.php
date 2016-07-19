@@ -143,6 +143,7 @@ interface PayoneApiConstants
     const REQUEST_TYPE_BANKACCOUNTCHECK = 'bankaccountcheck';
     const REQUEST_TYPE_CREDITCARDCHECK = 'creditcardcheck';
     const REQUEST_TYPE_GETINVOICE = 'getinvoice';
+    const REQUEST_TYPE_MANAGEMANDATE = 'managemandate';
 
     // ONLINE BANK TRANSFER TYPE
 

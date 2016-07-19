@@ -10,8 +10,10 @@ namespace Spryker\Zed\Payone\Business\Payment;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
+use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -67,6 +69,20 @@ interface PaymentManagerInterface
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData);
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer
+     */
+    public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $manageMandateTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
+     */
+    public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer);
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $orders

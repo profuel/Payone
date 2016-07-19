@@ -10,8 +10,10 @@ namespace Spryker\Zed\Payone\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
+use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCaptureTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
@@ -108,6 +110,30 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData)
     {
         return $this->getFactory()->createPaymentManager()->creditCardCheck($creditCardData);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer
+     */
+    public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer)
+    {
+        return $this->getFactory()->createPaymentManager()->bankAccountCheck($bankAccountCheckTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $bankAccountCheckTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
+     */
+    public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer)
+    {
+        return $this->getFactory()->createPaymentManager()->manageMandate($manageMandateTransfer);
     }
 
     /**

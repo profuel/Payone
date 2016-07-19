@@ -19,6 +19,7 @@ class PayoneHandler
 {
 
     const PAYMENT_PROVIDER = 'Payone';
+    const CHECKOUT_PARTIAL_SUMMARY_PATH = 'Payone/partial/summary';
 
     /**
      * @var array
@@ -26,6 +27,7 @@ class PayoneHandler
     protected static $paymentMethods = [
         PaymentTransfer::PAYONE_CREDIT_CARD => 'credit_card',
         PaymentTransfer::PAYONE_E_WALLET => 'e_wallet',
+        PaymentTransfer::PAYONE_DIRECT_DEBIT => 'direct_debit',
     ];
 
     /**
@@ -34,6 +36,7 @@ class PayoneHandler
     protected static $payonePaymentMethodMapper = [
         PaymentTransfer::PAYONE_CREDIT_CARD => PayoneApiConstants::PAYMENT_METHOD_CREDITCARD,
         PaymentTransfer::PAYONE_E_WALLET => PayoneApiConstants::PAYMENT_METHOD_E_WALLET,
+        PaymentTransfer::PAYONE_DIRECT_DEBIT => PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT,
     ];
 
     /**
@@ -75,6 +78,16 @@ class PayoneHandler
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function setPaymentSuccessPartialPath(QuoteTransfer $quoteTransfer)
+    {
+        $quoteTransfer->requirePayment()->getPayment()->setSummaryPartialPath(self::CHECKOUT_PARTIAL_SUMMARY_PATH);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $paymentSelection
@@ -93,6 +106,9 @@ class PayoneHandler
             $paymentDetailTransfer->setPseudoCardPan($payonePaymentTransfer->getPseudocardpan());
         } elseif ($paymentSelection == PaymentTransfer::PAYONE_E_WALLET) {
             $paymentDetailTransfer->setType($payonePaymentTransfer->getWallettype());
+        } elseif ($paymentSelection == PaymentTransfer::PAYONE_DIRECT_DEBIT) {
+            $paymentDetailTransfer->setMandateIdentification($payonePaymentTransfer->getMandateIdentification());
+            $paymentDetailTransfer->setMandateText($payonePaymentTransfer->getMandateText());
         }
 
         $quoteTransfer->getPayment()->setPayone(new PayonePaymentTransfer());

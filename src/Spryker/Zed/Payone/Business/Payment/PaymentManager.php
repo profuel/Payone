@@ -12,8 +12,10 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
+use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
@@ -32,9 +34,11 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use Spryker\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
@@ -278,6 +282,42 @@ class PaymentManager implements PaymentManagerInterface
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new CreditCardCheckResponseContainer($rawResponse);
+
+        return $responseContainer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer
+     */
+    public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer)
+    {
+        /** @var \Spryker\Zed\Payone\Business\Payment\MethodMapper\DirectDebit $paymentMethodMapper */
+        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT);
+        $requestContainer = $paymentMethodMapper->mapBankAccountCheck($bankAccountCheckTransfer);
+        $this->setStandardParameter($requestContainer);
+
+        $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+        $responseContainer = new BankAccountCheckResponseContainer($rawResponse);
+
+        return $responseContainer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $manageMandateTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
+     */
+    public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer)
+    {
+        /** @var \Spryker\Zed\Payone\Business\Payment\MethodMapper\DirectDebit $paymentMethodMapper */
+        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT);
+        $requestContainer = $paymentMethodMapper->mapManageMandate($manageMandateTransfer);
+        $this->setStandardParameter($requestContainer);
+
+        $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+        $responseContainer = new ManageMandateResponseContainer($rawResponse);
 
         return $responseContainer;
     }

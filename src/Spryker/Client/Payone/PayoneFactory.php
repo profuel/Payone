@@ -25,7 +25,7 @@ class PayoneFactory extends AbstractFactory
     /**
      * @param array $defaults
      *
-     * @return \Spryker\Client\Payone\ClientApi\HashGeneratorInterface
+     * @return \Spryker\Client\Payone\ClientApi\Call\CreditCardCheck
      */
     public function createCreditCardCheckCall(array $defaults)
     {
@@ -72,9 +72,6 @@ class PayoneFactory extends AbstractFactory
         $standardParameterTransfer = new PayoneStandardParameterTransfer();
         $standardParameterTransfer->fromArray($defaults);
 
-        /********************************
-         * @todo get params from config (like in PayoneConfig zed bundle)
-         ********************************/
         $payoneConfig = Config::get(PayoneConstants::PAYONE);
         $standardParameterTransfer->setAid($payoneConfig[PayoneConstants::PAYONE_CREDENTIALS_AID]);
         $standardParameterTransfer->setMid($payoneConfig[PayoneConstants::PAYONE_CREDENTIALS_MID]);

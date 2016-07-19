@@ -33,6 +33,20 @@
         <property name="payment" type="PayonePayment" />
     </transfer>
 
+    <transfer name="PayoneManageMandate">
+        <property name="aid" type="string" />
+        <property name="language" type="string" />
+        <property name="iban" type="string" />
+        <property name="bic" type="string" />
+        <property name="personalData" type="PayonePersonalData" />
+        <property name="status" type="string" />
+        <property name="internalErrorMessage" type="string" />
+        <property name="customerErrorMessage" type="string" />
+        <property name="errorCode" type="string" />
+        <property name="mandateIdentification" type="string" />
+        <property name="mandateText" type="string" />
+    </transfer>
+
     <transfer name="PayoneRefund">
         <property name="amount" type="int" />
         <property name="payment" type="PayonePayment" />
@@ -71,6 +85,8 @@
     <transfer name="PayonePaymentDirectDebit">
         <property name="iban" type="string" />
         <property name="bic" type="string" />
+        <property name="mandateIdentification" type="string" />
+        <property name="mandateText" type="string" />
     </transfer>
 
     <transfer name="PaymentDetail">
@@ -88,6 +104,23 @@
         <property name="bankCheckDigit" type="string"/>
         <property name="iban" type="string"/>
         <property name="bic" type="string"/>
+        <property name="mandateIdentification" type="string" />
+        <property name="mandateText" type="string" />
+    </transfer>
+
+    <transfer name="PayoneBankAccountCheck">
+        <property name="language" type="string" />
+        <property name="bankCountry" type="string"/>
+        <property name="bankAccount" type="string"/>
+        <property name="bankCode" type="string"/>
+        <property name="bankBranchCode" type="string"/>
+        <property name="bankCheckDigit" type="string"/>
+        <property name="iban" type="string"/>
+        <property name="bic" type="string"/>
+        <property name="status" type="string" />
+        <property name="internalErrorMessage" type="string" />
+        <property name="customerErrorMessage" type="string" />
+        <property name="errorCode" type="string" />
     </transfer>
 
     <transfer name="PaymentStatus">

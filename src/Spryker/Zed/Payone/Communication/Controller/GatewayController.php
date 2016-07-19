@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payone\Communication\Controller;
 
+use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
+use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Shared\Payone\PayoneConstants;
@@ -62,6 +64,38 @@ class GatewayController extends AbstractGatewayController
         if ($dataArray['txaction'] === PayoneConstants::PAYONE_TXACTION_APPOINTED) {
             $this->getFactory()->getOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheck
+     *
+     * @return \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer
+     */
+    public function bankAccountCheckAction(PayoneBankAccountCheckTransfer $bankAccountCheck)
+    {
+        $response = $this->getFacade()->bankAccountCheck($bankAccountCheck);
+        $bankAccountCheck->setErrorCode($response->getErrorcode());
+        $bankAccountCheck->setCustomerErrorMessage($response->getCustomermessage());
+        $bankAccountCheck->setStatus($response->getStatus());
+        $bankAccountCheck->setInternalErrorMessage($response->getErrormessage());
+        return $bankAccountCheck;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $manageMandateTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
+     */
+    public function manageMandateAction(PayoneManageMandateTransfer $manageMandateTransfer)
+    {
+        $response = $this->getFacade()->manageMandate($manageMandateTransfer);
+        $manageMandateTransfer->setErrorCode($response->getErrorcode());
+        $manageMandateTransfer->setCustomerErrorMessage($response->getCustomermessage());
+        $manageMandateTransfer->setStatus($response->getStatus());
+        $manageMandateTransfer->setInternalErrorMessage($response->getErrormessage());
+        $manageMandateTransfer->setMandateIdentification($response->getMandateIdentification());
+        $manageMandateTransfer->setMandateText($response->getMandateText());
+        return $manageMandateTransfer;
     }
 
 }

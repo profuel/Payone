@@ -18,6 +18,7 @@ use Spryker\Zed\Payone\Business\Key\HashProvider;
 use Spryker\Zed\Payone\Business\Mode\ModeDetector;
 use Spryker\Zed\Payone\Business\Order\OrderManager;
 use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\DirectDebit;
 use Spryker\Zed\Payone\Business\Payment\MethodMapper\EWallet;
 use Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice;
 use Spryker\Zed\Payone\Business\Payment\MethodMapper\OnlineBankTransfer;
@@ -170,6 +171,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
             PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER => $this->createOnlineBankTransfer($storeConfig),
             PayoneApiConstants::PAYMENT_METHOD_E_WALLET => $this->createEWallet($storeConfig),
             PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->createPrepayment($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT => $this->createDirectDebit($storeConfig),
         ];
     }
 
@@ -203,6 +205,18 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     protected function createCreditCardPseudo($storeConfig)
     {
         $creditCardPseudo = new CreditCardPseudo($storeConfig);
+
+        return $creditCardPseudo;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Store $storeConfig
+     *
+     * @return \Spryker\Zed\Payone\Business\Payment\MethodMapper\DirectDebit
+     */
+    protected function createDirectDebit($storeConfig)
+    {
+        $creditCardPseudo = new DirectDebit($storeConfig);
 
         return $creditCardPseudo;
     }
