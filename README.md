@@ -18,78 +18,137 @@ in **src/Pyz/Yves/Application/YvesBootstrap.php**
 ```
 use Spryker\Yves\Payone\Plugin\Provider\PayoneControllerProvider;
 	…
-	protected function registerControllerProviders() { 
-	    … 
-	    $controllerProviders = [ 
-	        … 
-	        new PayoneControllerProvider($ssl), 
+	protected function registerControllerProviders()
+{
+
+	    …
+
+	    $controllerProviders = [
+
+	        …
+
+	        new PayoneControllerProvider($ssl),
+
 	    ];
 ```
 * Optionally configure security firewall for **/payone** route in **Pyz\Yves\Customer\Plugin\Provider\CustomerSecurityServiceProvider**
 * Run antelope build yves and include js for credit card check in payment step template (e.g. **src/Pyz/Yves/Checkout/Theme/demoshop/checkout/payment.twig**)
 ```
-{% block content %} 
+{% block content %}
+
     <script src="/assets/demoshop/js/spryker-yves-payone-main.js"></script>
 ```
 
 * If needed, add **PaymentPostCheckPlugin** into **src/Pyz/Zed/Checkout/CheckoutDependencyProvider.php**
 ```
-use Spryker\Zed\Payment\Communication\Plugin\Checkout\PaymentPostCheckPlugin; 
-… 
-protected function getCheckoutPostHooks(Container $container)  { 
-    return [ 
-        new PaymentPostCheckPlugin(), 
-    ]; 
+use Spryker\Zed\Payment\Communication\Plugin\Checkout\PaymentPostCheckPlugin;
+
+…
+
+protected function getCheckoutPostHooks(Container $container)
+ {
+
+    return [
+
+        new PaymentPostCheckPlugin(),
+
+    ];
+
 }
 ```
 
 *	Add Payone credentials and configure dependency injectors in local config (to get credentials settings from Payone Merchant Interface, navigate to Configuration -> Payment Portals, click [Edit] next to Zahlungsportal Typ Shop, then open API-Parameter tab):
 ```
-use Spryker\Shared\Application\ApplicationConstants; 
-use Spryker\Shared\Payone\PayoneConstants; 
-use Spryker\Shared\Kernel\KernelConstants; 
-use Spryker\Zed\Oms\OmsConfig; 
-use Spryker\Shared\Oms\OmsConstants; 
-use Spryker\Shared\Sales\SalesConstants; 
-use Spryker\Zed\Payone\PayoneConfig;   
+use Spryker\Shared\Application\ApplicationConstants;
 
-$config[PayoneConstants::PAYONE] = [ 
-    PayoneConstants::PAYONE_CREDENTIALS_ENCODING => 'UTF-8', 
-    PayoneConstants::PAYONE_CREDENTIALS_KEY => ‘***’, 
-    PayoneConstants::PAYONE_CREDENTIALS_MID => ‘***’, 
-    PayoneConstants::PAYONE_CREDENTIALS_AID => ‘***’, 
-    PayoneConstants::PAYONE_CREDENTIALS_PORTAL_ID => ‘***’, 
-    PayoneConstants::PAYONE_PAYMENT_GATEWAY_URL => 'https://api.pay1.de/post-gateway/', 
-    PayoneConstants::PAYONE_REDIRECT_SUCCESS_URL => $config[ApplicationConstants::HOST_YVES] . '/checkout/success', 
-    PayoneConstants::PAYONE_REDIRECT_ERROR_URL => $config[ApplicationConstants::HOST_YVES] . '/checkout/payment', 
-    PayoneConstants::PAYONE_REDIRECT_BACK_URL => $config[ApplicationConstants::HOST_YVES] . '/checkout/payment', 
-    PayoneConstants::PAYONE_MODE => 'test', 
-    PayoneConstants::PAYONE_EMPTY_SEQUENCE_NUMBER => 0 ];  
+use Spryker\Shared\Payone\PayoneConstants;
 
-$config[KernelConstants::DEPENDENCY_INJECTOR_YVES] = [ 
-    'Checkout' => [ 
-        'Payone' 
+use Spryker\Shared\Kernel\KernelConstants;
+
+use Spryker\Zed\Oms\OmsConfig;
+
+use Spryker\Shared\Oms\OmsConstants;
+
+use Spryker\Shared\Sales\SalesConstants;
+
+use Spryker\Zed\Payone\PayoneConfig;
+
+
+
+
+$config[PayoneConstants::PAYONE] = [
+
+    PayoneConstants::PAYONE_CREDENTIALS_ENCODING => 'UTF-8',
+
+    PayoneConstants::PAYONE_CREDENTIALS_KEY => ‘***’,
+
+    PayoneConstants::PAYONE_CREDENTIALS_MID => ‘***’,
+
+    PayoneConstants::PAYONE_CREDENTIALS_AID => ‘***’,
+
+    PayoneConstants::PAYONE_CREDENTIALS_PORTAL_ID => ‘***’,
+
+    PayoneConstants::PAYONE_PAYMENT_GATEWAY_URL => 'https://api.pay1.de/post-gateway/',
+
+    PayoneConstants::PAYONE_REDIRECT_SUCCESS_URL => $config[ApplicationConstants::HOST_YVES] . '/checkout/success',
+
+    PayoneConstants::PAYONE_REDIRECT_ERROR_URL => $config[ApplicationConstants::HOST_YVES] . '/checkout/payment',
+
+    PayoneConstants::PAYONE_REDIRECT_BACK_URL => $config[ApplicationConstants::HOST_YVES] . '/checkout/payment',
+
+    PayoneConstants::PAYONE_MODE => 'test',
+
+    PayoneConstants::PAYONE_EMPTY_SEQUENCE_NUMBER => 0
+];
+
+
+
+$config[KernelConstants::DEPENDENCY_INJECTOR_YVES] = [
+
+    'Checkout' => [
+
+        'Payone'
+
     ]
-];  
+];
 
-$config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [ 
-    'Payment' => [ 
-        'Payone' 
-    ], 
-    'Oms' => [ 
-        'Payone' 
+
+
+$config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
+
+    'Payment' => [
+
+        'Payone'
+
+    ],
+
+    'Oms' => [
+
+        'Payone'
+
     ]
-]; 
+];
 
- $config[OmsConstants::PROCESS_LOCATION] = [ 
-    OmsConfig::DEFAULT_PROCESS_LOCATION, 
-    $config[ApplicationConstants::APPLICATION_SPRYKER_ROOT] . '/Payone/config/Zed/Oms' 
-];  
 
-$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [ 
+
+$config[OmsConstants::PROCESS_LOCATION] = [
+
+    OmsConfig::DEFAULT_PROCESS_LOCATION,
+
+    $config[ApplicationConstants::APPLICATION_SPRYKER_ROOT] . '/Payone/config/Zed/Oms'
+
+];
+
+
+
+$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
+
     PayoneConfig::PAYMENT_METHOD_CREDIT_CARD => 'PayoneCreditCard'
-];  
-$config[OmsConstants::ACTIVE_PROCESSES] = [ 
+];
+
+
+$config[OmsConstants::ACTIVE_PROCESSES] = [
+
     'PayoneCreditCard',
 ];
 ```
