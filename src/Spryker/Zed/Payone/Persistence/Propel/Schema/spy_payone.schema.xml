@@ -33,6 +33,9 @@
         <column name="bank_check_digit" type="VARCHAR" size="2"/>
         <column name="iban" type="VARCHAR" size="35"/>
         <column name="bic" type="VARCHAR" size="11"/>
+
+        <column name="mandate_identification" type="VARCHAR" size="35"/>
+
         <column name="type" type="VARCHAR" size="3"/>
 
         <foreign-key name="spy_payment_payone_detail-id_payment_payone" foreignTable="spy_payment_payone" phpName="SpyPaymentPayone">

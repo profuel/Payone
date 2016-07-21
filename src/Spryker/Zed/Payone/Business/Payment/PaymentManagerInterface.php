@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -83,6 +84,13 @@ interface PaymentManagerInterface
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
      */
     public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer
+     */
+    public function getFile(PayoneGetFileTransfer $getFileTransfer);
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $orders

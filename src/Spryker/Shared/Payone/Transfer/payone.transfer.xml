@@ -237,10 +237,20 @@
         <property name="createdAt" type="string" />
     </transfer>
 
+    <transfer name="PayoneGetFile">
+        <property name="reference" type="string" />
+        <property name="type" type="string" />
+        <property name="format" type="string" />
+        <property name="response" type="string" />
+    </transfer>
+
     <transfer name="Payment">
         <property name="payone" type="PayonePayment"/>
         <property name="payoneCreditCard" type="PayonePaymentCreditCard"/>
         <property name="payoneDirectDebit" type="PayonePaymentDirectDebit"/>
         <property name="payoneEWallet" type="PayonePaymentEWallet"/>
+        <property name="summaryIncludePath" type="string"/>
+        <property name="successIncludePath" type="string"/>
     </transfer>
+
 </transfers>

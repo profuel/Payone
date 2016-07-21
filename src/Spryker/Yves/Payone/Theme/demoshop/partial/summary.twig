@@ -1,5 +1,3 @@
-{% if quoteTransfer.payment.paymentMethod == 'payoneDirectDebit' %}
-<tr>
-    <td>{{ 'payment.paymentDetail.mandateText' }}</td>
-</tr>
+{% if quoteTransfer.payment.paymentMethod == 'payment.payone.direct_debit' %}
+{{ quoteTransfer.payment.payoneDirectDebit.mandateText | raw }}
 {% endif %}

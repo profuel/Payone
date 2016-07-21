@@ -9,8 +9,11 @@ namespace Spryker\Zed\Payone\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
+use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCaptureTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
@@ -311,5 +314,32 @@ interface PayoneFacadeInterface
      * @return void
      */
     public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer
+     */
+    public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $bankAccountCheckTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
+     */
+    public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
+     */
+    public function getFile(PayoneGetFileTransfer $getFileTransfer);
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Payone\Controller;
 
+use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Spryker\Yves\Application\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,9 @@ class IndexController extends AbstractController
 {
 
     /**
-     * @return array
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function indexAction(Request $request)
     {
@@ -28,6 +31,25 @@ class IndexController extends AbstractController
         $statusUpdateTranfer->fromArray($request->query->all(), true);
 
         $response = $this->getClient()->updateStatus($statusUpdateTranfer)->getResponse();
+
+        $callback = function () use ($response) {
+            echo $response;
+        };
+
+        return $this->streamedResponse($callback);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function getfileAction(Request $request)
+    {
+        $getFileTransfer = new PayoneGetFileTransfer();
+        $getFileTransfer->setReference($request->query->get('id'));
+
+        $response = $this->getClient()->getFile($getFileTransfer)->getResponse();
 
         $callback = function () use ($response) {
             echo $response;

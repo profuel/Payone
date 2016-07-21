@@ -75,18 +75,6 @@ class EWalletSubForm extends AbstractPayoneSubForm
      *
      * @return $this
      */
-    protected function addHiddenInputs(FormBuilderInterface $builder)
-    {
-        // TODO: provide implementation
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
     protected function addWalletType(FormBuilderInterface $builder)
     {
         $builder->add(

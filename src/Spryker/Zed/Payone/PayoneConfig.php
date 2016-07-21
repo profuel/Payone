@@ -22,6 +22,7 @@ class PayoneConfig extends AbstractBundleConfig
     const PROVIDER_NAME = 'Payone';
     const PAYMENT_METHOD_CREDIT_CARD = 'payoneCreditCard';
     const PAYMENT_METHOD_E_WALLET = 'payoneEWallet';
+    const PAYMENT_METHOD_DIRECT_DEBIT = 'payoneDirectDebit';
 
     /**
      * @return string

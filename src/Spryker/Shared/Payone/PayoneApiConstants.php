@@ -144,6 +144,7 @@ interface PayoneApiConstants
     const REQUEST_TYPE_CREDITCARDCHECK = 'creditcardcheck';
     const REQUEST_TYPE_GETINVOICE = 'getinvoice';
     const REQUEST_TYPE_MANAGEMANDATE = 'managemandate';
+    const REQUEST_TYPE_GETFILE = 'getfile';
 
     // ONLINE BANK TRANSFER TYPE
 
@@ -295,5 +296,13 @@ interface PayoneApiConstants
     const ADDRESS_CHECK_TYPE_NONE = 'NO';
     const ADDRESS_CHECK_TYPE_BASIC = 'BA';
     const ADDRESS_CHECK_TYPE_PERSON = 'PE';
+
+    // FILE TYPE
+
+    const FILE_TYPE_MANDATE = 'SEPA_MANDATE';
+
+    // FILE FORMAT
+
+    const FILE_FORMAT_PDF = 'PDF';
 
 }

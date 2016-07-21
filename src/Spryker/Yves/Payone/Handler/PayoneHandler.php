@@ -19,7 +19,8 @@ class PayoneHandler
 {
 
     const PAYMENT_PROVIDER = 'Payone';
-    const CHECKOUT_PARTIAL_SUMMARY_PATH = 'Payone/partial/summary';
+    const CHECKOUT_INCLUDE_SUMMARY_PATH = 'Payone/partial/summary';
+    const CHECKOUT_INCLUDE_SUCCESS_PATH = 'Payone/partial/success';
 
     /**
      * @var array
@@ -60,6 +61,7 @@ class PayoneHandler
 
         $this->setPaymentProviderAndMethod($quoteTransfer, $paymentSelection);
         $this->setPayonePayment($request, $quoteTransfer, $paymentSelection);
+        $this->setPaymentSuccessIncludePath($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -82,9 +84,10 @@ class PayoneHandler
      *
      * @return void
      */
-    protected function setPaymentSuccessPartialPath(QuoteTransfer $quoteTransfer)
+    protected function setPaymentSuccessIncludePath(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->requirePayment()->getPayment()->setSummaryPartialPath(self::CHECKOUT_PARTIAL_SUMMARY_PATH);
+        $quoteTransfer->requirePayment()->getPayment()->setSummaryIncludePath(self::CHECKOUT_INCLUDE_SUMMARY_PATH);
+        $quoteTransfer->requirePayment()->getPayment()->setSuccessIncludePath(self::CHECKOUT_INCLUDE_SUCCESS_PATH);
     }
 
     /**
@@ -107,6 +110,8 @@ class PayoneHandler
         } elseif ($paymentSelection == PaymentTransfer::PAYONE_E_WALLET) {
             $paymentDetailTransfer->setType($payonePaymentTransfer->getWallettype());
         } elseif ($paymentSelection == PaymentTransfer::PAYONE_DIRECT_DEBIT) {
+            $paymentDetailTransfer->setIban($payonePaymentTransfer->getIban());
+            $paymentDetailTransfer->setBic($payonePaymentTransfer->getBic());
             $paymentDetailTransfer->setMandateIdentification($payonePaymentTransfer->getMandateIdentification());
             $paymentDetailTransfer->setMandateText($payonePaymentTransfer->getMandateText());
         }

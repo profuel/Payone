@@ -8,6 +8,7 @@
 namespace Spryker\Client\Payone\Zed;
 
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
+use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
@@ -17,6 +18,7 @@ class PayoneStub extends BaseStub
 {
 
     /**
+     * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatus
      *
      * @return \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer
      */
@@ -29,6 +31,7 @@ class PayoneStub extends BaseStub
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer $directDebitTransfer
      *
      * @return \Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer
      */
@@ -54,6 +57,19 @@ class PayoneStub extends BaseStub
         return $this->zedStub->call(
             '/payone/gateway/manage-mandate',
             $manageMandateTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
+     */
+    public function getFile(PayoneGetFileTransfer $getFileTransfer)
+    {
+        return $this->zedStub->call(
+            '/payone/gateway/get-file',
+            $getFileTransfer
         );
     }
 

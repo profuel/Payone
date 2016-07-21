@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
@@ -38,6 +39,7 @@ use Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseC
 use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use Spryker\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
@@ -315,9 +317,25 @@ class PaymentManager implements PaymentManagerInterface
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT);
         $requestContainer = $paymentMethodMapper->mapManageMandate($manageMandateTransfer);
         $this->setStandardParameter($requestContainer);
-
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new ManageMandateResponseContainer($rawResponse);
+
+        return $responseContainer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer
+     */
+    public function getFile(PayoneGetFileTransfer $getFileTransfer)
+    {
+        /** @var \Spryker\Zed\Payone\Business\Payment\MethodMapper\DirectDebit $paymentMethodMapper */
+        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT);
+        $requestContainer = $paymentMethodMapper->mapGetFile($getFileTransfer);
+        $this->setStandardParameter($requestContainer);
+        $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+        $responseContainer = new GetFileResponseContainer($rawResponse);
 
         return $responseContainer;
     }

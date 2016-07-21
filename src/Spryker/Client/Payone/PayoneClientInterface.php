@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Payone;
 
+use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 
 interface PayoneClientInterface
@@ -27,5 +28,14 @@ interface PayoneClientInterface
      * @return \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer
      */
     public function updateStatus(PayoneTransactionStatusUpdateTransfer $statusUpdateTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
+     */
+    public function getFile(PayoneGetFileTransfer $getFileTransfer);
 
 }

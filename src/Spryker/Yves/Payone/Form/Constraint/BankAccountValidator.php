@@ -70,7 +70,7 @@ class BankAccountValidator extends ConstraintValidator
             return [$response->getCustomerErrorMessage()];
         } else {
             $data->getPayment()->getPayoneDirectDebit()->setMandateIdentification($response->getMandateIdentification());
-            $data->getPayment()->getPayoneDirectDebit()->setMandateText($response->getMandateText());
+            $data->getPayment()->getPayoneDirectDebit()->setMandateText(urldecode($response->getMandateText()));
         }
         return [];
     }

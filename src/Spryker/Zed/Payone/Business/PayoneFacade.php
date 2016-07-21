@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCaptureTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
@@ -134,6 +135,18 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer)
     {
         return $this->getFactory()->createPaymentManager()->manageMandate($manageMandateTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer
+     */
+    public function getFile(PayoneGetFileTransfer $getFileTransfer)
+    {
+        return $this->getFactory()->createPaymentManager()->getFile($getFileTransfer);
     }
 
     /**
