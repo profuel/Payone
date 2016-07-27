@@ -8,7 +8,7 @@ namespace Spryker\Yves\Payone\Form\Constraint;
 
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
-class BankAccount extends SymfonyConstraint
+class ManageMandate extends SymfonyConstraint
 {
 
     const OPTION_PAYONE_CLIENT = 'payoneClient';

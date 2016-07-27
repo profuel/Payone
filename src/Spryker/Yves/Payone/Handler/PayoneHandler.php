@@ -29,6 +29,13 @@ class PayoneHandler
         PaymentTransfer::PAYONE_CREDIT_CARD => 'credit_card',
         PaymentTransfer::PAYONE_E_WALLET => 'e_wallet',
         PaymentTransfer::PAYONE_DIRECT_DEBIT => 'direct_debit',
+        PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER => 'instant_online_transfer',
+        PaymentTransfer::PAYONE_EPS_ONLINE_TRANSFER => 'eps_online_transfer',
+        PaymentTransfer::PAYONE_GIROPAY_ONLINE_TRANSFER => 'giropay_online_transfer',
+        PaymentTransfer::PAYONE_IDEAL_ONLINE_TRANSFER => 'ideal_online_transfer',
+        PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER => 'postfinance_efinance_online_transfer',
+        PaymentTransfer::PAYONE_POSTFINANCE_CARD_ONLINE_TRANSFER => 'postfinance_card_online_transfer',
+        PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER => 'przelewy24_online_transfer',
     ];
 
     /**
@@ -38,6 +45,12 @@ class PayoneHandler
         PaymentTransfer::PAYONE_CREDIT_CARD => PayoneApiConstants::PAYMENT_METHOD_CREDITCARD,
         PaymentTransfer::PAYONE_E_WALLET => PayoneApiConstants::PAYMENT_METHOD_E_WALLET,
         PaymentTransfer::PAYONE_DIRECT_DEBIT => PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT,
+        PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER => PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER,
+        PaymentTransfer::PAYONE_EPS_ONLINE_TRANSFER => PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER,
+        PaymentTransfer::PAYONE_GIROPAY_ONLINE_TRANSFER => PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER,
+        PaymentTransfer::PAYONE_IDEAL_ONLINE_TRANSFER => PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER,
+        PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER => PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER,
+        PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER => PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER,
     ];
 
     /**
@@ -75,8 +88,8 @@ class PayoneHandler
     protected function setPaymentProviderAndMethod(QuoteTransfer $quoteTransfer, $paymentSelection)
     {
         $quoteTransfer->getPayment()
-            ->setPaymentProvider(self::PAYMENT_PROVIDER)
-            ->setPaymentMethod(self::$payonePaymentMethodMapper[$paymentSelection]);
+            ->setPaymentProvider(static::PAYMENT_PROVIDER)
+            ->setPaymentMethod(static::$payonePaymentMethodMapper[$paymentSelection]);
     }
 
     /**
@@ -114,6 +127,23 @@ class PayoneHandler
             $paymentDetailTransfer->setBic($payonePaymentTransfer->getBic());
             $paymentDetailTransfer->setMandateIdentification($payonePaymentTransfer->getMandateIdentification());
             $paymentDetailTransfer->setMandateText($payonePaymentTransfer->getMandateText());
+        } elseif ($paymentSelection == PaymentTransfer::PAYONE_EPS_ONLINE_TRANSFER
+            || $paymentSelection == PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER
+            || $paymentSelection == PaymentTransfer::PAYONE_GIROPAY_ONLINE_TRANSFER
+            || $paymentSelection == PaymentTransfer::PAYONE_IDEAL_ONLINE_TRANSFER
+            || $paymentSelection == PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER
+            || $paymentSelection == PaymentTransfer::PAYONE_POSTFINANCE_CARD_ONLINE_TRANSFER
+            || $paymentSelection == PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER
+        ) {
+            $paymentDetailTransfer->setType($payonePaymentTransfer->getOnlineBankTransferType());
+            $paymentDetailTransfer->setBankCountry($payonePaymentTransfer->getBankCountry());
+            $paymentDetailTransfer->setBankAccount($payonePaymentTransfer->getBankAccount());
+            $paymentDetailTransfer->setBankCode($payonePaymentTransfer->getBankCode());
+            $paymentDetailTransfer->setBankBranchCode($payonePaymentTransfer->getBankBranchCode());
+            $paymentDetailTransfer->setBankCheckDigit($payonePaymentTransfer->getBankCheckDigit());
+            $paymentDetailTransfer->setBankGroupType($payonePaymentTransfer->getBankGroupType());
+            $paymentDetailTransfer->setIban($payonePaymentTransfer->getIban());
+            $paymentDetailTransfer->setBic($payonePaymentTransfer->getBic());
         }
 
         $quoteTransfer->getPayment()->setPayone(new PayonePaymentTransfer());

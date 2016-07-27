@@ -296,7 +296,7 @@ class PaymentManager implements PaymentManagerInterface
     public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer)
     {
         /** @var \Spryker\Zed\Payone\Business\Payment\MethodMapper\DirectDebit $paymentMethodMapper */
-        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT);
+        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER);
         $requestContainer = $paymentMethodMapper->mapBankAccountCheck($bankAccountCheckTransfer);
         $this->setStandardParameter($requestContainer);
 

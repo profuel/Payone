@@ -8,26 +8,21 @@
 namespace Spryker\Yves\Payone\Form\Constraint;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class BankAccountValidator extends ConstraintValidator
+class ManageMandateValidator extends ConstraintValidator
 {
 
     /**
      * @param string $value
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Yves\Payone\Form\Constraint\BankAccount $constraint
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\Discount\Communication\Form\Constraint\QueryString $constraint
      *
      * @return void
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof BankAccount) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\BankAccount');
-        }
-
-        if (null === $value || '' === $value) {
+        if (!$value) {
             return;
         }
 
@@ -37,7 +32,7 @@ class BankAccountValidator extends ConstraintValidator
         /* @var $data \Generated\Shared\Transfer\QuoteTransfer */
         $data = $root->getData();
 
-        $validationMessages = $this->validateBankAccount($data, $constraint);
+        $validationMessages = $this->manageMandate($data, $constraint);
 
         if (count($validationMessages) > 0) {
             foreach ($validationMessages as $validationMessage) {
@@ -49,15 +44,18 @@ class BankAccountValidator extends ConstraintValidator
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $data
-     * @param \Spryker\Yves\Payone\Form\Constraint\BankAccount $constraint
+     * @param \Spryker\Yves\Payone\Form\Constraint\ManageMandate $constraint
      *
      * @return array|string[]
      */
-    protected function validateBankAccount(QuoteTransfer $data, BankAccount $constraint)
+    protected function manageMandate(QuoteTransfer $data, ManageMandate $constraint)
     {
-        $response = $constraint->getPayoneClient()->bankAccountCheck($data);
-        if ($response->getStatus() == 'ERROR' || $response->getStatus() == 'INVALID') {
+        $response = $constraint->getPayoneClient()->manageMandate($data);
+        if ($response->getStatus() == 'ERROR') {
             return [$response->getCustomerErrorMessage()];
+        } else {
+            $data->getPayment()->getPayoneDirectDebit()->setMandateIdentification($response->getMandateIdentification());
+            $data->getPayment()->getPayoneDirectDebit()->setMandateText(urldecode($response->getMandateText()));
         }
         return [];
     }

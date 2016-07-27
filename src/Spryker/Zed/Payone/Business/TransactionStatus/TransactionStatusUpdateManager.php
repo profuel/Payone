@@ -193,7 +193,7 @@ class TransactionStatusUpdateManager
         if ($statusLog === null) {
             return false;
         }
-        if ($statusLog->getBalance() !== 0) {
+        if ($statusLog->getBalance() > 0) {
             return false;
         }
 

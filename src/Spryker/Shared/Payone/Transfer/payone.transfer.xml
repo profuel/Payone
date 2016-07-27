@@ -89,6 +89,18 @@
         <property name="mandateText" type="string" />
     </transfer>
 
+    <transfer name="PayonePaymentOnlinetransfer">
+        <property name="onlinebanktransfertype" type="string" />
+        <property name="bankcountry" type="string" />
+        <property name="bankaccount" type="string" />
+        <property name="bankcode" type="string" />
+        <property name="bankbranchcode" type="string" />
+        <property name="bankcheckdigit" type="string" />
+        <property name="bankgrouptype" type="string" />
+        <property name="iban" type="string" />
+        <property name="bic" type="string" />
+    </transfer>
+
     <transfer name="PaymentDetail">
         <property name="amount" type="int" />
         <property name="currency" type="string" />
@@ -166,7 +178,6 @@
         <property name="errorCode" type="string" />
     </transfer>
 
-
     <transfer name="PayonePersonalData">
         <property name="customerId" type="string" />
         <property name="userId" type="string" />
@@ -201,7 +212,6 @@
         <property name="payonePayment" type="PayonePayment" />
     </transfer>
 
-
     <transfer name="PayoneTransactionStatusUpdate">
         <property name="key" type="string" />
         <property name="aid" type="string" />
@@ -222,7 +232,6 @@
         <property name="reminderlevel" type="string" />
         <property name="response" type="string" />
     </transfer>
-
 
     <transfer name="PayonePaymentLog">
         <property name="transactionId" type="string" />
@@ -248,6 +257,14 @@
         <property name="payone" type="PayonePayment"/>
         <property name="payoneCreditCard" type="PayonePaymentCreditCard"/>
         <property name="payoneDirectDebit" type="PayonePaymentDirectDebit"/>
+        <property name="payoneOnlineTransfer" type="PayonePaymentOnlinetransfer"/>
+        <property name="payoneEpsOnlineTransfer" type="PayonePaymentOnlinetransfer"/>
+        <property name="payoneGiropayOnlineTransfer" type="PayonePaymentOnlinetransfer"/>
+        <property name="payoneInstantOnlineTransfer" type="PayonePaymentOnlinetransfer"/>
+        <property name="payoneIdealOnlineTransfer" type="PayonePaymentOnlinetransfer"/>
+        <property name="payonePostfinanceEfinanceOnlineTransfer" type="PayonePaymentOnlinetransfer"/>
+        <property name="payonePostfinanceCardOnlineTransfer" type="PayonePaymentOnlinetransfer"/>
+        <property name="payonePrzelewy24OnlineTransfer" type="PayonePaymentOnlinetransfer"/>
         <property name="payoneEWallet" type="PayonePaymentEWallet"/>
         <property name="summaryIncludePath" type="string"/>
         <property name="successIncludePath" type="string"/>

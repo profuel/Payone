@@ -121,6 +121,9 @@ class DirectDebit extends AbstractMapper
         $bankAccountCheckContainer = new BankAccountCheckContainer();
 
         $bankAccountCheckContainer->setAid($this->getStandardParameter()->getAid());
+        $bankAccountCheckContainer->setBankCountry($bankAccountCheckTransfer->getBankCountry());
+        $bankAccountCheckContainer->setBankAccount($bankAccountCheckTransfer->getBankAccount());
+        $bankAccountCheckContainer->setBankCode($bankAccountCheckTransfer->getBankCode());
         $bankAccountCheckContainer->setIban($bankAccountCheckTransfer->getIban());
         $bankAccountCheckContainer->setBic($bankAccountCheckTransfer->getBic());
 

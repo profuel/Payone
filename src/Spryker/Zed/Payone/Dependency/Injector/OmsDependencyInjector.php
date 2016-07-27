@@ -19,6 +19,7 @@ use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\RefundPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\CaptureIsApprovedPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsAppointed;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsCapture;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsPaid;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsRefund;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreauthorizationIsApprovedPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreauthorizationIsErrorPlugin;
@@ -77,6 +78,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
                 ->add(new PreauthorizationIsRedirectPlugin(), 'Payone/PreauthorizationIsRedirectPlugin')
                 ->add(new PaymentIsAppointed(), 'Payone/PaymentIsAppointed')
                 ->add(new PaymentIsCapture(), 'Payone/PaymentIsCapture')
+                ->add(new PaymentIsPaid(), 'Payone/PaymentIsPaid')
                 ->add(new PaymentIsRefund(), 'Payone/PaymentIsRefund');
 
             return $conditionCollection;

@@ -9,6 +9,7 @@ namespace Spryker\Yves\Payone\Form;
 
 use Spryker\Client\Payone\PayoneClientInterface;
 use Spryker\Shared\Payone\PayoneConstants;
+use Spryker\Yves\Payone\Form\Constraint\BankAccount;
 use Spryker\Yves\StepEngine\Dependency\Form\AbstractSubFormType;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -88,6 +89,11 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
     protected function createNotBlankConstraint()
     {
         return new NotBlank(['groups' => $this->getPropertyPath()]);
+    }
+
+    protected function createBankAccountConstraint()
+    {
+        return new BankAccount([BankAccount::OPTION_PAYONE_CLIENT => $this->payoneClient]);
     }
 
 }

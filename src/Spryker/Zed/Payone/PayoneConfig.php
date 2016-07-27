@@ -23,6 +23,14 @@ class PayoneConfig extends AbstractBundleConfig
     const PAYMENT_METHOD_CREDIT_CARD = 'payoneCreditCard';
     const PAYMENT_METHOD_E_WALLET = 'payoneEWallet';
     const PAYMENT_METHOD_DIRECT_DEBIT = 'payoneDirectDebit';
+    const PAYMENT_METHOD_ONLINE_TRANSFER = 'payoneOnlineTransfer';
+    const PAYMENT_METHOD_EPS_ONLINE_TRANSFER = 'payoneEpsOnlineTransfer';
+    const PAYMENT_METHOD_INSTANT_ONLINE_TRANSFER = 'payoneInstantOnlineTransfer';
+    const PAYMENT_METHOD_GIROPAY_ONLINE_TRANSFER = 'payoneGiropayOnlineTransfer';
+    const PAYMENT_METHOD_IDEAL_ONLINE_TRANSFER = 'payoneIdealOnlineTransfer';
+    const PAYMENT_METHOD_POSTFINANCE_EFINANCE_ONLINE_TRANSFER = 'payonePostfinanceEfinanceOnlineTransfer';
+    const PAYMENT_METHOD_POSTFINANCE_CARD_ONLINE_TRANSFER = 'payonePostfinanceCardOnlineTransfer';
+    const PAYMENT_METHOD_PRZELEWY24_ONLINE_TRANSFER = 'payonePrzelewy24OnlineTransfer';
 
     /**
      * @return string

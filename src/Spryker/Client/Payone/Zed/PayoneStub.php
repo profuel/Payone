@@ -10,7 +10,6 @@ namespace Spryker\Client\Payone\Zed;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
-use Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Spryker\Client\ZedRequest\Stub\BaseStub;
 
@@ -31,20 +30,16 @@ class PayoneStub extends BaseStub
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer $directDebitTransfer
+     * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
      *
-     * @return \Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer
+     * @return \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer
      */
-    public function bankAccountCheck(PayonePaymentDirectDebitTransfer $directDebitTransfer)
+    public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer)
     {
-        $bankAccountCheckTransfer = new PayoneBankAccountCheckTransfer();
-        $bankAccountCheckTransfer->setBic($directDebitTransfer->getBic());
-        $bankAccountCheckTransfer->setIban($directDebitTransfer->getIban());
-        $result = $this->zedStub->call(
+        return $this->zedStub->call(
             '/payone/gateway/bank-account-check',
             $bankAccountCheckTransfer
         );
-        return $result;
     }
 
     /**

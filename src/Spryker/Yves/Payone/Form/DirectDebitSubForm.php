@@ -9,9 +9,8 @@ namespace Spryker\Yves\Payone\Form;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer;
-use Spryker\Client\Payone\PayoneClient;
 use Spryker\Shared\Payone\PayoneConstants;
-use Spryker\Yves\Payone\Form\Constraint\BankAccount;
+use Spryker\Yves\Payone\Form\Constraint\ManageMandate;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -28,14 +27,6 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
      * @var \Spryker\Client\Payone\PayoneClient
      */
     protected $payoneClient;
-
-    /**
-     * @param \Spryker\Client\Payone\PayoneClient $payoneClient
-     */
-    public function __construct(PayoneClient $payoneClient)
-    {
-        $this->payoneClient = $payoneClient;
-    }
 
     /**
      * @return string
@@ -125,7 +116,7 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
-                    $this->createBankAccountConstraint(),
+                    $this->createManageMandateConstraint(),
                 ],
             ]
         );
@@ -144,9 +135,9 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createBankAccountConstraint()
+    protected function createManageMandateConstraint()
     {
-        return new BankAccount(['payoneClient' => $this->payoneClient]);
+        return new ManageMandate(['payoneClient' => $this->payoneClient]);
     }
 
 }

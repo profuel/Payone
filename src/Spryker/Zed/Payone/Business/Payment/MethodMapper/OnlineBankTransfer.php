@@ -8,12 +8,14 @@
 namespace Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
+use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\OnlineBankTransferContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\BankAccountCheckContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
@@ -56,6 +58,7 @@ class OnlineBankTransfer extends AbstractMapper
         $captureContainer->setAmount($paymentDetailEntity->getAmount());
         $captureContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $captureContainer->setTxid($paymentEntity->getTransactionId());
+        $captureContainer->setSequenceNumber($this->getNextSequenceNumber($paymentEntity->getTransactionId()));
 
         return $captureContainer;
     }
@@ -89,12 +92,12 @@ class OnlineBankTransfer extends AbstractMapper
         $authorizationContainer->setAmount($paymentDetailEntity->getAmount());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $authorizationContainer->setPaymentMethod($this->createPaymentMethodContainerFromPayment($paymentEntity));
-        $authorizationContainer->setOnlinebanktransfertype($paymentDetailEntity->getType());
 
         $billingAddressEntity = $paymentEntity->getSpySalesOrder()->getBillingAddress();
 
         $personalContainer = new PersonalContainer();
         $this->mapBillingAddressToPersonalContainer($personalContainer, $billingAddressEntity);
+        $personalContainer->setLanguage($this->getStandardParameter()->getLanguage());
 
         $authorizationContainer->setPersonalData($personalContainer);
 
@@ -153,6 +156,7 @@ class OnlineBankTransfer extends AbstractMapper
 
         $paymentMethodContainer = new OnlineBankTransferContainer();
 
+        $paymentMethodContainer->setOnlineBankTransferType($paymentDetailEntity->getType());
         $paymentMethodContainer->setRedirect($this->createRedirectContainer($paymentEntity->getSpySalesOrder()->getOrderReference()));
         $paymentMethodContainer->setBankCountry($paymentDetailEntity->getBankCountry());
         $paymentMethodContainer->setBankAccount($paymentDetailEntity->getBankAccount());
@@ -178,6 +182,26 @@ class OnlineBankTransfer extends AbstractMapper
         $personalContainer->setCountry($this->storeConfig->getCurrentCountry());
 
         return $personalContainer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\BankAccountCheckContainer
+     */
+    public function mapBankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer)
+    {
+        $bankAccountCheckContainer = new BankAccountCheckContainer();
+
+        $bankAccountCheckContainer->setAid($this->getStandardParameter()->getAid());
+        $bankAccountCheckContainer->setBankCountry($bankAccountCheckTransfer->getBankCountry());
+        $bankAccountCheckContainer->setBankAccount($bankAccountCheckTransfer->getBankAccount());
+        $bankAccountCheckContainer->setBankCode($bankAccountCheckTransfer->getBankCode());
+        $bankAccountCheckContainer->setIban($bankAccountCheckTransfer->getIban());
+        $bankAccountCheckContainer->setBic($bankAccountCheckTransfer->getBic());
+        $bankAccountCheckContainer->setLanguage($this->getStandardParameter()->getLanguage());
+
+        return $bankAccountCheckContainer;
     }
 
 }
