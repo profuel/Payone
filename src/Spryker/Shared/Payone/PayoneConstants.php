@@ -10,6 +10,10 @@ namespace Spryker\Shared\Payone;
 interface PayoneConstants
 {
 
+    const COUNTRY_AT = 'AT';
+    const COUNTRY_DE = 'DE';
+    const COUNTRY_NL = 'NL';
+
     const PROVIDER_NAME = 'Payone';
     const PAYONE = 'PAYONE';
     const PAYONE_CREDENTIALS = 'PAYONE_CREDENTIALS';
