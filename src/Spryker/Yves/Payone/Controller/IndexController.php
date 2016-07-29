@@ -52,10 +52,10 @@ class IndexController extends AbstractController
         $response = $this->getClient()->getFile($getFileTransfer)->getResponse();
 
         $callback = function () use ($response) {
-            echo $response;
+            echo base64_decode($response['rawResponse']);
         };
 
-        return $this->streamedResponse($callback);
+        return $this->streamedResponse($callback, 200, ["Content-type" => "application/pdf"]);
     }
 
     /**
