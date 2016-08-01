@@ -18,6 +18,7 @@
             <state name="clarify refund failed" />
             <state name="payment pending" />
             <state name="paid" />
+            <state name="captured" />
             <state name="closed" />
             <state name="returned" />
             <state name="refund pending" />
@@ -87,6 +88,11 @@
                 <target>paid</target>
             </transition>
 
+            <transition condition="Payone/PaymentIsCapture" happy="true">
+                <source>paid</source>
+                <target>captured</target>
+            </transition>
+
             <transition>
                 <source>shipped</source>
                 <target>clarify capture failed</target>
@@ -106,13 +112,13 @@
             </transition>
 
             <transition happy="true">
-                <source>paid</source>
+                <source>captured</source>
                 <target>closed</target>
                 <event>item not returned</event>
             </transition>
 
             <transition>
-                <source>paid</source>
+                <source>captured</source>
                 <target>returned</target>
                 <event>return</event>
             </transition>
