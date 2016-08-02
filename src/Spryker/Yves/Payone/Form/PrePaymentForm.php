@@ -74,9 +74,17 @@ class PrePaymentForm extends AbstractPayoneSubForm
      *
      * @return $this
      */
-    protected function addHiddenInputs(FormBuilderInterface $builder)
+    protected function addLabel(FormBuilderInterface $builder)
     {
-        // TODO: provide implementation
+        $builder->add(
+            self::FIELD_PRE_PAYMENT_METHOD,
+            'hidden',
+            [
+                'label'    => false,
+                'required' => false,
+                'data' => []
+            ]
+        );
 
         return $this;
     }

@@ -36,6 +36,7 @@ class PayoneHandler
         PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER => 'postfinance_efinance_online_transfer',
         PaymentTransfer::PAYONE_POSTFINANCE_CARD_ONLINE_TRANSFER => 'postfinance_card_online_transfer',
         PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER => 'przelewy24_online_transfer',
+        PaymentTransfer::PAYONE_PRE_PAYMENT => 'prepayment',
     ];
 
     /**
@@ -51,6 +52,7 @@ class PayoneHandler
         PaymentTransfer::PAYONE_IDEAL_ONLINE_TRANSFER => PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER,
         PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER => PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER,
         PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER => PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER,
+        PaymentTransfer::PAYONE_PRE_PAYMENT => PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT,
     ];
 
     /**

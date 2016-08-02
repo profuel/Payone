@@ -270,6 +270,7 @@
         <property name="payonePostfinanceCardOnlineTransfer" type="PayonePaymentOnlinetransfer"/>
         <property name="payonePrzelewy24OnlineTransfer" type="PayonePaymentOnlinetransfer"/>
         <property name="payoneEWallet" type="PayonePaymentEWallet"/>
+        <property name="payonePrePayment" type="PayonePayment"/>
         <property name="summaryIncludePath" type="string"/>
         <property name="successIncludePath" type="string"/>
     </transfer>

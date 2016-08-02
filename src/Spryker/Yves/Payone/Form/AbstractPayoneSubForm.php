@@ -46,28 +46,6 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
      *
      * @return $this
      */
-    protected function addLabel(FormBuilderInterface $builder)
-    {
-        $builder->add(
-            self::FIELD_PRE_PAYMENT_METHOD,
-            'choice',
-            [
-                'label'    => false,
-                'required' => true,
-                'choices' => [
-                    'prepayment' => 'Pre Payment'
-                ]
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
     protected function addHiddenInputs(FormBuilderInterface $builder)
     {
         $formData = $this->payoneClient->getCreditCardCheckRequest();
