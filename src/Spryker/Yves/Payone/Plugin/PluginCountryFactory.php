@@ -10,6 +10,7 @@ namespace Spryker\Yves\Payone\Plugin;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Payone\Plugin\SubFormsCreator\AtSubFormsCreator;
+use Spryker\Yves\Payone\Plugin\SubFormsCreator\ChSubFormsCreator;
 use Spryker\Yves\Payone\Plugin\SubFormsCreator\DefaultSubFormsCreator;
 use Spryker\Yves\Payone\Plugin\SubFormsCreator\DeSubFormsCreator;
 use Spryker\Yves\Payone\Plugin\SubFormsCreator\NlSubFormsCreator;
@@ -38,6 +39,9 @@ class PluginCountryFactory extends AbstractPlugin
             },
             PayoneConstants::COUNTRY_DE => function () {
                 return new DeSubFormsCreator();
+            },
+            PayoneConstants::COUNTRY_CH => function () {
+                return new ChSubFormsCreator();
             },
             self::DEFAULT_COUNTRY => function () {
                 return new DefaultSubFormsCreator($this->getFactory()->getPayoneClient());
