@@ -107,7 +107,11 @@ class GatewayController extends AbstractGatewayController
     public function getFileAction(PayoneGetFileTransfer $getFileTransfer)
     {
         $response = $this->getFacade()->getFile($getFileTransfer);
-        $getFileTransfer->setResponse($response);
+        $getFileTransfer->setRawResponse($response->getRawResponse());
+        $getFileTransfer->setStatus($response->getStatus());
+        $getFileTransfer->setErrorCode($response->getErrorcode());
+        $getFileTransfer->setCustomerErrorMessage($response->getCustomermessage());
+        $getFileTransfer->setInternalErrorMessage($response->getErrormessage());
         return $getFileTransfer;
     }
 

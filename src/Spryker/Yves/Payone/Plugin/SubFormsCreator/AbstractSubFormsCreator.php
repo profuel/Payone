@@ -9,6 +9,7 @@ namespace Spryker\Yves\Payone\Plugin\SubFormsCreator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Payone\Plugin\PayoneCreditCardSubFormPlugin;
+use Spryker\Yves\Payone\Plugin\PayoneDirectDebitSubFormPlugin;
 
 abstract class AbstractSubFormsCreator
 {
@@ -21,6 +22,16 @@ abstract class AbstractSubFormsCreator
     protected function createPayoneCreditCardSubFormPlugin(QuoteTransfer $quoteTransfer)
     {
         return new PayoneCreditCardSubFormPlugin();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Yves\Payone\Plugin\PayoneDirectDebitSubFormPlugin
+     */
+    protected function createPayoneDirectDebitSubFormPlugin(QuoteTransfer $quoteTransfer)
+    {
+        return new PayoneDirectDebitSubFormPlugin();
     }
 
 }

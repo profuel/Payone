@@ -250,7 +250,11 @@
         <property name="reference" type="string" />
         <property name="type" type="string" />
         <property name="format" type="string" />
-        <property name="response" type="string" />
+        <property name="rawResponse" type="string" />
+        <property name="status" type="string" />
+        <property name="internalErrorMessage" type="string" />
+        <property name="customerErrorMessage" type="string" />
+        <property name="errorCode" type="string" />
     </transfer>
 
     <transfer name="Payment">

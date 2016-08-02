@@ -49,10 +49,14 @@ class IndexController extends AbstractController
         $getFileTransfer = new PayoneGetFileTransfer();
         $getFileTransfer->setReference($request->query->get('id'));
 
-        $response = $this->getClient()->getFile($getFileTransfer)->getResponse();
+        $response = $this->getClient()->getFile($getFileTransfer);
+
+        if ($response->getStatus() === 'ERROR') {
+            return $this->viewResponse(['errormessage' => $response->getCustomerErrorMessage()]);
+        }
 
         $callback = function () use ($response) {
-            echo base64_decode($response['rawResponse']);
+            echo base64_decode($response->getRawResponse());
         };
 
         return $this->streamedResponse($callback, 200, ["Content-type" => "application/pdf"]);
