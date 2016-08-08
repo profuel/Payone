@@ -11,6 +11,7 @@
             <state name="authorization pending"/>
             <state name="authorization appointed"/>
             <state name="invalid"/>
+            <state name="cancelled"/>
             <state name="cancel reservation pending"/>
             <state name="cancelled" />
             <state name="shipped" />
@@ -49,6 +50,12 @@
                 <source>bank system login</source>
                 <target>invalid</target>
                 <event>redirect timeout</event>
+            </transition>
+
+            <transition>
+                <source>bank system login</source>
+                <target>cancelled</target>
+                <event>RedirectCancelled</event>
             </transition>
 
             <transition condition="Payone/PaymentIsAppointed" happy="true">
@@ -120,6 +127,7 @@
             <event name="return" manual="true" />
             <event name="refund" onEnter="true" command="Payone/Refund" />
             <event name="manual refund" manual="true" />
+            <event name="RedirectCancelled" />
         </events>
 
     </process>

@@ -7,8 +7,10 @@
 
 namespace Spryker\Yves\Payone\Controller;
 
+use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+use Pyz\Yves\Checkout\Plugin\Provider\CheckoutControllerProvider;
 use Spryker\Yves\Application\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -56,6 +58,25 @@ class IndexController extends AbstractController
         };
 
         return $this->streamedResponse($callback, 200, ["Content-type" => "application/pdf"]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function cancelRedirectAction(Request $request)
+    {
+        $orderReference = $request->query->get('orderReference');
+
+        if ($orderReference) {
+            $cancelRedirectTransfer = new PayoneCancelRedirectTransfer();
+            $cancelRedirectTransfer->setOrderReference($orderReference);
+
+            $response = $this->getClient()->cancelRedirect($cancelRedirectTransfer);
+        }
+
+        return $this->redirectResponseInternal(CheckoutControllerProvider::CHECKOUT_PAYMENT);
     }
 
     /**

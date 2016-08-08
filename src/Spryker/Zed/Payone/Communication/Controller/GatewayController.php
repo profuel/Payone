@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Payone\Communication\Controller;
 
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
+use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
@@ -37,6 +38,24 @@ class GatewayController extends AbstractGatewayController
         $transactionStatus->setResponse($response->getStatus());
 
         return $transactionStatus;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneCancelRedirectTransfer $cancelRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneCancelRedirectTransfer
+     */
+    public function cancelRedirectAction(PayoneCancelRedirectTransfer $cancelRedirectTransfer)
+    {
+        $orderItems = SpySalesOrderItemQuery::create()
+            ->useOrderQuery()
+            ->filterByOrderReference($cancelRedirectTransfer->getOrderReference())
+            ->endUse()
+            ->find();
+
+        $this->getFactory()->getOmsFacade()->triggerEvent('RedirectCancelled', $orderItems, []);
+
+        return $cancelRedirectTransfer;
     }
 
     /**
