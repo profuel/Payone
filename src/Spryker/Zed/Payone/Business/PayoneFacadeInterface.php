@@ -303,7 +303,7 @@ interface PayoneFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
-    public function getPaymentData($idPayment);
+    public function getPaymentDetail($idPayment);
 
     /**
      * @api

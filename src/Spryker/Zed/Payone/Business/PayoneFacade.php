@@ -470,13 +470,13 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * @api
      *
-     * @param int $idPayment
+     * @param int $idOrder
      *
      * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
-    public function getPaymentData($idPayment)
+    public function getPaymentDetail($idOrder)
     {
-        return $this->getFactory()->createPaymentManager()->getPaymentData($idPayment);
+        return $this->getFactory()->createPaymentManager()->getPaymentDetail($idOrder);
     }
 
     /**

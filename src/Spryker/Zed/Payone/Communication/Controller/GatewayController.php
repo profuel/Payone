@@ -9,7 +9,9 @@ namespace Spryker\Zed\Payone\Communication\Controller;
 
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Shared\Payone\PayoneConstants;
@@ -113,6 +115,18 @@ class GatewayController extends AbstractGatewayController
         $getFileTransfer->setCustomerErrorMessage($response->getCustomermessage());
         $getFileTransfer->setInternalErrorMessage($response->getErrormessage());
         return $getFileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer
+     */
+    public function getPaymentDetailAction(PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer)
+    {
+        $response = $this->getFacade()->getPaymentDetail($getPaymentDetailTransfer->getOrderId());
+        $getPaymentDetailTransfer->setPaymentDetail($response);
+        return $getPaymentDetailTransfer;
     }
 
 }

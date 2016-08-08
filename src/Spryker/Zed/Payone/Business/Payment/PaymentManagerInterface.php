@@ -129,11 +129,11 @@ interface PaymentManagerInterface
     public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
-     * @param int $idPayment
+     * @param int $idOrder
      *
      * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
-    public function getPaymentData($idPayment);
+    public function getPaymentDetail($idOrder);
 
     /**
      * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentDataTransfer

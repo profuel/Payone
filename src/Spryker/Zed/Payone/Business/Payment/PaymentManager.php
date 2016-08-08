@@ -27,11 +27,13 @@ use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payone\Business\Api\Call\CreditCardCheck;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
 use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
@@ -82,6 +84,11 @@ class PaymentManager implements PaymentManagerInterface
      * @var \Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface[]
      */
     protected $registeredMethodMappers;
+
+    /**
+     * @var HashGenerator
+     */
+    protected $hashGenerator;
 
     /**
      * @param \Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface $executionAdapter
@@ -198,6 +205,8 @@ class PaymentManager implements PaymentManagerInterface
         $responseContainer = new AuthorizationResponseContainer($rawResponse);
         $this->updatePaymentAfterAuthorization($paymentEntity, $responseContainer);
         $this->updateApiLogAfterAuthorization($apiLogEntity, $responseContainer);
+        $this->updatePaymentDetailAfterAuthorization($paymentEntity, $responseContainer);
+
 
         return $responseContainer;
     }
@@ -234,6 +243,12 @@ class PaymentManager implements PaymentManagerInterface
 
         $requestContainer = $paymentMethodMapper->mapPaymentToCapture($paymentEntity);
         $requestContainer->setAmount($captureTransfer->getAmount());
+
+        if (!empty($captureTransfer->getSettleaccount())) {
+            $businnessContainer = new BusinessContainer();
+            $businnessContainer->setSettleAccount($captureTransfer->getSettleaccount());
+            $requestContainer->setBusiness($businnessContainer);
+        }
 
         $this->setStandardParameter($requestContainer);
 
@@ -530,14 +545,14 @@ class PaymentManager implements PaymentManagerInterface
      *
      * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
-    public function getPaymentData($idOrder)
+    public function getPaymentDetail($idOrder)
     {
         $paymentEntity = $this->queryContainer->createPaymentByOrderId($idOrder)->findOne();
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
-        $paymentDataTransfer = new PaymentDataTransfer();
-        $paymentDataTransfer->fromArray($paymentDetailEntity->toArray(), true);
+        $paymentDetailTransfer = new PaymentDetailTransfer();
+        $paymentDetailTransfer->fromArray($paymentDetailEntity->toArray(), true);
 
-        return $paymentDataTransfer;
+        return $paymentDetailTransfer;
     }
 
     /**
@@ -678,6 +693,30 @@ class PaymentManager implements PaymentManagerInterface
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
         $paymentDetailEntity->fromArray($paymentDataTransfer->toArray());
+
+        $paymentDetailEntity->save();
+    }
+
+    /**
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer $responseContainer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    protected function updatePaymentDetailAfterAuthorization(SpyPaymentPayone $paymentEntity, AuthorizationResponseContainer $responseContainer)
+    {
+        $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
+
+        $paymentDetailEntity->setClearingBankAccountHolder($responseContainer->getClearingBankaccountholder());
+        $paymentDetailEntity->setClearingBankCountry($responseContainer->getClearingBankcountry());
+        $paymentDetailEntity->setClearingBankAccount($responseContainer->getClearingBankaccount());
+        $paymentDetailEntity->setClearingBankCode($responseContainer->getClearingBankcode());
+        $paymentDetailEntity->setClearingBankIban($responseContainer->getClearingBankiban());
+        $paymentDetailEntity->setClearingBankBic($responseContainer->getClearingBankbic());
+        $paymentDetailEntity->setClearingBankCity($responseContainer->getClearingBankcity());
+        $paymentDetailEntity->setClearingBankName($responseContainer->getClearingBankname());
 
         $paymentDetailEntity->save();
     }

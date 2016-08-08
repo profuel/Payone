@@ -14,6 +14,7 @@
     <transfer name="PayoneCapture">
         <property name="amount" type="int" />
         <property name="payment" type="PayonePayment" />
+        <property name="settleaccount" type="string" />
     </transfer>
 
     <transfer name="PayoneDebit">
@@ -118,6 +119,14 @@
         <property name="bic" type="string"/>
         <property name="mandateIdentification" type="string" />
         <property name="mandateText" type="string" />
+        <property name="clearingBankAccountHolder" type="string"/>
+        <property name="clearingBankCountry" type="string"/>
+        <property name="clearingBankAccount" type="string"/>
+        <property name="clearingBankCode" type="string"/>
+        <property name="clearingBankIban" type="string"/>
+        <property name="clearingBankBic" type="string"/>
+        <property name="clearingBankCity" type="string"/>
+        <property name="clearingBankName" type="string"/>
     </transfer>
 
     <transfer name="PayoneBankAccountCheck">
@@ -255,6 +264,11 @@
         <property name="internalErrorMessage" type="string" />
         <property name="customerErrorMessage" type="string" />
         <property name="errorCode" type="string" />
+    </transfer>
+
+    <transfer name="PayoneGetPaymentDetail">
+        <property name="orderId" type="string" />
+        <property name="paymentDetail" type="PaymentDetail" />
     </transfer>
 
     <transfer name="Payment">

@@ -36,6 +36,15 @@
 
         <column name="mandate_identification" type="VARCHAR" size="35"/>
 
+        <column name="clearing_bank_account_holder" type="VARCHAR" size="35"/>
+        <column name="clearing_bank_country" type="VARCHAR" size="2"/>
+        <column name="clearing_bank_account" type="VARCHAR" size="26"/>
+        <column name="clearing_bank_code" type="VARCHAR" size="11"/>
+        <column name="clearing_bank_iban" type="VARCHAR" size="35"/>
+        <column name="clearing_bank_bic" type="VARCHAR" size="11"/>
+        <column name="clearing_bank_city" type="VARCHAR" size="50"/>
+        <column name="clearing_bank_name" type="VARCHAR" size="50"/>
+
         <column name="type" type="VARCHAR" size="3"/>
 
         <foreign-key name="spy_payment_payone_detail-id_payment_payone" foreignTable="spy_payment_payone" phpName="SpyPaymentPayone">

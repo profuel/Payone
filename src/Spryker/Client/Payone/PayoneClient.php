@@ -9,6 +9,7 @@ namespace Spryker\Client\Payone;
 
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayonePersonalDataTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
@@ -93,6 +94,18 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
         $manageMandateTransfer->setPersonalData($personalData);
 
         return $this->getFactory()->createZedStub()->manageMandate($manageMandateTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer
+     */
+    public function getPaymentDetail(PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer)
+    {
+        return $this->getFactory()->createZedStub()->getPaymentDetail($getPaymentDetailTransfer);
     }
 
 }
