@@ -42,7 +42,7 @@ interface PayoneClientInterface
 
     /**
      * @api
-     * 
+     *
      * @param \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer
      *
      * @return \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer

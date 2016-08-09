@@ -1,3 +1,38 @@
 {% if quoteTransfer.payment.paymentMethod == 'payment.payone.direct_debit' %}
-<a href="{{ url('payone-getfile', {'id': quoteTransfer.payment.payone.paymentDetail.mandateIdentification}) }}">{{ "Your Mandate as PDF" | trans }}</a>
+    <a href="{{ url('payone-getfile', {'id': quoteTransfer.payment.payone.paymentDetail.mandateIdentification}) }}">{{ "Your Mandate as PDF" | trans }}</a>
+{% endif %}
+{% if quoteTransfer.payment.paymentMethod == 'payment.payone.prepayment' %}
+    {% if paymentDetail is defined %}
+        <h3>{{ 'checkout.order.prepayment_details' | trans }}</h3>
+        <table>
+            <tr>
+                <td>{{ 'clearing_bank_account_holder' | trans }}</td>
+                <td>{{ paymentDetail.clearingBankAccountHolder }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'clearing_bank_account' | trans }}</td>
+                <td>{{ paymentDetail.clearingBankAccount }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'clearing_bank_code' | trans }}</td>
+                <td>{{ paymentDetail.clearingBankCode }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'clearing_bank_iban' | trans }}</td>
+                <td>{{ paymentDetail.clearingBankIban }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'clearing_bank_bic' | trans }}</td>
+                <td>{{ paymentDetail.clearingBankBic }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'clearing_bank_city' | trans }}</td>
+                <td>{{ paymentDetail.clearingBankCity }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'clearing_bank_name' | trans }}</td>
+                <td>{{ paymentDetail.clearingBankName }}</td>
+            </tr>
+        </table>
+    {% endif %}
 {% endif %}

@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
-use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+use Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -143,6 +143,12 @@ class GatewayController extends AbstractGatewayController
      */
     public function getPaymentDetailAction(PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer)
     {
+        if (!empty($getPaymentDetailTransfer->getOrderReference())) {
+            $order = SpySalesOrderQuery::create()
+                ->filterByOrderReference($getPaymentDetailTransfer->getOrderReference())
+                ->findOne();
+            $getPaymentDetailTransfer->setOrderId($order->getIdSalesOrder());
+        }
         $response = $this->getFacade()->getPaymentDetail($getPaymentDetailTransfer->getOrderId());
         $getPaymentDetailTransfer->setPaymentDetail($response);
         return $getPaymentDetailTransfer;

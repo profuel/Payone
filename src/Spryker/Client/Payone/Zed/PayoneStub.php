@@ -71,10 +71,10 @@ class PayoneStub extends BaseStub
     }
 
     /**
-    * @param \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer
-    *
-    * @return \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer
-    */
+     * @param \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer
+     */
     public function getPaymentDetail(PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer)
     {
         return $this->zedStub->call(

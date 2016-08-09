@@ -27,7 +27,6 @@ use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 use Spryker\Shared\Payone\PayoneApiConstants;
-use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payone\Business\Api\Call\CreditCardCheck;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
@@ -86,7 +85,7 @@ class PaymentManager implements PaymentManagerInterface
     protected $registeredMethodMappers;
 
     /**
-     * @var HashGenerator
+     * @var \Spryker\Zed\Payone\Business\Key\HashGenerator
      */
     protected $hashGenerator;
 
@@ -206,7 +205,6 @@ class PaymentManager implements PaymentManagerInterface
         $this->updatePaymentAfterAuthorization($paymentEntity, $responseContainer);
         $this->updateApiLogAfterAuthorization($apiLogEntity, $responseContainer);
         $this->updatePaymentDetailAfterAuthorization($paymentEntity, $responseContainer);
-
 
         return $responseContainer;
     }
