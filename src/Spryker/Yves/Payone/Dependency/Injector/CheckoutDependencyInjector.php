@@ -55,6 +55,7 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
             $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_POSTFINANCE_CARD_ONLINE_TRANSFER);
             $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER);
             $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_PRE_PAYMENT);
+            $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_INVOICE);
 
             return $paymentMethodHandler;
         });

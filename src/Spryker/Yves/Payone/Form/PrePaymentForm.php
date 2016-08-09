@@ -77,7 +77,7 @@ class PrePaymentForm extends AbstractPayoneSubForm
     protected function addLabel(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_PRE_PAYMENT_METHOD,
+            self::FIELD_PAYMENT_METHOD,
             'hidden',
             [
                 'label'    => false,

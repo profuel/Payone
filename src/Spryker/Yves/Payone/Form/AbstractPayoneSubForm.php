@@ -20,7 +20,7 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
 
     const PAYMENT_PROVIDER = PayoneConstants::PROVIDER_NAME;
 
-    const FIELD_PRE_PAYMENT_METHOD = 'paymentMethod';
+    const FIELD_PAYMENT_METHOD = 'paymentMethod';
     const FIELD_PAYONE_CREDENTIALS_MID = 'payone_mid';
     const FIELD_PAYONE_CREDENTIALS_AID = 'payone_aid';
     const FIELD_PAYONE_CREDENTIALS_PORTAL_ID = 'payone_portal_id';

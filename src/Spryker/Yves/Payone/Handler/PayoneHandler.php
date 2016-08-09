@@ -37,6 +37,7 @@ class PayoneHandler
         PaymentTransfer::PAYONE_POSTFINANCE_CARD_ONLINE_TRANSFER => 'postfinance_card_online_transfer',
         PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER => 'przelewy24_online_transfer',
         PaymentTransfer::PAYONE_PRE_PAYMENT => 'prepayment',
+        PaymentTransfer::PAYONE_INVOICE => 'invoice',
     ];
 
     /**
@@ -53,6 +54,7 @@ class PayoneHandler
         PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER => PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER,
         PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER => PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER,
         PaymentTransfer::PAYONE_PRE_PAYMENT => PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT,
+        PaymentTransfer::PAYONE_INVOICE => PayoneApiConstants::PAYMENT_METHOD_INVOICE,
     ];
 
     /**
@@ -153,7 +155,6 @@ class PayoneHandler
         $quoteTransfer->getPayment()->getPayone()->setPaymentDetail($paymentDetailTransfer);
         $quoteTransfer->getPayment()->getPayone()->setPaymentMethod($quoteTransfer->getPayment()->getPaymentMethod());
     }
-
 
     /**
      * @return string
