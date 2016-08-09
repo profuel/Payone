@@ -271,6 +271,10 @@
         <property name="paymentDetail" type="PaymentDetail" />
     </transfer>
 
+    <transfer name="PayoneCancelRedirect">
+        <property name="orderReference" type="string" />
+    </transfer>
+
     <transfer name="Payment">
         <property name="payone" type="PayonePayment"/>
         <property name="payoneCreditCard" type="PayonePaymentCreditCard"/>
