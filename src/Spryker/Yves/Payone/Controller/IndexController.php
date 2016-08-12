@@ -68,10 +68,12 @@ class IndexController extends AbstractController
     public function cancelRedirectAction(Request $request)
     {
         $orderReference = $request->query->get('orderReference');
+        $urlHmac = $request->query->get('sig');
 
         if ($orderReference) {
             $cancelRedirectTransfer = new PayoneCancelRedirectTransfer();
             $cancelRedirectTransfer->setOrderReference($orderReference);
+            $cancelRedirectTransfer->setUrlHmac($urlHmac);
 
             $response = $this->getClient()->cancelRedirect($cancelRedirectTransfer);
         }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Payone\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Payone\Business\Key\UrlHmacGenerator;
 use Spryker\Zed\Payone\PayoneDependencyProvider;
 
 /**
@@ -31,6 +32,14 @@ class PayoneCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesAggregatorFacade()
     {
         return $this->getProvidedDependency(PayoneDependencyProvider::FACADE_SALES_AGGREGATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payone\Business\Key\UrlHmacGenerator
+     */
+    public function createUrlHmacGenerator()
+    {
+        return new UrlHmacGenerator();
     }
 
 }

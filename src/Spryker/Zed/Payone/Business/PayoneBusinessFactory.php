@@ -15,6 +15,7 @@ use Spryker\Zed\Payone\Business\Api\Adapter\Http\Guzzle;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
 use Spryker\Zed\Payone\Business\Key\HashProvider;
+use Spryker\Zed\Payone\Business\Key\UrlHmacGenerator;
 use Spryker\Zed\Payone\Business\Mode\ModeDetector;
 use Spryker\Zed\Payone\Business\Order\OrderManager;
 use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
@@ -51,7 +52,8 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
             $this->getStandardParameter(),
             $this->createKeyHashGenerator(),
             $this->createSequenceNumberProvider(),
-            $this->createModeDetector()
+            $this->createModeDetector(),
+            $this->createUrlHmacGenerator()
         );
 
         foreach ($this->getAvailablePaymentMethods() as $paymentMethod) {
@@ -134,6 +136,14 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
         return new HashGenerator(
             $this->createHashProvider()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payone\Business\Key\UrlHmacGenerator
+     */
+    protected function createUrlHmacGenerator()
+    {
+        return new UrlHmacGenerator();
     }
 
     /**
