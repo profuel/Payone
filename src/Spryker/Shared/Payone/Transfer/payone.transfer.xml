@@ -266,6 +266,15 @@
         <property name="errorCode" type="string" />
     </transfer>
 
+    <transfer name="PayoneGetInvoice">
+        <property name="reference" type="string" />
+        <property name="rawResponse" type="string" />
+        <property name="status" type="string" />
+        <property name="internalErrorMessage" type="string" />
+        <property name="customerErrorMessage" type="string" />
+        <property name="errorCode" type="string" />
+    </transfer>
+
     <transfer name="PayoneGetPaymentDetail">
         <property name="orderId" type="string" />
         <property name="orderReference" type="string" />

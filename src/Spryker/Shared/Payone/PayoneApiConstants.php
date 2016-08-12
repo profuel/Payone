@@ -306,4 +306,9 @@ interface PayoneApiConstants
 
     const FILE_FORMAT_PDF = 'PDF';
 
+    // INVOICE TITLE PREFIX
+
+    const INVOICE_TITLE_PREFIX_INVOICE = 'RG';
+    const INVOICE_TITLE_PREFIX_CREDIT_NOTE = 'GT';
+
 }

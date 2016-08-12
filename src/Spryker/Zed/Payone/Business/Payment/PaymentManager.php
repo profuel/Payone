@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
@@ -41,6 +42,7 @@ use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\GetInvoiceResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use Spryker\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
@@ -94,11 +96,6 @@ class PaymentManager implements PaymentManagerInterface
      * @var \Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface[]
      */
     protected $registeredMethodMappers;
-
-    /**
-     * @var \Spryker\Zed\Payone\Business\Key\HashGenerator
-     */
-    protected $hashGenerator;
 
     /**
      * @param \Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface $executionAdapter
@@ -363,6 +360,23 @@ class PaymentManager implements PaymentManagerInterface
         $this->setStandardParameter($requestContainer);
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new GetFileResponseContainer($rawResponse);
+
+        return $responseContainer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetInvoiceResponseContainer
+     */
+    public function getInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer)
+    {
+        /** @var \Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice $paymentMethodMapper */
+        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_INVOICE);
+        $requestContainer = $paymentMethodMapper->mapGetInvoice($getInvoiceTransfer);
+        $this->setStandardParameter($requestContainer);
+        $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+        $responseContainer = new GetInvoiceResponseContainer($rawResponse);
 
         return $responseContainer;
     }

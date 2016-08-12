@@ -32,6 +32,7 @@ class PayoneConfig extends AbstractBundleConfig
     const PAYMENT_METHOD_POSTFINANCE_CARD_ONLINE_TRANSFER = 'payonePostfinanceCardOnlineTransfer';
     const PAYMENT_METHOD_PRZELEWY24_ONLINE_TRANSFER = 'payonePrzelewy24OnlineTransfer';
     const PAYMENT_METHOD_PRE_PAYMENT = 'payonePrePayment';
+    const PAYMENT_METHOD_INVOICE = 'payoneInvoice';
 
     /**
      * @return string

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Payone\Communication\Controller;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
@@ -142,6 +143,21 @@ class GatewayController extends AbstractGatewayController
         $getFileTransfer->setCustomerErrorMessage($response->getCustomermessage());
         $getFileTransfer->setInternalErrorMessage($response->getErrormessage());
         return $getFileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
+     */
+    public function getInvoiceAction(PayoneGetInvoiceTransfer $getInvoiceTransfer)
+    {
+        $response = $this->getFacade()->getInvoice($getInvoiceTransfer);
+        $getInvoiceTransfer->setRawResponse($response->getRawResponse());
+        $getInvoiceTransfer->setStatus($response->getStatus());
+        $getInvoiceTransfer->setErrorCode($response->getErrorcode());
+        $getInvoiceTransfer->setInternalErrorMessage($response->getErrormessage());
+        return $getInvoiceTransfer;
     }
 
     /**

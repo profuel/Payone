@@ -9,6 +9,7 @@ namespace Spryker\Yves\Payone\Controller;
 
 use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Pyz\Yves\Checkout\Plugin\Provider\CheckoutControllerProvider;
 use Spryker\Yves\Application\Controller\AbstractController;
@@ -55,6 +56,29 @@ class IndexController extends AbstractController
 
         if ($response->getStatus() === 'ERROR') {
             return $this->viewResponse(['errormessage' => $response->getCustomerErrorMessage()]);
+        }
+
+        $callback = function () use ($response) {
+            echo base64_decode($response->getRawResponse());
+        };
+
+        return $this->streamedResponse($callback, 200, ["Content-type" => "application/pdf"]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function getInvoiceAction(Request $request)
+    {
+        $getInvoiceTransfer = new PayoneGetInvoiceTransfer();
+        $getInvoiceTransfer->setReference($request->query->get('id'));
+
+        $response = $this->getClient()->getInvoice($getInvoiceTransfer);
+
+        if ($response->getStatus() === 'ERROR') {
+            return $this->viewResponse(['errormessage' => $response->getInternalErrorMessage()]);
         }
 
         $callback = function () use ($response) {

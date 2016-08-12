@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
+use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
@@ -16,6 +17,7 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMetho
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\GetInvoiceContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 
@@ -115,6 +117,18 @@ class Invoice extends AbstractMapper
         $debitContainer->setAmount($paymentEntity->getSpyPaymentPayoneDetail()->getAmount());
 
         return $debitContainer;
+    }
+
+    public function mapGetInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer)
+    {
+        $getInvoiceContainer = new GetInvoiceContainer();
+        $getInvoiceContainer->setInvoiceTitle(implode('-', [
+                PayoneApiConstants::INVOICE_TITLE_PREFIX_INVOICE,
+                $getInvoiceTransfer->getReference(),
+                $this->getNextSequenceNumber($getInvoiceTransfer->getReference()) - 1
+            ]));
+
+        return $getInvoiceContainer;
     }
 
     /**
