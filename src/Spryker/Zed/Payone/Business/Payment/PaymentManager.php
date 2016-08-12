@@ -45,6 +45,7 @@ use Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseCont
 use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use Spryker\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
+use Spryker\Zed\Payone\Business\Key\UrlHmacGenerator;
 use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 
@@ -80,6 +81,16 @@ class PaymentManager implements PaymentManagerInterface
     protected $modeDetector;
 
     /**
+     * @var \Spryker\Zed\Payone\Business\Key\HashGenerator
+     */
+    protected $hashGenerator;
+
+    /**
+     * @var \Spryker\Zed\Payone\Business\Key\UrlHmacGenerator
+     */
+    protected $urlHmacGenerator;
+
+    /**
      * @var \Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface[]
      */
     protected $registeredMethodMappers;
@@ -103,7 +114,8 @@ class PaymentManager implements PaymentManagerInterface
         PayoneStandardParameterTransfer $standardParameter,
         HashGenerator $hashGenerator,
         SequenceNumberProviderInterface $sequenceNumberProvider,
-        ModeDetectorInterface $modeDetector
+        ModeDetectorInterface $modeDetector,
+        UrlHmacGenerator $urlHmacGenerator
     ) {
 
         $this->executionAdapter = $executionAdapter;
@@ -112,6 +124,7 @@ class PaymentManager implements PaymentManagerInterface
         $this->hashGenerator = $hashGenerator;
         $this->sequenceNumberProvider = $sequenceNumberProvider;
         $this->modeDetector = $modeDetector;
+        $this->urlHmacGenerator = $urlHmacGenerator;
     }
 
     /**
@@ -123,6 +136,7 @@ class PaymentManager implements PaymentManagerInterface
     {
         $paymentMethodMapper->setStandardParameter($this->standardParameter);
         $paymentMethodMapper->setSequenceNumberProvider($this->sequenceNumberProvider);
+        $paymentMethodMapper->setUrlHmacGenerator($this->urlHmacGenerator);
         $this->registeredMethodMappers[$paymentMethodMapper->getName()] = $paymentMethodMapper;
     }
 

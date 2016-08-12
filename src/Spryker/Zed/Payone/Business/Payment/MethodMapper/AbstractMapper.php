@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;
+use Spryker\Zed\Payone\Business\Key\UrlHmacGenerator;
 use Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 
@@ -28,6 +29,11 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
      * @var \Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface
      */
     private $sequenceNumberProvider;
+
+    /**
+     * @var \Spryker\Zed\Payone\Business\Key\UrlHmacGenerator
+     */
+    private $urlHmacGenerator;
 
     /**
      * @var \Spryker\Shared\Kernel\Store
@@ -55,6 +61,24 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     protected function getStandardParameter()
     {
         return $this->standardParameter;
+    }
+
+    /**
+     * @param \Spryker\Zed\Payone\Business\Key\UrlHmacGenerator $urlHmacGenerator
+     *
+     * @return void
+     */
+    public function setUrlHmacGenerator(UrlHmacGenerator $urlHmacGenerator)
+    {
+        $this->urlHmacGenerator = $urlHmacGenerator;
+    }
+
+    /**
+     * @return \Spryker\Zed\Payone\Business\Key\UrlHmacGenerator
+     */
+    protected function getUrlHmacGenerator()
+    {
+        return $this->urlHmacGenerator;
     }
 
     /**
@@ -96,7 +120,8 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     {
         $redirectContainer = new RedirectContainer();
 
-        $params = '?orderReference=' . $orderReference;
+        $sig = $this->getUrlHmacGenerator()->hash($orderReference, $this->getStandardParameter()->getKey());
+        $params = '?orderReference=' . $orderReference . '&sig=' . $sig;
 
         $redirectContainer->setSuccessUrl($this->getStandardParameter()->getRedirectSuccessUrl() . $params);
         $redirectContainer->setBackUrl($this->getStandardParameter()->getRedirectBackUrl() . $params);

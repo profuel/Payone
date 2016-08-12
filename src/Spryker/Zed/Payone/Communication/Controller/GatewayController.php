@@ -49,13 +49,21 @@ class GatewayController extends AbstractGatewayController
      */
     public function cancelRedirectAction(PayoneCancelRedirectTransfer $cancelRedirectTransfer)
     {
-        $orderItems = SpySalesOrderItemQuery::create()
-            ->useOrderQuery()
-            ->filterByOrderReference($cancelRedirectTransfer->getOrderReference())
-            ->endUse()
-            ->find();
+        $urlHmacGenerator = $this->getFactory()->createUrlHmacGenerator();
+        $hash = $urlHmacGenerator->hash(
+            $cancelRedirectTransfer->getOrderReference(),
+            $this->getFactory()->getConfig()->getRequestStandardParameter()->getKey()
+        );
 
-        $this->getFactory()->getOmsFacade()->triggerEvent('RedirectCancelled', $orderItems, []);
+        if ($cancelRedirectTransfer->getUrlHmac() == $hash) {
+            $orderItems = SpySalesOrderItemQuery::create()
+                ->useOrderQuery()
+                ->filterByOrderReference($cancelRedirectTransfer->getOrderReference())
+                ->endUse()
+                ->find();
+
+            $this->getFactory()->getOmsFacade()->triggerEvent('RedirectCancelled', $orderItems, []);
+        }
 
         return $cancelRedirectTransfer;
     }

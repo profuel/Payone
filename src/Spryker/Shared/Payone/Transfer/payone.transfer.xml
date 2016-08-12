@@ -274,6 +274,7 @@
 
     <transfer name="PayoneCancelRedirect">
         <property name="orderReference" type="string" />
+        <property name="urlHmac" type="string" />
     </transfer>
 
     <transfer name="Payment">
