@@ -147,6 +147,7 @@ class DirectDebit extends AbstractMapper
         $manageMandateContainer->setCity($manageMandateTransfer->getPersonalData()->getCity());
         $manageMandateContainer->setCountry($manageMandateTransfer->getPersonalData()->getCountry());
         $manageMandateContainer->setEmail($manageMandateTransfer->getPersonalData()->getEmail());
+        $manageMandateContainer->setLanguage($this->getStandardParameter()->getLanguage());
 
         $manageMandateContainer->setIban($manageMandateTransfer->getIban());
         $manageMandateContainer->setBic($manageMandateTransfer->getBic());
