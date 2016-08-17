@@ -10,7 +10,6 @@ namespace Spryker\Zed\Payone\Business\Payment;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
@@ -569,7 +568,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param int $idOrder
      *
-     * @return \Generated\Shared\Transfer\PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDetailTransfer
      */
     public function getPaymentDetail($idOrder)
     {
@@ -663,7 +662,7 @@ class PaymentManager implements PaymentManagerInterface
         // Return early if we don't need the iban or bic data
         $paymentMethod = $paymentTransfer->getPaymentMethod();
         $whiteList = [
-            PayoneApiConstants::PAYMENT_METHOD_PAYPAL,
+            PayoneApiConstants::PAYMENT_METHOD_E_WALLET,
             PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO,
         ];
 
@@ -708,12 +707,12 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentDataTransfer
+     * @param \Generated\Shared\Transfer\PaymentDetailTransfer $paymentDataTransfer
      * @param int $idOrder
      *
      * @return void
      */
-    public function updatePaymentDetail(PaymentDataTransfer $paymentDataTransfer, $idOrder)
+    public function updatePaymentDetail(PaymentDetailTransfer $paymentDataTransfer, $idOrder)
     {
         $paymentEntity = $this->queryContainer->createPaymentByOrderId($idOrder)->findOne();
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();

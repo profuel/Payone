@@ -9,7 +9,7 @@ namespace Spryker\Zed\Payone\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaymentDataTransfer;
+use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCaptureTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
@@ -324,18 +325,6 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\PayonePaymentTransfer $payment
-     *
-     * @return \Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer
-     */
-    public function getAuthorizationResponse(PayonePaymentTransfer $payment)
-    {
-        return $this->getFactory()->createApiLogFinder()->getAuthorizationResponse($payment);
-    }
-
-    /**
-     * @api
-     *
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
@@ -485,7 +474,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param int $idOrder
      *
-     * @return \Generated\Shared\Transfer\PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDetailTransfer
      */
     public function getPaymentDetail($idOrder)
     {
@@ -495,14 +484,29 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentData
+     * @param \Generated\Shared\Transfer\PaymentDetailTransfer $paymentData
      * @param int $idOrder
      *
      * @return void
      */
-    public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder)
+    public function updatePaymentDetail(PaymentDetailTransfer $paymentData, $idOrder)
     {
         $this->getFactory()->createPaymentManager()->updatePaymentDetail($paymentData, $idOrder);
+    }
+
+    /**
+     * Specification:
+     * - Installs bundle translations to project glossary.
+     *
+     * @api
+     *
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
+     *
+     * @return void
+     */
+    public function install(MessengerInterface $messenger = null)
+    {
+        $this->getFactory()->createInstaller($messenger)->install();
     }
 
 }

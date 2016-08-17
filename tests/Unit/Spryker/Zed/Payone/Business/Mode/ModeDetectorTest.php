@@ -18,8 +18,6 @@ class ModeDetectorTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @todo impl of mode detector not final!
-     *
      * @return void
      */
     public function testModeDetection()

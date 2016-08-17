@@ -82,7 +82,6 @@ class GatewayController extends AbstractGatewayController
             return;
         }
 
-        //TODO: Refactor as per CD-380
         $orderItems = SpySalesOrderItemQuery::create()
             ->useOrderQuery()
             ->useSpyPaymentPayoneQuery()

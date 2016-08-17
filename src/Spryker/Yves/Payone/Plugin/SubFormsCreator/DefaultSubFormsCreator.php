@@ -15,17 +15,17 @@ class DefaultSubFormsCreator extends AbstractSubFormsCreator implements SubForms
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $params
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface[]
      */
-    public function createPaymentMethodsSubForms(QuoteTransfer $quoteTransfer, $params = [])
+    public function createPaymentMethodsSubForms(QuoteTransfer $quoteTransfer)
     {
         return [
             PaymentTransfer::PAYONE_CREDIT_CARD => $this->createPayoneCreditCardSubFormPlugin($quoteTransfer),
             PaymentTransfer::PAYONE_DIRECT_DEBIT => $this->createPayoneDirectDebitSubFormPlugin($quoteTransfer),
             PaymentTransfer::PAYONE_PRE_PAYMENT => $this->createPayonePrePaymentSubFormPlugin($quoteTransfer),
             PaymentTransfer::PAYONE_INVOICE => $this->createPayoneInvoiceSubFormPlugin($quoteTransfer),
+            PaymentTransfer::PAYONE_E_WALLET => $this->createEWalletSubFormPlugin($quoteTransfer),
         ];
     }
 
