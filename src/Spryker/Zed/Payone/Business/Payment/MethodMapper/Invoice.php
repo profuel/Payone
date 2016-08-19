@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
 use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
@@ -18,6 +21,8 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalCont
 use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\GetInvoiceContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 
@@ -34,15 +39,68 @@ class Invoice extends AbstractMapper
 
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer
      */
-    public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity)
+    public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity, OrderTransfer $orderTransfer)
     {
         $authorizationContainer = new AuthorizationContainer();
         $authorizationContainer = $this->mapPaymentToAbstractAuthorization($paymentEntity, $authorizationContainer);
 
+        $transactionContainer = new TransactionContainer();
+        $items = [];
+
+        $orderItems = $orderTransfer->requireItems()->getItems();
+        foreach ($orderItems as $orderItem) {
+            $items[] = $this->mapOrderItemToItemContainer($orderItem);
+        }
+
+        $expenses = $orderTransfer->getExpenses();
+        foreach ($expenses as $expense) {
+            $items[] = $this->mapExpenseToItemContainer($expense);
+        }
+
+        $transactionContainer->setItems($items);
+        $authorizationContainer->setInvoicing($transactionContainer);
+
         return $authorizationContainer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $orderItem
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer
+     */
+    public function mapOrderItemToItemContainer(ItemTransfer $orderItem)
+    {
+        $itemContainer = new ItemContainer();
+        $itemContainer->setIt(PayoneApiConstants::INVOICING_ITEM_TYPE_GOODS);
+        $itemContainer->setId($orderItem->getSku());
+        $itemContainer->setPr($orderItem->getUnitGrossPrice());
+        $itemContainer->setNo($orderItem->getQuantity());
+        $itemContainer->setDe($orderItem->getName());
+        $itemContainer->setVa($orderItem->getTaxRate());
+
+        return $itemContainer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expense
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer
+     */
+    public function mapExpenseToItemContainer(ExpenseTransfer $expense)
+    {
+        $itemContainer = new ItemContainer();
+        $itemContainer->setIt(PayoneApiConstants::INVOICING_ITEM_TYPE_SHIPMENT);
+        $itemContainer->setId('-');
+        $itemContainer->setPr($expense->getUnitGrossPrice());
+        $itemContainer->setNo($expense->getQuantity());
+        $itemContainer->setDe($expense->getName());
+        $itemContainer->setVa($expense->getTaxRate());
+
+        return $itemContainer;
     }
 
     /**
@@ -119,14 +177,15 @@ class Invoice extends AbstractMapper
         return $debitContainer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\GetInvoiceContainer
+     */
     public function mapGetInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer)
     {
         $getInvoiceContainer = new GetInvoiceContainer();
-        $getInvoiceContainer->setInvoiceTitle(implode('-', [
-                PayoneApiConstants::INVOICE_TITLE_PREFIX_INVOICE,
-                $getInvoiceTransfer->getReference(),
-                $this->getNextSequenceNumber($getInvoiceTransfer->getReference()) - 1
-            ]));
+        $getInvoiceContainer->setInvoiceTitle($getInvoiceTransfer->getReference());
 
         return $getInvoiceContainer;
     }

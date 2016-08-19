@@ -1,6 +1,11 @@
 {% if quoteTransfer.payment.paymentMethod == 'payment.payone.direct_debit' %}
     <a href="{{ url('payone-getfile', {'id': quoteTransfer.payment.payone.paymentDetail.mandateIdentification}) }}">{{ "Your Mandate as PDF" | trans }}</a>
 {% endif %}
+{% if quoteTransfer.payment.paymentMethod == 'payment.payone.invoice' %}
+    {% if paymentDetail is defined %}
+        <a href="{{ url('payone-getinvoice', {'id': paymentDetail.invoiceTitle}) }}">{{ "Your Invoice as PDF" | trans }}</a>
+    {% endif %}
+{% endif %}
 {% if quoteTransfer.payment.paymentMethod == 'payment.payone.prepayment' %}
     {% if paymentDetail is defined %}
         <h3>{{ 'checkout.order.prepayment_details' | trans }}</h3>

@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Payone\Business\ApiLog;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
-use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;

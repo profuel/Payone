@@ -45,11 +45,11 @@ interface PaymentManagerInterface
     public function debitPayment($idPayment);
 
     /**
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
-    public function authorizePayment($idPayment);
+    public function authorizePayment(OrderTransfer $orderTransfer);
 
     /**
      * @param int $idPayment

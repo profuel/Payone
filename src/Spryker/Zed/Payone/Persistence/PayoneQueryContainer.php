@@ -103,14 +103,14 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @api
      *
-     * @param int $paymentId
+     * @param int $orderId
      *
      * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
      */
-    public function createPaymentById($paymentId)
+    public function createPaymentById($orderId)
     {
         $query = $this->getFactory()->createPaymentPayoneQuery();
-        $query->findByFkSalesOrder($paymentId);
+        $query->findByFkSalesOrder($orderId);
 
         return $query;
     }

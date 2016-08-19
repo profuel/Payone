@@ -119,6 +119,7 @@
         <property name="bic" type="string"/>
         <property name="mandateIdentification" type="string" />
         <property name="mandateText" type="string" />
+        <property name="invoiceTitle" type="string"/>
         <property name="clearingBankAccountHolder" type="string"/>
         <property name="clearingBankCountry" type="string"/>
         <property name="clearingBankAccount" type="string"/>

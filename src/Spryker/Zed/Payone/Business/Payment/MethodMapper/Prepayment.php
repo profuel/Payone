@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Spryker\Shared\Payone\PayoneApiConstants;
@@ -32,10 +33,11 @@ class Prepayment extends AbstractMapper
 
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer
      */
-    public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity)
+    public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity, OrderTransfer $orderTransfer)
     {
         $authorizationContainer = new AuthorizationContainer();
         $authorizationContainer = $this->mapPaymentToAbstractAuthorization($paymentEntity, $authorizationContainer);

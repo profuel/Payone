@@ -170,15 +170,15 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
-    public function authorizePayment($idPayment)
+    public function authorizePayment(OrderTransfer $orderTransfer)
     {
-        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $paymentEntity = $this->getPaymentEntity($orderTransfer->getIdSalesOrder());
         $paymentMethodMapper = $this->getPaymentMethodMapper($paymentEntity);
-        $requestContainer = $paymentMethodMapper->mapPaymentToAuthorization($paymentEntity);
+        $requestContainer = $paymentMethodMapper->mapPaymentToAuthorization($paymentEntity, $orderTransfer);
         $responseContainer = $this->performAuthorizationRequest($paymentEntity, $requestContainer);
 
         return $responseContainer;
@@ -230,13 +230,13 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param int $idPayment
+     * @param int $orderId
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
-    protected function getPaymentEntity($idPayment)
+    protected function getPaymentEntity($orderId)
     {
-        return $this->queryContainer->createPaymentById($idPayment)->findOne();
+        return $this->queryContainer->createPaymentById($orderId)->findOne();
     }
 
     /**
@@ -378,6 +378,20 @@ class PaymentManager implements PaymentManagerInterface
         $responseContainer = new GetInvoiceResponseContainer($rawResponse);
 
         return $responseContainer;
+    }
+
+    /**
+     * @param int $transactionId
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetInvoiceResponseContainer
+     */
+    public function getInvoiceTitle($transactionId)
+    {
+        return implode('-', [
+            PayoneApiConstants::INVOICE_TITLE_PREFIX_INVOICE,
+            $transactionId,
+            0
+        ]);
     }
 
     /**
@@ -742,6 +756,10 @@ class PaymentManager implements PaymentManagerInterface
         $paymentDetailEntity->setClearingBankBic($responseContainer->getClearingBankbic());
         $paymentDetailEntity->setClearingBankCity($responseContainer->getClearingBankcity());
         $paymentDetailEntity->setClearingBankName($responseContainer->getClearingBankname());
+
+        if ($paymentEntity->getPaymentMethod() == PayoneApiConstants::PAYMENT_METHOD_INVOICE) {
+            $paymentDetailEntity->setInvoiceTitle($this->getInvoiceTitle($paymentEntity->getTransactionId()));
+        }
 
         $paymentDetailEntity->save();
     }

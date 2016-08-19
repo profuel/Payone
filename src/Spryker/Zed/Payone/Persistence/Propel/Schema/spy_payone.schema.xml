@@ -35,6 +35,7 @@
         <column name="bic" type="VARCHAR" size="11"/>
 
         <column name="mandate_identification" type="VARCHAR" size="35"/>
+        <column name="invoice_title" type="VARCHAR" size="16"/>
 
         <column name="clearing_bank_account_holder" type="VARCHAR" size="35"/>
         <column name="clearing_bank_country" type="VARCHAR" size="2"/>
