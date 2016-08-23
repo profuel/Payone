@@ -465,8 +465,6 @@ class PaymentManager implements PaymentManagerInterface
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer $responseContainer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function updatePaymentAfterAuthorization(SpyPaymentPayone $paymentEntity, AuthorizationResponseContainer $responseContainer)
@@ -511,8 +509,6 @@ class PaymentManager implements PaymentManagerInterface
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer $container
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog
      */
     protected function initializeApiLog(SpyPaymentPayone $paymentEntity, AbstractRequestContainer $container)
@@ -537,8 +533,6 @@ class PaymentManager implements PaymentManagerInterface
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
      * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer $responseContainer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function updateApiLogAfterAuthorization(SpyPaymentPayoneApiLog $apiLogEntity, AuthorizationResponseContainer $responseContainer)
@@ -558,8 +552,6 @@ class PaymentManager implements PaymentManagerInterface
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
      * @param \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer $responseContainer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function updateApiLogAfterCapture(SpyPaymentPayoneApiLog $apiLogEntity, CaptureResponseContainer $responseContainer)
@@ -576,8 +568,6 @@ class PaymentManager implements PaymentManagerInterface
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
      * @param \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer $responseContainer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function updateApiLogAfterDebit(SpyPaymentPayoneApiLog $apiLogEntity, DebitResponseContainer $responseContainer)
@@ -593,8 +583,6 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
      * @param \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer $responseContainer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
