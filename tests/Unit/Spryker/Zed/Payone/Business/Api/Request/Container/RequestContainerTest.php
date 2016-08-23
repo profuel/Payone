@@ -938,20 +938,20 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $container = new RefundBankAccountContainer();
         $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
-        $container->setBankAccount('bankaccount');
-        $this->assertEquals('bankaccount', $container->getBankAccount());
+        $container->setBankaccount('bankaccount');
+        $this->assertEquals('bankaccount', $container->getBankaccount());
 
-        $container->setBankBranchCode('branchcode');
-        $this->assertEquals('branchcode', $container->getBankBranchCode());
+        $container->setBankbranchcode('branchcode');
+        $this->assertEquals('branchcode', $container->getBankbranchcode());
 
-        $container->setBankCheckDigit('checkdigit');
-        $this->assertEquals('checkdigit', $container->getBankCheckDigit());
+        $container->setBankcheckdigit('checkdigit');
+        $this->assertEquals('checkdigit', $container->getBankcheckdigit());
 
-        $container->setBankCode('code');
-        $this->assertEquals('code', $container->getBankCode());
+        $container->setBankcode('code');
+        $this->assertEquals('code', $container->getBankcode());
 
-        $container->setBankCountry('country');
-        $this->assertEquals('country', $container->getBankCountry());
+        $container->setBankcountry('country');
+        $this->assertEquals('country', $container->getBankcountry());
 
         $container->setBic('bic');
         $this->assertEquals('bic', $container->getBic());

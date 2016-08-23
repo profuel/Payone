@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Yves\Payone\Dependency\Injector;
 
 use Generated\Shared\Transfer\PaymentTransfer;
+use Spryker\Client\Cart\CartClient;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Payone\Dependency\Injector\CheckoutDependencyInjector;
@@ -34,11 +35,21 @@ class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
         $checkoutDependencyInjector->inject($container);
 
         $checkoutSubFormPluginCollection = $container[CheckoutDependencyProvider::PAYMENT_SUB_FORMS];
-        $this->assertCount(1, $checkoutSubFormPluginCollection);
+        $this->assertGreaterThanOrEqual(5, $checkoutSubFormPluginCollection->count());
 
         $checkoutStepHandlerPluginCollection = $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER];
-
         $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_CREDIT_CARD));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_DIRECT_DEBIT));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_E_WALLET));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_INVOICE));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_PRE_PAYMENT));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_EPS_ONLINE_TRANSFER));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_GIROPAY_ONLINE_TRANSFER));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_POSTFINANCE_CARD_ONLINE_TRANSFER));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_IDEAL_ONLINE_TRANSFER));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER));
     }
 
     /**
@@ -52,6 +63,9 @@ class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
         };
         $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER] = function () {
             return new StepHandlerPluginCollection();
+        };
+        $container[CheckoutDependencyProvider::CLIENT_CART] = function () {
+            return new CartClient();
         };
 
         return $container;
