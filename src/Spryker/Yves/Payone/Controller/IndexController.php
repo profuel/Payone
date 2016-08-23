@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Pyz\Yves\Checkout\Plugin\Provider\CheckoutControllerProvider;
+use Pyz\Yves\Customer\Plugin\Provider\CustomerControllerProvider;
 use Spryker\Yves\Application\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -49,8 +50,16 @@ class IndexController extends AbstractController
      */
     public function getfileAction(Request $request)
     {
+        $customerClient = $this->getFactory()->createCustomerClient();
+        $customerTransfer = $customerClient->getCustomer();
+
+        if (!$customerTransfer) {
+            return $this->redirectResponseInternal(CustomerControllerProvider::ROUTE_LOGIN);
+        }
+
         $getFileTransfer = new PayoneGetFileTransfer();
         $getFileTransfer->setReference($request->query->get('id'));
+        $getFileTransfer->setCustomerId($customerTransfer->getIdCustomer());
 
         $response = $this->getClient()->getFile($getFileTransfer);
 
@@ -72,8 +81,16 @@ class IndexController extends AbstractController
      */
     public function getInvoiceAction(Request $request)
     {
+        $customerClient = $this->getFactory()->createCustomerClient();
+        $customerTransfer = $customerClient->getCustomer();
+
+        if (!$customerTransfer) {
+            return $this->redirectResponseInternal(CustomerControllerProvider::ROUTE_LOGIN);
+        }
+
         $getInvoiceTransfer = new PayoneGetInvoiceTransfer();
         $getInvoiceTransfer->setReference($request->query->get('id'));
+        $getInvoiceTransfer->setCustomerId($customerTransfer->getIdCustomer());
 
         $response = $this->getClient()->getInvoice($getInvoiceTransfer);
 

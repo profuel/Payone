@@ -33,6 +33,26 @@ interface PayoneQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param string $invoiceTitle
+     * @param int $customerId
+     *
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
+     */
+    public function createPaymentByInvoiceTitleAndCustomerIdQuery($invoiceTitle, $customerId);
+
+    /**
+     * @api
+     *
+     * @param string $fileReference
+     * @param int $customerId
+     *
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
+     */
+    public function createPaymentByFileReferenceAndCustomerIdQuery($fileReference, $customerId);
+
+    /**
+     * @api
+     *
      * @param int $fkPayment
      * @param string $requestType
      *

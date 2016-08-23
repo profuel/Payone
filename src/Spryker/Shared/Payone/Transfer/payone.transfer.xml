@@ -260,6 +260,7 @@
         <property name="reference" type="string" />
         <property name="type" type="string" />
         <property name="format" type="string" />
+        <property name="customerId" type="int" />
         <property name="rawResponse" type="string" />
         <property name="status" type="string" />
         <property name="internalErrorMessage" type="string" />
@@ -269,6 +270,7 @@
 
     <transfer name="PayoneGetInvoice">
         <property name="reference" type="string" />
+        <property name="customerId" type="int" />
         <property name="rawResponse" type="string" />
         <property name="status" type="string" />
         <property name="internalErrorMessage" type="string" />

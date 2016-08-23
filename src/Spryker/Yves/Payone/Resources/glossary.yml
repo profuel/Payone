@@ -66,3 +66,45 @@ payment.payone.e_wallet:
   translations:
     en_US: 'Payone E-Wallet'
     de_DE: 'Payone E-Wallet'
+'Your mandate as PDF':
+  translations:
+    en_US: 'Your mandate as PDF'
+    de_DE: 'Ihr Mandat als PDF'
+'Your Invoice as PDF':
+  translations:
+    en_US: 'Your Invoice as PDF'
+    de_DE: 'Ihre Rechnung als PDF'
+payone.order.payment_details:
+  translations:
+    en_US: 'Payment Details'
+    de_DE: 'Zahlungsdetails'
+payone.order.clearing_bank_account_holder:
+  translations:
+    en_US: 'Account holder'
+    de_DE: 'Zahlungsempfänger'
+payone.order.clearing_bank_account:
+  translations:
+    en_US: 'Bank Account'
+    de_DE: 'Kontonummer'
+payone.order.clearing_bank_code:
+  translations:
+    en_US: 'Bank Code'
+    de_DE: 'Bankleitzahl'
+payone.order.clearing_bank_iban:
+  translations:
+    en_US: 'IBAN'
+    de_DE: 'IBAN'
+payone.order.clearing_bank_bic:
+  translations:
+    en_US: 'BIC'
+    de_DE: 'BIC'
+
+payone.order.clearing_bank_city:
+  translations:
+    en_US: 'City'
+    de_DE: 'Stadt'
+
+payone.order.clearing_bank_name:
+  translations:
+    en_US: 'Bank'
+    de_DE: 'Bank'

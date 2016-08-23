@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Payone\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -43,6 +44,54 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     {
         $query = $this->getFactory()->createPaymentPayoneQuery();
         $query->filterByTransactionId($transactionId);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $invoiceTitle
+     * @param int $customerId
+     *
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
+     */
+    public function createPaymentByInvoiceTitleAndCustomerIdQuery($invoiceTitle, $customerId)
+    {
+        $query = $this->getFactory()->createPaymentPayoneQuery();
+        $query->useSpySalesOrderQuery()
+            ->filterByFkCustomer($customerId)
+            ->endUse()
+            ->useSpyPaymentPayoneDetailQuery()
+            ->filterByInvoiceTitle($invoiceTitle)
+            ->endUse()
+            ->useSpyPaymentPayoneApiLogQuery()
+            ->filterByStatus(PayoneApiConstants::RESPONSE_TYPE_APPROVED)
+            ->endUse();
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $fileReference
+     * @param int $customerId
+     *
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
+     */
+    public function createPaymentByFileReferenceAndCustomerIdQuery($fileReference, $customerId)
+    {
+        $query = $this->getFactory()->createPaymentPayoneQuery();
+        $query->useSpySalesOrderQuery()
+            ->filterByFkCustomer($customerId)
+            ->endUse()
+            ->useSpyPaymentPayoneDetailQuery()
+            ->filterByMandateIdentification($fileReference)
+            ->endUse()
+            ->useSpyPaymentPayoneApiLogQuery()
+            ->filterByStatus(PayoneApiConstants::RESPONSE_TYPE_APPROVED)
+            ->endUse();
 
         return $query;
     }

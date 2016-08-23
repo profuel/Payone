@@ -40,8 +40,8 @@ class AbstractPayonePlugin extends AbstractPlugin
     {
         return $this
             ->getFactory()
-            ->getSalesAggregatorFacade()
-            ->getOrderTotalsByIdSalesOrder($orderEntity->getIdSalesOrder());
+            ->getSalesFacade()
+            ->getOrderByIdSalesOrder($orderEntity->getIdSalesOrder());
     }
 
 }
