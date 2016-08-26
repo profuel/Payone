@@ -13,8 +13,8 @@
             <state name="reservation cancellation pending"/>
             <state name="cancelled" />
             <state name="shipped" />
-            <state name="capture clarification" />
-            <state name="refund clarification" />
+            <state name="capture failed clarification" />
+            <state name="refund failed clarification" />
             <state name="capture pending" />
             <state name="captured" />
             <state name="closed" />
@@ -71,18 +71,18 @@
 
             <transition>
                 <source>shipped</source>
-                <target>capture clarification</target>
+                <target>capture failed clarification</target>
                 <event>capture</event>
             </transition>
 
             <transition>
-                <source>capture clarification</source>
+                <source>capture failed clarification</source>
                 <target>shipped</target>
                 <event>retry capture</event>
             </transition>
 
             <transition>
-                <source>capture clarification</source>
+                <source>capture failed clarification</source>
                 <target>cancelled</target>
                 <event>cancel</event>
             </transition>
@@ -112,12 +112,12 @@
 
             <transition>
                 <source>returned</source>
-                <target>refund clarification</target>
+                <target>refund failed clarification</target>
                 <event>refund</event>
             </transition>
 
             <transition>
-                <source>refund clarification</source>
+                <source>refund failed clarification</source>
                 <target>refunded</target>
                 <event>refund manually</event>
             </transition>

@@ -14,7 +14,7 @@
             <state name="cancelled"/>
             <state name="reservation cancellation pending"/>
             <state name="shipped" />
-            <state name="refund clarification" />
+            <state name="refund failed clarification" />
             <state name="closed" />
             <state name="returned" />
             <state name="refund pending" />
@@ -104,12 +104,12 @@
 
             <transition>
                 <source>returned</source>
-                <target>refund clarification</target>
+                <target>refund failed clarification</target>
                 <event>refund</event>
             </transition>
 
             <transition>
-                <source>refund clarification</source>
+                <source>refund failed clarification</source>
                 <target>refunded</target>
                 <event>manual refund</event>
             </transition>
