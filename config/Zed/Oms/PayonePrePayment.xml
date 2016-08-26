@@ -130,7 +130,7 @@
             <transition>
                 <source>refund failed clarification</source>
                 <target>refunded</target>
-                <event>manual refund</event>
+                <event>refund manually</event>
             </transition>
 
         </transitions>
@@ -138,14 +138,13 @@
         <events>
             <event name="pre-authorize" onEnter="true" command="Payone/PreAuthorize"/>
             <event name="ship" manual="true" />
-            <event name="refunded" onEnter="true" />
             <event name="wait for item return" timeout="14days" />
             <event name="cancel" manual="true" />
             <event name="capture with settlement" onEnter="true" command="Payone/CaptureWithSettlement"/>
             <event name="return" manual="true" />
             <event name="refund" onEnter="true" command="Payone/Refund" />
             <event name="retry capture" manual="true" />
-            <event name="manual refund" manual="true" />
+            <event name="refund manually" manual="true" />
         </events>
 
     </process>
