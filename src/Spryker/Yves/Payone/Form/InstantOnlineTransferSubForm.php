@@ -38,14 +38,14 @@ class InstantOnlineTransferSubForm extends OnlineTransferSubForm
             ->addBankCountry($builder, $options)
             ->addBankAccount($builder)
             ->addBankCode($builder)
-            ->addIBAN($builder)
-            ->addBIC($builder);
+            ->addIban($builder)
+            ->addBic($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Yves\Payone\Form\EPSOnlineTransferSubForm
+     * @return \Spryker\Yves\Payone\Form\EpsOnlineTransferSubForm
      */
     public function addOnlineBankTransferType(FormBuilderInterface $builder, array $options)
     {

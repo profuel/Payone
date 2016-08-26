@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Payone\Form\Constraint;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Payone\PayoneApiConstants;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -20,6 +21,8 @@ class BankAccountValidator extends ConstraintValidator
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Yves\Payone\Form\Constraint\BankAccount $constraint
      *
      * @return void
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
      */
     public function validate($value, Constraint $constraint)
     {
@@ -27,7 +30,7 @@ class BankAccountValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\BankAccount');
         }
 
-        if (null === $value || '' === $value) {
+        if ($value === null || $value === '') {
             return;
         }
 
@@ -51,12 +54,12 @@ class BankAccountValidator extends ConstraintValidator
      * @param \Generated\Shared\Transfer\QuoteTransfer $data
      * @param \Spryker\Yves\Payone\Form\Constraint\BankAccount $constraint
      *
-     * @return array|string[]
+     * @return string[]
      */
     protected function validateBankAccount(QuoteTransfer $data, BankAccount $constraint)
     {
         $response = $constraint->getPayoneClient()->bankAccountCheck($data);
-        if ($response->getStatus() == 'ERROR' || $response->getStatus() == 'INVALID') {
+        if ($response->getStatus() === PayoneApiConstants::RESPONSE_TYPE_ERROR || $response->getStatus() === PayoneApiConstants::RESPONSE_TYPE_INVALID) {
             return [$response->getCustomerErrorMessage()];
         }
         return [];

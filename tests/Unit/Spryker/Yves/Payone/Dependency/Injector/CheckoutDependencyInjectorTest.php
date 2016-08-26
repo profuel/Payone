@@ -19,7 +19,9 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
  * @group Spryker
  * @group Yves
  * @group Payone
- * @group CheckoutDependencyInjector
+ * @group Dependency
+ * @group Injector
+ * @group CheckoutDependencyInjectorTest
  */
 class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,7 +31,7 @@ class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testInjectInjectsPaymentSubFormAndHandler()
     {
-        $container = $this->getContainerToInjectTo();
+        $container = $this->createContainerToInjectTo();
 
         $checkoutDependencyInjector = new CheckoutDependencyInjector();
         $checkoutDependencyInjector->inject($container);
@@ -55,7 +57,7 @@ class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \Spryker\Yves\Kernel\Container
      */
-    private function getContainerToInjectTo()
+    protected function createContainerToInjectTo()
     {
         $container = new Container();
         $container[CheckoutDependencyProvider::PAYMENT_SUB_FORMS] = function () {

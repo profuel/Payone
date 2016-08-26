@@ -56,14 +56,14 @@ class GatewayController extends AbstractGatewayController
             $this->getFactory()->getConfig()->getRequestStandardParameter()->getKey()
         );
 
-        if ($cancelRedirectTransfer->getUrlHmac() == $hash) {
+        if ($cancelRedirectTransfer->getUrlHmac() === $hash) {
             $orderItems = SpySalesOrderItemQuery::create()
                 ->useOrderQuery()
                 ->filterByOrderReference($cancelRedirectTransfer->getOrderReference())
                 ->endUse()
                 ->find();
 
-            $this->getFactory()->getOmsFacade()->triggerEvent('RedirectCancelled', $orderItems, []);
+            $this->getFactory()->getOmsFacade()->triggerEvent('cancel redirect', $orderItems, []);
         }
 
         return $cancelRedirectTransfer;

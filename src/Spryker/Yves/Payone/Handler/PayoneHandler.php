@@ -65,7 +65,6 @@ class PayoneHandler
         'Mrs' => 'Female',
     ];
 
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

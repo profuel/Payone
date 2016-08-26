@@ -169,7 +169,7 @@ abstract class OnlineTransferSubForm extends AbstractPayoneSubForm
      *
      * @return \Spryker\Yves\Payone\Form\OnlineTransferSubForm
      */
-    protected function addIBAN(FormBuilderInterface $builder)
+    protected function addIban(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_IBAN,
@@ -226,7 +226,7 @@ abstract class OnlineTransferSubForm extends AbstractPayoneSubForm
      *
      * @return \Spryker\Yves\Payone\Form\OnlineTransferSubForm
      */
-    protected function addBIC(FormBuilderInterface $builder)
+    protected function addBic(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_BIC,

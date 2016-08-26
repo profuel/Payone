@@ -14,7 +14,7 @@ use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder;
 use Spryker\Zed\Payone\Business\Api\Adapter\Http\Guzzle;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
-use Spryker\Zed\Payone\Business\Internal\Install;
+use Spryker\Zed\Payone\Business\Internal\Installer;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
 use Spryker\Zed\Payone\Business\Key\HashProvider;
 use Spryker\Zed\Payone\Business\Key\UrlHmacGenerator;
@@ -294,7 +294,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
      */
     public function createInstaller(MessengerInterface $messenger)
     {
-        $installer = new Install(
+        $installer = new Installer(
             $this->getGlossaryFacade(),
             $this->getConfig()
         );

@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <statemachine
-        xmlns="https://static.spryker.com"
+        xmlns="http://static.spryker.com"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="https://static.spryker.com https://static.spryker.com/oms-01.xsd">
+        xsi:schemaLocation="http://static.spryker.com http://static.spryker.com/oms-01.xsd">
 
     <process name="PayoneOnlineTransfer" main="true">
         <states>
             <state name="new" reserved="true"/>
-            <state name="bank system login"/>
+            <state name="online transfer pending"/>
             <state name="authorization pending"/>
             <state name="authorization appointed"/>
             <state name="invalid"/>
             <state name="cancelled"/>
-            <state name="cancel reservation pending"/>
-            <state name="cancelled" />
+            <state name="reservation cancellation pending"/>
             <state name="shipped" />
-            <state name="clarify refund failed" />
+            <state name="refund clarification" />
             <state name="closed" />
             <state name="returned" />
             <state name="refund pending" />
@@ -42,35 +41,35 @@
 
             <transition condition="Payone/AuthorizationIsRedirectPlugin">
                 <source>new</source>
-                <target>bank system login</target>
+                <target>online transfer pending</target>
                 <event>authorize</event>
             </transition>
 
             <transition>
-                <source>bank system login</source>
+                <source>online transfer pending</source>
                 <target>invalid</target>
-                <event>redirect timeout</event>
+                <event>on redirect timeout</event>
             </transition>
 
             <transition>
-                <source>bank system login</source>
+                <source>online transfer pending</source>
                 <target>cancelled</target>
-                <event>RedirectCancelled</event>
+                <event>cancel redirect</event>
             </transition>
 
             <transition condition="Payone/PaymentIsAppointed" happy="true">
-                <source>bank system login</source>
+                <source>online transfer pending</source>
                 <target>authorization appointed</target>
             </transition>
 
             <transition condition="Payone/CaptureIsApprovedPlugin">
                 <source>authorization appointed</source>
-                <target>cancel reservation pending</target>
+                <target>reservation cancellation pending</target>
                 <event>cancel reservation</event>
             </transition>
 
             <transition condition="Payone/PaymentIsCapture">
-                <source>cancel reservation pending</source>
+                <source>reservation cancellation pending</source>
                 <target>cancelled</target>
             </transition>
 
@@ -83,7 +82,7 @@
             <transition happy="true">
                 <source>shipped</source>
                 <target>closed</target>
-                <event>item not returned</event>
+                <event>wait for item return</event>
             </transition>
 
             <transition>
@@ -105,12 +104,12 @@
 
             <transition>
                 <source>returned</source>
-                <target>clarify refund failed</target>
+                <target>refund clarification</target>
                 <event>refund</event>
             </transition>
 
             <transition>
-                <source>clarify refund failed</source>
+                <source>refund clarification</source>
                 <target>refunded</target>
                 <event>manual refund</event>
             </transition>
@@ -119,15 +118,15 @@
 
         <events>
             <event name="authorize" onEnter="true" command="Payone/Authorize"/>
-            <event name="redirect timeout" timeout="1hour" />
+            <event name="on redirect timeout" timeout="1hour" />
             <event name="ship" manual="true" />
-            <event name="item not returned" timeout="14days" />
+            <event name="wait for item return" timeout="14days" />
             <event name="cancel reservation" manual="true" command="Payone/Cancel"/>
             <event name="cancel" manual="true"/>
             <event name="return" manual="true" />
             <event name="refund" onEnter="true" command="Payone/Refund" />
             <event name="manual refund" manual="true" />
-            <event name="RedirectCancelled" />
+            <event name="cancel redirect" />
         </events>
 
     </process>

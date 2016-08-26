@@ -10,10 +10,10 @@ namespace Spryker\Yves\Payone\Form\DataProvider;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Yves\Payone\Form\EPSOnlineTransferSubForm;
+use Spryker\Yves\Payone\Form\EpsOnlineTransferSubForm;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
-class EPSOnlineTransferDataProvider implements StepEngineFormDataProviderInterface
+class EpsOnlineTransferDataProvider implements StepEngineFormDataProviderInterface
 {
 
     /**
@@ -39,8 +39,8 @@ class EPSOnlineTransferDataProvider implements StepEngineFormDataProviderInterfa
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
         return [
-            EPSOnlineTransferSubForm::OPTION_BANK_COUNTRIES => $this->getBankCountries(),
-            EPSOnlineTransferSubForm::OPTION_BANK_GROUP_TYPES => $this->getBankGroupTypes(),
+            EpsOnlineTransferSubForm::OPTION_BANK_COUNTRIES => $this->getBankCountries(),
+            EpsOnlineTransferSubForm::OPTION_BANK_GROUP_TYPES => $this->getBankGroupTypes(),
         ];
     }
 

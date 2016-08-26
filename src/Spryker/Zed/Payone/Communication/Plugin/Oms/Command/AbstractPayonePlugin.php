@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Payone\Communication\Plugin\Oms\Command;
 
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -17,19 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractPayonePlugin extends AbstractPlugin
 {
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function getItemTransfer(SpySalesOrderItem $orderItemEntity)
-    {
-        return $this
-            ->getFactory()
-            ->getSalesAggregatorFacade()
-            ->getOrderItemTotalsByIdSalesOrderItem($orderItemEntity->getIdSalesOrderItem());
-    }
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity

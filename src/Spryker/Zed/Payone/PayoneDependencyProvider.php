@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Payone\Dependency\Facade\PayoneToOmsBridge;
 use Spryker\Zed\Payone\Dependency\Facade\PayoneToRefundBridge;
 use Spryker\Zed\Payone\Dependency\Facade\PayoneToSalesBridge;
-use \Spryker\Zed\Payone\Dependency\Facade\PayoneToSalesAggregatorBridge;
 
 class PayoneDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -21,7 +20,6 @@ class PayoneDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_OMS = 'oms facade';
     const FACADE_REFUND = 'refund facade';
     const STORE_CONFIG = 'store config';
-    const FACADE_SALES_AGGREGATOR = 'sales aggregor facade';
     const FACADE_SALES = 'sales facade';
 
     /**
@@ -37,10 +35,6 @@ class PayoneDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_REFUND] = function (Container $container) {
             return new PayoneToRefundBridge($container->getLocator()->refund()->facade());
-        };
-
-        $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
-            return new PayoneToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
         };
 
         $container[self::FACADE_SALES] = function (Container $container) {

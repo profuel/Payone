@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <statemachine
-        xmlns="https://static.spryker.com"
+        xmlns="http://static.spryker.com"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="https://static.spryker.com https://static.spryker.com/oms-01.xsd">
+        xsi:schemaLocation="http://static.spryker.com http://static.spryker.com/oms-01.xsd">
 
     <process name="PayonePrePayment" main="true">
         <states>
             <state name="new" reserved="true"/>
             <state name="invalid"/>
-            <state name="preauthorization pending"/>
-            <state name="preauthorization appointed"/>
+            <state name="pre-authorization pending"/>
+            <state name="pre-authorization appointed"/>
             <state name="underpaid" />
             <state name="paid" />
             <state name="cancelled" />
             <state name="shipped" />
-            <state name="clarify capture failed" />
-            <state name="clarify refund failed" />
+            <state name="capture clarification" />
+            <state name="refund clarification" />
             <state name="capture pending" />
             <state name="captured" />
             <state name="closed" />
@@ -25,24 +25,24 @@
         </states>
 
         <transitions>
-            <transition condition="Payone/PreauthorizationIsApprovedPlugin" happy="true">
+            <transition condition="Payone/PreAuthorizationIsApprovedPlugin" happy="true">
                 <source>new</source>
-                <target>preauthorization pending</target>
+                <target>pre-authorization pending</target>
                 <event>pre-authorize</event>
             </transition>
 
             <transition condition="Payone/PaymentIsAppointed" happy="true">
-                <source>preauthorization pending</source>
-                <target>preauthorization appointed</target>
+                <source>pre-authorization pending</source>
+                <target>pre-authorization appointed</target>
             </transition>
 
             <transition condition="Payone/PaymentIsUnderPaid">
-                <source>preauthorization appointed</source>
+                <source>pre-authorization appointed</source>
                 <target>underpaid</target>
             </transition>
 
             <transition condition="Payone/PaymentIsPaid" happy="true">
-                <source>preauthorization appointed</source>
+                <source>pre-authorization appointed</source>
                 <target>paid</target>
             </transition>
 
@@ -82,18 +82,18 @@
 
             <transition>
                 <source>shipped</source>
-                <target>clarify capture failed</target>
+                <target>capture clarification</target>
                 <event>capture with settlement</event>
             </transition>
 
             <transition>
-                <source>clarify capture failed</source>
+                <source>capture clarification</source>
                 <target>shipped</target>
                 <event>retry capture</event>
             </transition>
 
             <transition>
-                <source>clarify capture failed</source>
+                <source>capture clarification</source>
                 <target>cancelled</target>
                 <event>cancel</event>
             </transition>
@@ -101,7 +101,7 @@
             <transition happy="true">
                 <source>captured</source>
                 <target>closed</target>
-                <event>item not returned</event>
+                <event>wait for item return</event>
             </transition>
 
             <transition>
@@ -123,12 +123,12 @@
 
             <transition>
                 <source>returned</source>
-                <target>clarify refund failed</target>
+                <target>refund clarification</target>
                 <event>refund</event>
             </transition>
 
             <transition>
-                <source>clarify refund failed</source>
+                <source>refund clarification</source>
                 <target>refunded</target>
                 <event>manual refund</event>
             </transition>
@@ -139,7 +139,7 @@
             <event name="pre-authorize" onEnter="true" command="Payone/PreAuthorize"/>
             <event name="ship" manual="true" />
             <event name="refunded" onEnter="true" />
-            <event name="item not returned" timeout="14days" />
+            <event name="wait for item return" timeout="14days" />
             <event name="cancel" manual="true" />
             <event name="capture with settlement" onEnter="true" command="Payone/CaptureWithSettlement"/>
             <event name="return" manual="true" />

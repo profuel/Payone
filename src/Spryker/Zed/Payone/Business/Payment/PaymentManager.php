@@ -784,8 +784,6 @@ class PaymentManager implements PaymentManagerInterface
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer $responseContainer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function updatePaymentDetailAfterAuthorization(SpyPaymentPayone $paymentEntity, AuthorizationResponseContainer $responseContainer)

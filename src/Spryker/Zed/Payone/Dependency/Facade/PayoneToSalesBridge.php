@@ -11,12 +11,12 @@ class PayoneToSalesBridge implements PayoneToSalesInterface
 {
 
     /**
-     * @var \Spryker\Zed\Sales\Business\SalesFacade
+     * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
     protected $salesFacade;
 
     /**
-     * @param \Spryker\Zed\Sales\Business\SalesFacade
+     * @param \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
     public function __construct($salesFacade)
     {

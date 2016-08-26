@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class EPSOnlineTransferSubForm extends OnlineTransferSubForm
+class EpsOnlineTransferSubForm extends OnlineTransferSubForm
 {
 
     const PAYMENT_METHOD = 'eps_online_transfer';
@@ -42,7 +42,7 @@ class EPSOnlineTransferSubForm extends OnlineTransferSubForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Yves\Payone\Form\EPSOnlineTransferSubForm
+     * @return \Spryker\Yves\Payone\Form\EpsOnlineTransferSubForm
      */
     public function addOnlineBankTransferType(FormBuilderInterface $builder, array $options)
     {
@@ -61,7 +61,7 @@ class EPSOnlineTransferSubForm extends OnlineTransferSubForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Yves\Payone\Form\EPSOnlineTransferSubForm
+     * @return \Spryker\Yves\Payone\Form\EpsOnlineTransferSubForm
      */
     protected function addBankGroupType(FormBuilderInterface $builder, array $options)
     {

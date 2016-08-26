@@ -9,7 +9,7 @@ namespace Spryker\Yves\Payone\Plugin\SubFormsCreator;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\Payone\Plugin\PayoneEPSOnlineTransferSubFormPlugin;
+use Spryker\Yves\Payone\Plugin\PayoneEpsOnlineTransferSubFormPlugin;
 
 class AtSubFormsCreator extends AbstractSubFormsCreator implements SubFormsCreatorInterface
 {
@@ -34,11 +34,11 @@ class AtSubFormsCreator extends AbstractSubFormsCreator implements SubFormsCreat
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Yves\Payone\Plugin\PayoneEPSOnlineTransferSubFormPlugin
+     * @return \Spryker\Yves\Payone\Plugin\PayoneEpsOnlineTransferSubFormPlugin
      */
     protected function createPayoneEPSOnlineTransferSubFormPlugin(QuoteTransfer $quoteTransfer)
     {
-        return new PayoneEPSOnlineTransferSubFormPlugin();
+        return new PayoneEpsOnlineTransferSubFormPlugin();
     }
 
 }

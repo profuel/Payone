@@ -28,9 +28,9 @@ use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsOverpaid;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsPaid;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsRefund;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsUnderPaid;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreauthorizationIsApprovedPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreauthorizationIsErrorPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreauthorizationIsRedirectPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsApprovedPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsErrorPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsRedirectPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsApprovedPlugin;
 
 class OmsDependencyInjector extends AbstractDependencyInjector
@@ -80,13 +80,13 @@ class OmsDependencyInjector extends AbstractDependencyInjector
     {
         $container->extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
             $conditionCollection
-                ->add(new PreauthorizationIsApprovedPlugin(), 'Payone/PreauthorizationIsApprovedPlugin')
+                ->add(new PreAuthorizationIsApprovedPlugin(), 'Payone/PreAuthorizationIsApprovedPlugin')
                 ->add(new AuthorizationIsApprovedPlugin(), 'Payone/AuthorizationIsApprovedPlugin')
                 ->add(new CaptureIsApprovedPlugin(), 'Payone/CaptureIsApprovedPlugin')
                 ->add(new RefundIsApprovedPlugin(), 'Payone/RefundIsApprovedPlugin')
-                ->add(new PreauthorizationIsErrorPlugin(), 'Payone/PreauthorizationIsErrorPlugin')
+                ->add(new PreAuthorizationIsErrorPlugin(), 'Payone/PreAuthorizationIsErrorPlugin')
                 ->add(new AuthorizationIsErrorPlugin(), 'Payone/AuthorizationIsErrorPlugin')
-                ->add(new PreauthorizationIsRedirectPlugin(), 'Payone/PreauthorizationIsRedirectPlugin')
+                ->add(new PreAuthorizationIsRedirectPlugin(), 'Payone/PreAuthorizationIsRedirectPlugin')
                 ->add(new AuthorizationIsRedirectPlugin(), 'Payone/AuthorizationIsRedirectPlugin')
                 ->add(new PaymentIsAppointed(), 'Payone/PaymentIsAppointed')
                 ->add(new PaymentIsCapture(), 'Payone/PaymentIsCapture')

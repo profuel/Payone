@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\OrderTransfer;
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  */
-class PreauthorizationIsApprovedPlugin extends AbstractPlugin
+class PreAuthorizationIsApprovedPlugin extends AbstractPlugin
 {
 
-    const NAME = 'PreauthorizationIsApprovedPlugin';
+    const NAME = 'PreAuthorizationIsApprovedPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

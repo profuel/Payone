@@ -48,7 +48,7 @@ class IndexController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function getfileAction(Request $request)
+    public function getFileAction(Request $request)
     {
         $customerClient = $this->getFactory()->createCustomerClient();
         $customerTransfer = $customerClient->getCustomer();

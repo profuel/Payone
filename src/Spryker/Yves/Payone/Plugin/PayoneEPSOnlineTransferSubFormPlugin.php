@@ -13,23 +13,23 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 /**
  * @method \Spryker\Yves\Payone\PayoneFactory getFactory()
  */
-class PayoneEPSOnlineTransferSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
+class PayoneEpsOnlineTransferSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
 
     /**
-     * @return \Spryker\Yves\Payone\Form\EPSOnlineTransferSubForm
+     * @return \Spryker\Yves\Payone\Form\EpsOnlineTransferSubForm
      */
     public function createSubForm()
     {
-        return $this->getFactory()->createEPSOnlineTransferSubForm();
+        return $this->getFactory()->createEpsOnlineTransferSubForm();
     }
 
     /**
-     * @return \Spryker\Yves\Payone\Form\DataProvider\EPSOnlineTransferDataProvider
+     * @return \Spryker\Yves\Payone\Form\DataProvider\EpsOnlineTransferDataProvider
      */
     public function createSubFormDataProvider()
     {
-        return $this->getFactory()->createEPSOnlineTransferSubFormDataProvider();
+        return $this->getFactory()->createEpsOnlineTransferSubFormDataProvider();
     }
 
 }
