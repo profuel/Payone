@@ -20,7 +20,7 @@ class CreditCardSubForm extends AbstractPayoneSubForm
 
     const FIELD_CARD_TYPE = 'cardtype';
     const FIELD_CARD_NUMBER = 'cardpan';
-    const FIELD_NAME_ON_CARD= 'cardholder';
+    const FIELD_NAME_ON_CARD = 'cardholder';
     const FIELD_CARD_EXPIRES_MONTH = 'cardexpiredate_month';
     const FIELD_CARD_EXPIRES_YEAR = 'cardexpiredate_year';
     const FIELD_CARD_SECURITY_CODE = 'cardcvc2';

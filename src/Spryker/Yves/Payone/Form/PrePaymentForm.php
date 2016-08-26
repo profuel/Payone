@@ -80,7 +80,7 @@ class PrePaymentForm extends AbstractPayoneSubForm
             self::FIELD_PAYMENT_METHOD,
             'hidden',
             [
-                'label'    => false,
+                'label' => false,
                 'required' => false,
                 'data' => []
             ]

@@ -16,6 +16,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Payone

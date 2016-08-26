@@ -61,7 +61,7 @@ abstract class OnlineTransferSubForm extends AbstractPayoneSubForm
 
         $resolver->setDefaults([
             'data_class' => PayonePaymentOnlinetransferTransfer::class,
-            'constraints'=> [
+            'constraints' => [
                 // Add Callback constraint for bank account check in ancestor classes
                 // new Callback(['methods' => [[$this, 'checkBankAccount']]])
             ],

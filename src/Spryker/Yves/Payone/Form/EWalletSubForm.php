@@ -81,7 +81,7 @@ class EWalletSubForm extends AbstractPayoneSubForm
             self::FIELD_WALLET_TYPE,
             'choice',
             [
-                'label'    => false,
+                'label' => false,
                 'required' => true,
                 'choices' => [
                     'PPE' => 'PayPal'
