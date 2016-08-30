@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
 
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer;
+
 class CreditCardPseudoContainer extends AbstractPaymentMethodContainer
 {
 
@@ -14,6 +16,11 @@ class CreditCardPseudoContainer extends AbstractPaymentMethodContainer
      * @var string
      */
     protected $pseudocardpan;
+
+    /**
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer
+     */
+    protected $threedsecure;
 
     /**
      * @param string $pseudoCardPan
@@ -31,6 +38,24 @@ class CreditCardPseudoContainer extends AbstractPaymentMethodContainer
     public function getPseudoCardPan()
     {
         return $this->pseudocardpan;
+    }
+
+    /**
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer $threeDSecure
+     *
+     * @return void
+     */
+    public function setThreeDSecure(ThreeDSecureContainer $threeDSecure)
+    {
+        $this->threedsecure = $threeDSecure;
+    }
+
+    /**
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer
+     */
+    public function getThreeDSecure()
+    {
+        return $this->threedsecure;
     }
 
 }

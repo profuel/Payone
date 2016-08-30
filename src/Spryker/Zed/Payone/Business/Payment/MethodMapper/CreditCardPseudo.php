@@ -16,6 +16,7 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
@@ -171,6 +172,9 @@ class CreditCardPseudo extends AbstractMapper
         $pseudoCardPan = $paymentEntity->getSpyPaymentPayoneDetail()->getPseudoCardPan();
         $paymentMethodContainer->setPseudoCardPan($pseudoCardPan);
 
+        $threeDSecure = $this->createThreeDSecureData($paymentEntity);
+        $paymentMethodContainer->setThreeDSecure($threeDSecure);
+
         return $paymentMethodContainer;
     }
 
@@ -188,6 +192,20 @@ class CreditCardPseudo extends AbstractMapper
         $personalContainer->setCountry($this->storeConfig->getCurrentCountry());
 
         return $personalContainer;
+    }
+
+    /**
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer
+     */
+    protected function createThreeDSecureData(SpyPaymentPayone $paymentEntity)
+    {
+        $threeDContainer = new ThreeDSecureContainer();
+
+        $threeDContainer->setRedirect($this->createRedirectContainer($paymentEntity->getSpySalesOrder()->getOrderReference()));
+
+        return $threeDContainer;
     }
 
 }
