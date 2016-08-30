@@ -42,7 +42,7 @@
                 <event>pre-authorize</event>
             </transition>
 
-            <transition condition="Payone/PreuthorizationIsRedirectPlugin">
+            <transition condition="Payone/PreAuthorizationIsRedirectPlugin">
                 <source>new</source>
                 <target>3D secure verification</target>
                 <event>pre-authorize</event>
