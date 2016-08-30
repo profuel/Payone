@@ -98,13 +98,27 @@ payone.order.clearing_bank_bic:
   translations:
     en_US: 'BIC'
     de_DE: 'BIC'
-
 payone.order.clearing_bank_city:
   translations:
     en_US: 'City'
     de_DE: 'Stadt'
-
 payone.order.clearing_bank_name:
   translations:
     en_US: 'Bank'
     de_DE: 'Bank'
+Payone_giropay_online_transfer:
+  translations:
+    en_US: 'Payone Giropay'
+    de_DE: 'Payone Giropay'
+payment.payone.giropay-online-transfer:
+  translations:
+    en_US: 'Payone Giropay'
+    de_DE: 'Payone Giropay'
+Payone_giropay_online_transfer.IBAN:
+  translations:
+    en_US: 'IBAN'
+    de_DE: 'IBAN'
+Payone_giropay_online_transfer.BIC:
+  translations:
+    en_US: 'BIC'
+    de_DE: 'BIC'
