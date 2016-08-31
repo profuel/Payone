@@ -1,0 +1,16 @@
+<div class="payone-form payone-direct-debit-form payment-form" id="payoneDirectDebit">
+    <h3>{{ 'payment.payone.direct-debit' | trans }}</h3>
+
+    <label>{{ 'Payone_direct_debit.IBAN' | trans }}</label>
+    <div class="field">
+        {{ form_widget(form.payoneDirectDebit.iban, { 'attr': {'placeholder': 'Payone_direct_debit.IBAN' | trans } }) }}
+        {{ form_errors(form.payoneDirectDebit.iban) }}
+    </div>
+
+    <label>{{ 'Payone_direct_debit.BIC' | trans }}</label>
+    <div class="field">
+        {{ form_widget(form.payoneDirectDebit.bic, { 'attr': {'placeholder': 'Payone_direct_debit.BIC' | trans } }) }}
+        {{ form_errors(form.payoneDirectDebit.bic) }}
+    </div>
+
+</div>

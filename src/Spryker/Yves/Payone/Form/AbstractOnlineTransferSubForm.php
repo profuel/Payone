@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Payone\Form;
 
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayonePaymentOnlinetransferTransfer;
 use Spryker\Shared\Payone\PayoneConstants;
@@ -39,7 +40,7 @@ abstract class AbstractOnlineTransferSubForm extends AbstractPayoneSubForm
      */
     public function getName()
     {
-        return static::PAYMENT_PROVIDER . '_' . static::PAYMENT_METHOD;
+        return PaymentTransfer::PAYONE_ONLINE_TRANSFER;
     }
 
     /**

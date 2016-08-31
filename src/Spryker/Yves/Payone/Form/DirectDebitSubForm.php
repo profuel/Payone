@@ -33,7 +33,7 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
      */
     public function getName()
     {
-        return self::PAYMENT_PROVIDER . '_' . self::PAYMENT_METHOD;
+        return PaymentTransfer::PAYONE_DIRECT_DEBIT;
     }
 
     /**
