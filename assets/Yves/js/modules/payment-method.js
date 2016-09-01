@@ -5,9 +5,10 @@
 
 'use strict';
 
+var $ = require('jquery');
+
 function init(config) {
     var $form = $(config.formSelector);
-
     $form.submit(function(ev) {
         window.processPayoneResponse = function(response) {
             console.log(response);
@@ -21,7 +22,6 @@ function init(config) {
                 alert(response.customermessage);
             }
         };
-
         if ($(config.currentPaymentMethodSelector).val() === 'payoneCreditCard') {
             ev.preventDefault();
             var clientApiConfig = JSON.parse($form.find(config.clientApiConfigInput).val());
