@@ -38,7 +38,11 @@ class GatewayController extends AbstractGatewayController
 
         $transactionId = $transactionStatus->getTxid();
         $this->triggerEventsOnSuccess($response, $transactionId, $transactionStatus->toArray());
-        $transactionStatus->setResponse($response->getStatus());
+        if ($response->getErrorMessage()) {
+            $transactionStatus->setResponse($response->getStatus() . ': ' . $response->getErrorMessage());
+        } else {
+            $transactionStatus->setResponse($response->getStatus());
+        }
 
         return $transactionStatus;
     }
