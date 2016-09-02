@@ -32,7 +32,7 @@ class IndexController extends AbstractController
     public function indexAction(Request $request)
     {
         $statusUpdateTranfer = new PayoneTransactionStatusUpdateTransfer();
-        $statusUpdateTranfer->fromArray($request->query->all(), true);
+        $statusUpdateTranfer->fromArray($request->request->all(), true);
 
         $response = $this->getClient()->updateStatus($statusUpdateTranfer)->getResponse();
 
