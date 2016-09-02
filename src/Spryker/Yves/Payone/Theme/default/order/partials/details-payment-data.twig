@@ -1,6 +1,7 @@
+<div class="row">
 {% if paymentDetail.clearingBankAccount or paymentDetail.mandateIdentification or paymentDetail.invoiceTitle %}
-    <div style="overflow: hidden;">
-        <div style="float:left;width:50%">
+    <div class="small-12 large-6 columns">
+        <div class="callout">
             <h3>{{ 'payone.order.payment_details' | trans }}</h3>
 {% endif %}
 {% if paymentDetail.clearingBankAccount %}
@@ -45,3 +46,4 @@
         </div>
     </div>
 {% endif %}
+</div>
