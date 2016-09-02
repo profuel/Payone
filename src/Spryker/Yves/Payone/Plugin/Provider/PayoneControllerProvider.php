@@ -20,7 +20,7 @@ class PayoneControllerProvider extends YvesControllerProvider
     protected function defineControllers(Application $app)
     {
         $this->createController('/payone', 'payone-index', 'Payone', 'index', 'index')->method('POST');
-        $this->createController('/payone/getfile', 'payone-getfile', 'Payone', 'index', 'getFile')->method('GET|POST');
+        $this->createController('/payone/getfile', 'payone-getfile', 'payone', 'index', 'getFile')->method('GET|POST');
         $this->createController('/payone/regular-redirect-payment-cancellation', 'payone-cancel-redirect', 'Payone', 'index', 'cancelRedirect')->method('GET');
         $this->createController('/payone/getinvoice', 'payone-getinvoice', 'Payone', 'index', 'getInvoice')->method('GET');
     }
