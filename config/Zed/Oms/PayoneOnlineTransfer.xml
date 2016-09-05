@@ -10,6 +10,8 @@
             <state name="online transfer pending"/>
             <state name="authorization pending"/>
             <state name="authorization appointed"/>
+            <state name="underpaid" />
+            <state name="paid" />
             <state name="invalid"/>
             <state name="cancelled"/>
             <state name="reservation cancellation pending"/>
@@ -31,6 +33,21 @@
             <transition condition="Payone/PaymentIsAppointed" happy="true">
                 <source>authorization pending</source>
                 <target>authorization appointed</target>
+            </transition>
+
+            <transition condition="Payone/PaymentIsUnderPaid">
+                <source>authorization appointed</source>
+                <target>underpaid</target>
+            </transition>
+
+            <transition condition="Payone/PaymentIsPaid" happy="true">
+                <source>authorization appointed</source>
+                <target>paid</target>
+            </transition>
+
+            <transition condition="Payone/PaymentIsPaid">
+                <source>underpaid</source>
+                <target>paid</target>
             </transition>
 
             <transition condition="Payone/AuthorizationIsErrorPlugin">
@@ -74,7 +91,7 @@
             </transition>
 
             <transition happy="true">
-                <source>authorization appointed</source>
+                <source>paid</source>
                 <target>shipped</target>
                 <event>ship</event>
             </transition>
