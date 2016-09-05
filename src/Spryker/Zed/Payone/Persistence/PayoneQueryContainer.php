@@ -25,9 +25,9 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      */
     public function createCurrentSequenceNumberQuery($transactionId)
     {
-        $query = $this->getFactory()->createPaymentPayoneApiLogQuery();
+        $query = $this->getFactory()->createPaymentPayoneTransactionStatusLogQuery();
         $query->filterByTransactionId($transactionId)
-              ->orderBySequenceNumber(Criteria::DESC);
+            ->orderBySequenceNumber(Criteria::DESC);
 
         return $query;
     }
