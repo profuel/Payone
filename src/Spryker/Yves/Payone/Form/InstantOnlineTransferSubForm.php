@@ -21,6 +21,14 @@ class InstantOnlineTransferSubForm extends OnlineTransferSubForm
     /**
      * @return string
      */
+    public function getName()
+    {
+        return PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER;
+    }
+
+    /**
+     * @return string
+     */
     public function getPropertyPath()
     {
         return PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER;
@@ -34,12 +42,7 @@ class InstantOnlineTransferSubForm extends OnlineTransferSubForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addOnlineBankTransferType($builder, $options)
-            ->addBankCountry($builder, $options)
-            ->addBankAccount($builder)
-            ->addBankCode($builder)
-            ->addIban($builder)
-            ->addBic($builder);
+        $this->addOnlineBankTransferType($builder, $options);
     }
 
     /**
