@@ -31,6 +31,7 @@ class ChSubFormsCreator extends AbstractSubFormsCreator implements SubFormsCreat
             PaymentTransfer::PAYONE_E_WALLET => $this->createEWalletSubFormPlugin($quoteTransfer),
             PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER => $this->createPayonePostfinanceEfinanceOnlineTransferSubFormPlugin($quoteTransfer),
             PaymentTransfer::PAYONE_POSTFINANCE_CARD_ONLINE_TRANSFER => $this->createPayonePostfinanceCardOnlineTransferSubFormPlugin($quoteTransfer),
+            PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER => $this->createPayoneInstantOnlineTransferSubFormPlugin($quoteTransfer),
         ];
     }
 

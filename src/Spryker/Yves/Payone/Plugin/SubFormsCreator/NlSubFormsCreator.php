@@ -28,6 +28,7 @@ class NlSubFormsCreator extends AbstractSubFormsCreator implements SubFormsCreat
             PaymentTransfer::PAYONE_INVOICE => $this->createPayoneInvoiceSubFormPlugin($quoteTransfer),
             PaymentTransfer::PAYONE_E_WALLET => $this->createEWalletSubFormPlugin($quoteTransfer),
             PaymentTransfer::PAYONE_IDEAL_ONLINE_TRANSFER => $this->createPayoneIdealOnlineTransferSubFormPlugin($quoteTransfer),
+            PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER => $this->createPayoneInstantOnlineTransferSubFormPlugin($quoteTransfer),
         ];
     }
 

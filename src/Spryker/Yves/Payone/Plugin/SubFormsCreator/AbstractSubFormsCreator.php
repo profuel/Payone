@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Payone\Plugin\PayoneCreditCardSubFormPlugin;
 use Spryker\Yves\Payone\Plugin\PayoneDirectDebitSubFormPlugin;
 use Spryker\Yves\Payone\Plugin\PayoneEWalletSubFormPlugin;
+use Spryker\Yves\Payone\Plugin\PayoneInstantOnlineTransferSubFormPlugin;
 use Spryker\Yves\Payone\Plugin\PayoneInvoiceSubFormPlugin;
 use Spryker\Yves\Payone\Plugin\PayonePrePaymentSubFormPlugin;
 
@@ -65,6 +66,16 @@ abstract class AbstractSubFormsCreator
     protected function createEWalletSubFormPlugin(QuoteTransfer $quoteTransfer)
     {
         return new PayoneEWalletSubFormPlugin();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Yves\Payone\Plugin\PayoneInstantOnlineTransferSubFormPlugin
+     */
+    protected function createPayoneInstantOnlineTransferSubFormPlugin(QuoteTransfer $quoteTransfer)
+    {
+        return new PayoneInstantOnlineTransferSubFormPlugin();
     }
 
 }

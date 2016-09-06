@@ -28,6 +28,7 @@ class AtSubFormsCreator extends AbstractSubFormsCreator implements SubFormsCreat
             PaymentTransfer::PAYONE_INVOICE => $this->createPayoneInvoiceSubFormPlugin($quoteTransfer),
             PaymentTransfer::PAYONE_E_WALLET => $this->createEWalletSubFormPlugin($quoteTransfer),
             PaymentTransfer::PAYONE_EPS_ONLINE_TRANSFER => $this->createPayoneEPSOnlineTransferSubFormPlugin($quoteTransfer),
+            PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER => $this->createPayoneInstantOnlineTransferSubFormPlugin($quoteTransfer),
         ];
     }
 
