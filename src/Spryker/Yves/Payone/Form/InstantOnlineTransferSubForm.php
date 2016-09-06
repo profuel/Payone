@@ -36,17 +36,6 @@ class InstantOnlineTransferSubForm extends OnlineTransferSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return void
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $this->addOnlineBankTransferType($builder, $options);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return \Spryker\Yves\Payone\Form\EpsOnlineTransferSubForm
      */
