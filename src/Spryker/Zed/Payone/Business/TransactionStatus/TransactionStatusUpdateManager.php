@@ -90,6 +90,8 @@ class TransactionStatusUpdateManager
         $entity->setReceivable($request->getReceivable());
         $entity->setReminderLevel($request->getReminderlevel());
 
+        $entity->setRawRequest($request);
+
         $entity->save();
     }
 

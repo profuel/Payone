@@ -76,6 +76,7 @@
         <column name="redirect_url" type="LONGVARCHAR"/>
 
         <column name="raw_request" type="LONGVARCHAR"/>
+        <column name="raw_response" type="LONGVARCHAR"/>
 
         <foreign-key name="spy_payment_payone_api_log-fk_payment_payone" foreignTable="spy_payment_payone">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
@@ -115,6 +116,8 @@
         <foreign-key name="spy_payment_payone_transaction_status_log-fk_payment_payone" foreignTable="spy_payment_payone">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
         </foreign-key>
+
+        <column name="raw_request" type="LONGVARCHAR"/>
 
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_payment_payone_transaction_status_log_pk_seq"/>

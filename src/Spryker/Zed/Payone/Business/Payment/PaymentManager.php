@@ -545,6 +545,8 @@ class PaymentManager implements PaymentManagerInterface
         $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
         $apiLogEntity->setRedirectUrl($responseContainer->getRedirecturl());
         $apiLogEntity->setSequenceNumber(0);
+
+        $apiLogEntity->setRawResponse(json_encode($responseContainer->toArray()));
         $apiLogEntity->save();
     }
 
@@ -561,6 +563,8 @@ class PaymentManager implements PaymentManagerInterface
         $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
         $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
         $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
+
+        $apiLogEntity->setRawResponse(json_encode($responseContainer->toArray()));
         $apiLogEntity->save();
     }
 
@@ -577,6 +581,8 @@ class PaymentManager implements PaymentManagerInterface
         $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
         $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
         $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
+
+        $apiLogEntity->setRawResponse(json_encode($responseContainer->toArray()));
         $apiLogEntity->save();
     }
 
@@ -593,6 +599,8 @@ class PaymentManager implements PaymentManagerInterface
         $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
         $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
         $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
+
+        $apiLogEntity->setRawResponse(json_encode($responseContainer->toArray()));
         $apiLogEntity->save();
     }
 
