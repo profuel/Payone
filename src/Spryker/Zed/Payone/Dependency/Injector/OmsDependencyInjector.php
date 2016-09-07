@@ -32,6 +32,7 @@ use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsAppr
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsErrorPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsRedirectPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsApprovedPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsPossiblePlugin;
 
 class OmsDependencyInjector extends AbstractDependencyInjector
 {
@@ -84,6 +85,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
                 ->add(new AuthorizationIsApprovedPlugin(), 'Payone/AuthorizationIsApprovedPlugin')
                 ->add(new CaptureIsApprovedPlugin(), 'Payone/CaptureIsApprovedPlugin')
                 ->add(new RefundIsApprovedPlugin(), 'Payone/RefundIsApprovedPlugin')
+                ->add(new RefundIsPossiblePlugin(), 'Payone/RefundIsPossiblePlugin')
                 ->add(new PreAuthorizationIsErrorPlugin(), 'Payone/PreAuthorizationIsErrorPlugin')
                 ->add(new AuthorizationIsErrorPlugin(), 'Payone/AuthorizationIsErrorPlugin')
                 ->add(new PreAuthorizationIsRedirectPlugin(), 'Payone/PreAuthorizationIsRedirectPlugin')

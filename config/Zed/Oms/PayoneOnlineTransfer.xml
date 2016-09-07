@@ -102,7 +102,7 @@
                 <event>wait for item return</event>
             </transition>
 
-            <transition>
+            <transition condition="Payone/RefundIsPossiblePlugin">
                 <source>shipped</source>
                 <target>returned</target>
                 <event>return</event>
