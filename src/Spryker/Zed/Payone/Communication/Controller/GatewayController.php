@@ -10,9 +10,11 @@ namespace Spryker\Zed\Payone\Communication\Controller;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
@@ -134,8 +136,30 @@ class GatewayController extends AbstractGatewayController
     public function getFileAction(PayoneGetFileTransfer $getFileTransfer)
     {
         $response = $this->getFacade()->getFile($getFileTransfer);
-        $getFileTransfer->setResponse($response);
+        $getFileTransfer->setRawResponse($response->getRawResponse());
+        $getFileTransfer->setStatus($response->getStatus());
+        $getFileTransfer->setErrorCode($response->getErrorcode());
+        $getFileTransfer->setCustomerErrorMessage($response->getCustomermessage());
+        $getFileTransfer->setInternalErrorMessage($response->getErrormessage());
         return $getFileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer
+     */
+    public function getPaymentDetailAction(PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer)
+    {
+        if (!empty($getPaymentDetailTransfer->getOrderReference())) {
+            $order = SpySalesOrderQuery::create()
+                ->filterByOrderReference($getPaymentDetailTransfer->getOrderReference())
+                ->findOne();
+            $getPaymentDetailTransfer->setOrderId($order->getIdSalesOrder());
+        }
+        $response = $this->getFacade()->getPaymentDetail($getPaymentDetailTransfer->getOrderId());
+        $getPaymentDetailTransfer->setPaymentDetail($response);
+        return $getPaymentDetailTransfer;
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
@@ -147,6 +148,7 @@ class DirectDebit extends AbstractMapper
         $manageMandateContainer->setCity($manageMandateTransfer->getPersonalData()->getCity());
         $manageMandateContainer->setCountry($manageMandateTransfer->getPersonalData()->getCountry());
         $manageMandateContainer->setEmail($manageMandateTransfer->getPersonalData()->getEmail());
+        $manageMandateContainer->setLanguage($this->getStandardParameter()->getLanguage());
 
         $manageMandateContainer->setIban($manageMandateTransfer->getIban());
         $manageMandateContainer->setBic($manageMandateTransfer->getBic());
@@ -208,6 +210,7 @@ class DirectDebit extends AbstractMapper
         $getFileContainer->setFileReference($getFileTransfer->getReference());
         $getFileContainer->setFileType(PayoneApiConstants::FILE_TYPE_MANDATE);
         $getFileContainer->setFileFormat(PayoneApiConstants::FILE_FORMAT_PDF);
+        $getFileContainer->setLanguage($this->getStandardParameter()->getLanguage());
 
         return $getFileContainer;
     }

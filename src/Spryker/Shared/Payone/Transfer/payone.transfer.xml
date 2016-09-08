@@ -118,6 +118,15 @@
         <property name="bic" type="string"/>
         <property name="mandateIdentification" type="string" />
         <property name="mandateText" type="string" />
+        <property name="invoiceTitle" type="string"/>
+        <property name="clearingBankAccountHolder" type="string"/>
+        <property name="clearingBankCountry" type="string"/>
+        <property name="clearingBankAccount" type="string"/>
+        <property name="clearingBankCode" type="string"/>
+        <property name="clearingBankIban" type="string"/>
+        <property name="clearingBankBic" type="string"/>
+        <property name="clearingBankCity" type="string"/>
+        <property name="clearingBankName" type="string"/>
     </transfer>
 
     <transfer name="PayoneBankAccountCheck">
@@ -250,7 +259,18 @@
         <property name="reference" type="string" />
         <property name="type" type="string" />
         <property name="format" type="string" />
-        <property name="response" type="string" />
+        <property name="customerId" type="int" />
+        <property name="rawResponse" type="string" />
+        <property name="status" type="string" />
+        <property name="internalErrorMessage" type="string" />
+        <property name="customerErrorMessage" type="string" />
+        <property name="errorCode" type="string" />
+    </transfer>
+
+    <transfer name="PayoneGetPaymentDetail">
+        <property name="orderId" type="string" />
+        <property name="orderReference" type="string" />
+        <property name="paymentDetail" type="PaymentDetail" />
     </transfer>
 
     <transfer name="PayoneCancelRedirect">

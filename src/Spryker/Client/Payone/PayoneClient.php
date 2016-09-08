@@ -10,6 +10,7 @@ namespace Spryker\Client\Payone;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayonePersonalDataTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
@@ -97,15 +98,28 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
         $manageMandateTransfer->setBic($quoteTransfer->getPayment()->getPayoneDirectDebit()->getBic());
         $personalData = new PayonePersonalDataTransfer();
         $customer = $quoteTransfer->getCustomer();
+        $billingAddress = $quoteTransfer->getBillingAddress();
         $personalData->setCustomerId($customer->getIdCustomer());
-        $personalData->setLastName($customer->getLastName());
-        $personalData->setFirstName($customer->getFirstName());
+        $personalData->setLastName(($customer->getLastName() ? $customer->getLastName() : $billingAddress->getLastName()));
+        $personalData->setFirstName(($customer->getFirstName() ? $customer->getFirstName() : $billingAddress->getFirstName()));
         $personalData->setCompany($customer->getCompany());
         $personalData->setCountry($quoteTransfer->getBillingAddress()->getIso2Code());
         $personalData->setCity($quoteTransfer->getBillingAddress()->getCity());
         $manageMandateTransfer->setPersonalData($personalData);
 
         return $this->getFactory()->createZedStub()->manageMandate($manageMandateTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer
+     */
+    public function getPaymentDetail(PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer)
+    {
+        return $this->getFactory()->createZedStub()->getPaymentDetail($getPaymentDetailTransfer);
     }
 
 }

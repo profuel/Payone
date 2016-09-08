@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Payone\Business\Api\Adapter\Http;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use Spryker\Zed\Payone\Business\Exception\TimeoutException;
 
@@ -52,6 +53,8 @@ class Guzzle extends AbstractHttpAdapter
             $response = $this->client->post($url, ['form_params' => $params]);
         } catch (ConnectException $e) {
             throw new TimeoutException('Timeout - Payone Communication: ' . $e->getMessage());
+        } catch (ClientException $e) {
+            $response = $e->getResponse();
         }
 
         $result = (string)$response->getBody();

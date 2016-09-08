@@ -10,6 +10,7 @@ namespace Spryker\Zed\Payone\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
+use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCaptureTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
@@ -470,24 +471,24 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * @api
      *
-     * @param int $idPayment
+     * @param int $idOrder
      *
-     * @return \Generated\Shared\Transfer\PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDetailTransfer
      */
-    public function getPaymentData($idPayment)
+    public function getPaymentDetail($idOrder)
     {
-        return $this->getFactory()->createPaymentManager()->getPaymentData($idPayment);
+        return $this->getFactory()->createPaymentManager()->getPaymentDetail($idOrder);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentData
+     * @param \Generated\Shared\Transfer\PaymentDetailTransfer $paymentData
      * @param int $idOrder
      *
      * @return void
      */
-    public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder)
+    public function updatePaymentDetail(PaymentDetailTransfer $paymentData, $idOrder)
     {
         $this->getFactory()->createPaymentManager()->updatePaymentDetail($paymentData, $idOrder);
     }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Payone\Business\Payment;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
+use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
@@ -129,18 +130,18 @@ interface PaymentManagerInterface
     public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
-     * @param int $idPayment
+     * @param int $idOrder
      *
-     * @return \Generated\Shared\Transfer\PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDetailTransfer
      */
-    public function getPaymentData($idPayment);
+    public function getPaymentDetail($idOrder);
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentDataTransfer
+     * @param \Generated\Shared\Transfer\PaymentDetailTransfer $paymentDataTransfer
      * @param int $idOrder
      *
      * @return void
      */
-    public function updatePaymentDetail(PaymentDataTransfer $paymentDataTransfer, $idOrder);
+    public function updatePaymentDetail(PaymentDetailTransfer $paymentDataTransfer, $idOrder);
 
 }

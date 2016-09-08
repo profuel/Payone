@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Pyz\Yves\Checkout\Plugin\Provider\CheckoutControllerProvider;
+use Pyz\Yves\Customer\Plugin\Provider\CustomerControllerProvider;
 use Spryker\Yves\Application\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -30,7 +31,7 @@ class IndexController extends AbstractController
     public function indexAction(Request $request)
     {
         $statusUpdateTranfer = new PayoneTransactionStatusUpdateTransfer();
-        $statusUpdateTranfer->fromArray($request->query->all(), true);
+        $statusUpdateTranfer->fromArray($request->request->all(), true);
 
         $response = $this->getClient()->updateStatus($statusUpdateTranfer)->getResponse();
 
@@ -46,15 +47,26 @@ class IndexController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function getfileAction(Request $request)
+    public function getFileAction(Request $request)
     {
+        $customerClient = $this->getFactory()->createCustomerClient();
+        $customerTransfer = $customerClient->getCustomer();
+
+        if (!$customerTransfer) {
+            return $this->redirectResponseInternal(CustomerControllerProvider::ROUTE_LOGIN);
+        }
+
         $getFileTransfer = new PayoneGetFileTransfer();
         $getFileTransfer->setReference($request->query->get('id'));
+        $getFileTransfer->setCustomerId($customerTransfer->getIdCustomer());
+        $response = $this->getClient()->getFile($getFileTransfer);
 
-        $response = $this->getClient()->getFile($getFileTransfer)->getResponse();
+        if ($response->getStatus() === 'ERROR') {
+            return $this->viewResponse(['errormessage' => $response->getCustomerErrorMessage()]);
+        }
 
         $callback = function () use ($response) {
-            echo base64_decode($response['rawResponse']);
+            echo base64_decode($response->getRawResponse());
         };
 
         return $this->streamedResponse($callback, 200, ["Content-type" => "application/pdf"]);

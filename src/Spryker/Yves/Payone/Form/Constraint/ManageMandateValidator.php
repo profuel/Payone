@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Payone\Form\Constraint;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Payone\PayoneApiConstants;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -34,11 +35,13 @@ class ManageMandateValidator extends ConstraintValidator
 
         $validationMessages = $this->manageMandate($data, $constraint);
 
-        if (count($validationMessages) > 0) {
-            foreach ($validationMessages as $validationMessage) {
-                $this->buildViolation($validationMessage)
-                    ->addViolation();
-            }
+        if (count($validationMessages) === 0) {
+            return;
+        }
+
+        foreach ($validationMessages as $validationMessage) {
+            $this->buildViolation($validationMessage)
+                ->addViolation();
         }
     }
 
@@ -51,12 +54,11 @@ class ManageMandateValidator extends ConstraintValidator
     protected function manageMandate(QuoteTransfer $data, ManageMandate $constraint)
     {
         $response = $constraint->getPayoneClient()->manageMandate($data);
-        if ($response->getStatus() == 'ERROR') {
+        if ($response->getStatus() === PayoneApiConstants::RESPONSE_TYPE_ERROR) {
             return [$response->getCustomerErrorMessage()];
-        } else {
-            $data->getPayment()->getPayoneDirectDebit()->setMandateIdentification($response->getMandateIdentification());
-            $data->getPayment()->getPayoneDirectDebit()->setMandateText(urldecode($response->getMandateText()));
         }
+        $data->getPayment()->getPayoneDirectDebit()->setMandateIdentification($response->getMandateIdentification());
+        $data->getPayment()->getPayoneDirectDebit()->setMandateText(urldecode($response->getMandateText()));
         return [];
     }
 

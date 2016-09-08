@@ -9,7 +9,9 @@ namespace Spryker\Client\Payone;
 
 use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PayoneClientInterface
 {
@@ -47,5 +49,23 @@ interface PayoneClientInterface
      * @return \Generated\Shared\Transfer\PayoneCancelRedirectTransfer
      */
     public function cancelRedirect(PayoneCancelRedirectTransfer $cancelRedirectTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
+     */
+    public function manageMandate(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer
+     */
+    public function getPaymentDetail(PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer);
 
 }

@@ -34,6 +34,7 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInte
 use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
@@ -53,6 +54,7 @@ class PaymentManager implements PaymentManagerInterface
 
     const LOG_TYPE_API_LOG = 'SpyPaymentPayoneApiLog';
     const LOG_TYPE_TRANSACTION_STATUS_LOG = 'SpyPaymentPayoneTransactionStatusLog';
+    const ERROR_ACCESS_DENIED_MESSAGE = 'Access denied';
 
     /**
      * @var \Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface
@@ -344,12 +346,22 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function getFile(PayoneGetFileTransfer $getFileTransfer)
     {
-        /** @var \Spryker\Zed\Payone\Business\Payment\MethodMapper\DirectDebit $paymentMethodMapper */
-        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT);
-        $requestContainer = $paymentMethodMapper->mapGetFile($getFileTransfer);
-        $this->setStandardParameter($requestContainer);
-        $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
-        $responseContainer = new GetFileResponseContainer($rawResponse);
+        $responseContainer = new GetFileResponseContainer();
+        $paymentEntity = $this->findPaymentByFileReferenceAndCustomerId(
+            $getFileTransfer->getReference(),
+            $getFileTransfer->getCustomerId()
+        );
+
+        if ($paymentEntity) {
+            /** @var \Spryker\Zed\Payone\Business\Payment\MethodMapper\DirectDebit $paymentMethodMapper */
+            $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT);
+            $requestContainer = $paymentMethodMapper->mapGetFile($getFileTransfer);
+            $this->setStandardParameter($requestContainer);
+            $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+            $responseContainer->init($rawResponse);
+        } else {
+            $this->setAccessDeniedError($responseContainer);
+        }
 
         return $responseContainer;
     }
@@ -421,6 +433,17 @@ class PaymentManager implements PaymentManagerInterface
     protected function findPaymentByTransactionId($transactionId)
     {
         return $this->queryContainer->createPaymentByTransactionIdQuery($transactionId)->findOne();
+    }
+
+    /**
+     * @param string $fileReference
+     * @param int $customerId
+     *
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
+     */
+    protected function findPaymentByFileReferenceAndCustomerId($fileReference, $customerId)
+    {
+        return $this->queryContainer->createPaymentByFileReferenceAndCustomerIdQuery($fileReference, $customerId)->findOne();
     }
 
     /**
@@ -540,18 +563,30 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
+     * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer $container
+     *
+     * @return void
+     */
+    protected function setAccessDeniedError(AbstractResponseContainer $container)
+    {
+        $container->setStatus(PayoneApiConstants::RESPONSE_TYPE_ERROR);
+        $container->setErrormessage(static::ERROR_ACCESS_DENIED_MESSAGE);
+        $container->setCustomermessage(static::ERROR_ACCESS_DENIED_MESSAGE);
+    }
+
+    /**
      * @param int $idOrder
      *
-     * @return \Generated\Shared\Transfer\PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDetailTransfer
      */
-    public function getPaymentData($idOrder)
+    public function getPaymentDetail($idOrder)
     {
         $paymentEntity = $this->queryContainer->createPaymentByOrderId($idOrder)->findOne();
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
-        $paymentDataTransfer = new PaymentDataTransfer();
-        $paymentDataTransfer->fromArray($paymentDetailEntity->toArray(), true);
+        $paymentDetailTransfer = new PaymentDetailTransfer();
+        $paymentDetailTransfer->fromArray($paymentDetailEntity->toArray(), true);
 
-        return $paymentDataTransfer;
+        return $paymentDetailTransfer;
     }
 
     /**
@@ -681,12 +716,12 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentDataTransfer
+     * @param \Generated\Shared\Transfer\PaymentDetailTransfer $paymentDataTransfer
      * @param int $idOrder
      *
      * @return void
      */
-    public function updatePaymentDetail(PaymentDataTransfer $paymentDataTransfer, $idOrder)
+    public function updatePaymentDetail(PaymentDetailTransfer $paymentDataTransfer, $idOrder)
     {
         $paymentEntity = $this->queryContainer->createPaymentByOrderId($idOrder)->findOne();
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
