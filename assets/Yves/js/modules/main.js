@@ -21,6 +21,12 @@ $(document).ready(function() {
         cardcvc2Input: '#Payone_credit_card_cardcvc2',
         clientApiConfigInput: '#paymentForm_payoneCreditCard_payone_client_api_config',
         pseudocardpanInput: '#paymentForm_payoneCreditCard_pseudocardpan',
-        languageInput: '#Payone_credit_card_payone_client_lang_code'
+        languageInput: '#Payone_credit_card_payone_client_lang_code',
+        bankAccountModeBbanInput: '#paymentForm_payoneDirectDebit_bankaccountmode_0',
+        bankAccountModeIbanBicInput: '#paymentForm_payoneDirectDebit_bankaccountmode_1',
+        bankAccountInput: '#paymentForm_payoneDirectDebit_bankaccount',
+        bankCodeInput: '#paymentForm_payoneDirectDebit_bankcode',
+        ibanInput: '#paymentForm_payoneDirectDebit_iban',
+        bicInput: '#paymentForm_payoneDirectDebit_bic'
     });
 });

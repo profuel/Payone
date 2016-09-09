@@ -129,6 +129,8 @@ class GatewayController extends AbstractGatewayController
         $manageMandateTransfer->setInternalErrorMessage($response->getErrormessage());
         $manageMandateTransfer->setMandateIdentification($response->getMandateIdentification());
         $manageMandateTransfer->setMandateText($response->getMandateText());
+        $manageMandateTransfer->setIban($response->getIban());
+        $manageMandateTransfer->setBic($response->getBic());
         return $manageMandateTransfer;
     }
 

@@ -146,11 +146,15 @@ class DirectDebit extends AbstractMapper
         $manageMandateContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $manageMandateContainer->setCustomerid($manageMandateTransfer->getPersonalData()->getCustomerId());
         $manageMandateContainer->setLastname($manageMandateTransfer->getPersonalData()->getLastName());
+        $manageMandateContainer->setFirstname($manageMandateTransfer->getPersonalData()->getFirstName());
         $manageMandateContainer->setCity($manageMandateTransfer->getPersonalData()->getCity());
         $manageMandateContainer->setCountry($manageMandateTransfer->getPersonalData()->getCountry());
         $manageMandateContainer->setEmail($manageMandateTransfer->getPersonalData()->getEmail());
         $manageMandateContainer->setLanguage($this->getStandardParameter()->getLanguage());
 
+        $manageMandateContainer->setBankCountry($manageMandateTransfer->getBankCountry());
+        $manageMandateContainer->setBankAccount($manageMandateTransfer->getBankAccount());
+        $manageMandateContainer->setBankCode($manageMandateTransfer->getBankCode());
         $manageMandateContainer->setIban($manageMandateTransfer->getIban());
         $manageMandateContainer->setBic($manageMandateTransfer->getBic());
 
@@ -193,6 +197,9 @@ class DirectDebit extends AbstractMapper
     {
         $paymentMethodContainer = new DirectDebitContainer();
 
+        $paymentMethodContainer->setBankCountry($paymentEntity->getSpyPaymentPayoneDetail()->getBankCountry());
+        $paymentMethodContainer->setBankAccount($paymentEntity->getSpyPaymentPayoneDetail()->getBankAccount());
+        $paymentMethodContainer->setBankCode($paymentEntity->getSpyPaymentPayoneDetail()->getBankCode());
         $paymentMethodContainer->setIban($paymentEntity->getSpyPaymentPayoneDetail()->getIban());
         $paymentMethodContainer->setBic($paymentEntity->getSpyPaymentPayoneDetail()->getBic());
 
