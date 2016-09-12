@@ -94,17 +94,23 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
     public function manageMandate(QuoteTransfer $quoteTransfer)
     {
         $manageMandateTransfer = new PayoneManageMandateTransfer();
+        $manageMandateTransfer->setBankCountry($quoteTransfer->getPayment()->getPayoneDirectDebit()->getBankcountry());
+        $manageMandateTransfer->setBankAccount($quoteTransfer->getPayment()->getPayoneDirectDebit()->getBankaccount());
+        $manageMandateTransfer->setBankCode($quoteTransfer->getPayment()->getPayoneDirectDebit()->getBankcode());
         $manageMandateTransfer->setIban($quoteTransfer->getPayment()->getPayoneDirectDebit()->getIban());
         $manageMandateTransfer->setBic($quoteTransfer->getPayment()->getPayoneDirectDebit()->getBic());
         $personalData = new PayonePersonalDataTransfer();
         $customer = $quoteTransfer->getCustomer();
         $billingAddress = $quoteTransfer->getBillingAddress();
         $personalData->setCustomerId($customer->getIdCustomer());
-        $personalData->setLastName(($customer->getLastName() ? $customer->getLastName() : $billingAddress->getLastName()));
-        $personalData->setFirstName(($customer->getFirstName() ? $customer->getFirstName() : $billingAddress->getFirstName()));
-        $personalData->setCompany($customer->getCompany());
-        $personalData->setCountry($quoteTransfer->getBillingAddress()->getIso2Code());
-        $personalData->setCity($quoteTransfer->getBillingAddress()->getCity());
+        $personalData->setLastName($billingAddress->getLastName());
+        $personalData->setFirstName($billingAddress->getFirstName());
+        $personalData->setCompany($billingAddress->getCompany());
+        $personalData->setCountry($billingAddress->getIso2Code());
+        $personalData->setCity($billingAddress->getCity());
+        $personalData->setStreet($billingAddress->getAddress1());
+        $personalData->setZip($billingAddress->getZipCode());
+        $personalData->setEmail($billingAddress->getEmail());
         $manageMandateTransfer->setPersonalData($personalData);
 
         return $this->getFactory()->createZedStub()->manageMandate($manageMandateTransfer);

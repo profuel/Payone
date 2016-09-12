@@ -9,6 +9,7 @@ namespace Spryker\Yves\Payone\Form;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Yves\Payone\Form\Constraint\ManageMandate;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
@@ -22,6 +23,12 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
     const PAYMENT_METHOD = 'direct_debit';
     const FIELD_IBAN = 'iban';
     const FIELD_BIC = 'bic';
+    const FIELD_BANK_COUNTRY = 'bankcountry';
+    const FIELD_BANK_ACCOUNT = 'bankaccount';
+    const FIELD_BANK_ACCOUNT_MODE = 'bankaccountmode';
+    const FIELD_BANK_CODE = 'bankcode';
+    const OPTION_BANK_COUNTRIES = 'direct debit bank countries';
+    const OPTION_BANK_ACCOUNT_MODE = 'direct debit bank account mode';
 
     /**
      * @var \Spryker\Client\Payone\PayoneClient
@@ -77,6 +84,118 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
     {
         $this->addIBAN($builder)
             ->addBIC($builder);
+
+        if (Store::getInstance()->getCurrentCountry() === 'DE') {
+            $this->addBankAccount($builder)
+                ->addBankCode($builder)
+                ->addBankCountry($builder, $options)
+                ->addModeSwitch($builder, $options);
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return \Spryker\Yves\Payone\Form\DirectDebitSubForm
+     */
+    protected function addModeSwitch(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            static::FIELD_BANK_ACCOUNT_MODE,
+            'choice',
+            [
+                'label' => false,
+                'required' => true,
+                'expanded' => true,
+                'multiple' => false,
+                'empty_value' => false,
+                'choices' => $options[static::OPTIONS_FIELD_NAME][static::OPTION_BANK_ACCOUNT_MODE],
+                'constraints' => [
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return \Spryker\Yves\Payone\Form\DirectDebitSubForm
+     */
+    protected function addBankAccount(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_BANK_ACCOUNT,
+            'text',
+            [
+                'label' => false,
+                'required' => true,
+                'constraints' => [
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return \Spryker\Yves\Payone\Form\DirectDebitSubForm
+     */
+    protected function addBankCode(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_BANK_CODE,
+            'text',
+            [
+                'label' => false,
+                'required' => true,
+                'constraints' => [
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return \Spryker\Yves\Payone\Form\DirectDebitSubForm
+     */
+    protected function addBankCountry(FormBuilderInterface $builder, array $options)
+    {
+        if (count($options[static::OPTIONS_FIELD_NAME][static::OPTION_BANK_COUNTRIES]) == 1) {
+            $builder->add(
+                static::FIELD_BANK_COUNTRY,
+                'hidden',
+                [
+                    'label' => false,
+                    'data' => array_keys($options[static::OPTIONS_FIELD_NAME][static::OPTION_BANK_COUNTRIES])[0],
+                ]
+            );
+        } else {
+            $builder->add(
+                static::FIELD_BANK_COUNTRY,
+                'choice',
+                [
+                    'label' => false,
+                    'required' => true,
+                    'expanded' => false,
+                    'multiple' => false,
+                    'empty_value' => false,
+                    'choices' => $options[static::OPTIONS_FIELD_NAME][static::OPTION_BANK_COUNTRIES],
+                    'constraints' => [
+                    ],
+                ]
+            );
+        }
+
+        return $this;
     }
 
     /**
@@ -93,7 +212,6 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
                 'label' => false,
                 'required' => true,
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
                 ],
             ]
         );
@@ -115,7 +233,6 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
                 'label' => false,
                 'required' => true,
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
                     $this->createManageMandateConstraint(),
                 ],
             ]

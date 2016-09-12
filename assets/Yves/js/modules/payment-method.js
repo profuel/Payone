@@ -44,6 +44,31 @@ function init(config) {
             request.checkAndStore();
         }
     });
+
+    var $bankAccountModeBban = $form.find(config.bankAccountModeBbanInput);
+    $bankAccountModeBban.change(function() {
+        console.log('change BBAN');
+        $form.find(config.bankAccountInput).prop('disabled', false);
+        $form.find(config.bankCodeInput).prop('disabled', false);
+        $form.find(config.ibanInput).prop('disabled', true);
+        $form.find(config.bicInput).prop('disabled', true);
+    });
+
+    var $bankAccountModeIbanBic = $form.find(config.bankAccountModeIbanBicInput);
+    $bankAccountModeIbanBic.change(function() {
+        console.log('change IBAN/BIC');
+        $form.find(config.bankAccountInput).prop('disabled', true);
+        $form.find(config.bankCodeInput).prop('disabled', true);
+        $form.find(config.ibanInput).prop('disabled', false);
+        $form.find(config.bicInput).prop('disabled', false);
+    });
+
+    if ($bankAccountModeBban.is(':checked')) {
+        $bankAccountModeBban.change();
+    } else {
+        $bankAccountModeIbanBic.prop('checked', true);
+        $bankAccountModeIbanBic.change();
+    }
 }
 
 module.exports = {

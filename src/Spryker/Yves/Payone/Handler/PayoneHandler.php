@@ -123,8 +123,11 @@ class PayoneHandler
         } elseif ($paymentSelection == PaymentTransfer::PAYONE_E_WALLET) {
             $paymentDetailTransfer->setType($payonePaymentTransfer->getWallettype());
         } elseif ($paymentSelection == PaymentTransfer::PAYONE_DIRECT_DEBIT) {
-            $paymentDetailTransfer->setIban($payonePaymentTransfer->getIban());
+            $paymentDetailTransfer->setBankCountry($payonePaymentTransfer->getBankcountry());
+            $paymentDetailTransfer->setBankAccount($payonePaymentTransfer->getBankaccount());
+            $paymentDetailTransfer->setBankCode($payonePaymentTransfer->getBankcode());
             $paymentDetailTransfer->setBic($payonePaymentTransfer->getBic());
+            $paymentDetailTransfer->setIban($payonePaymentTransfer->getIban());
             $paymentDetailTransfer->setMandateIdentification($payonePaymentTransfer->getMandateIdentification());
             $paymentDetailTransfer->setMandateText($payonePaymentTransfer->getMandateText());
         } elseif ($paymentSelection == PaymentTransfer::PAYONE_EPS_ONLINE_TRANSFER

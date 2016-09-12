@@ -36,6 +36,9 @@
     <transfer name="PayoneManageMandate">
         <property name="aid" type="string" />
         <property name="language" type="string" />
+        <property name="bankCountry" type="string"/>
+        <property name="bankAccount" type="string"/>
+        <property name="bankCode" type="string"/>
         <property name="iban" type="string" />
         <property name="bic" type="string" />
         <property name="personalData" type="PayonePersonalData" />
@@ -83,6 +86,10 @@
     </transfer>
 
     <transfer name="PayonePaymentDirectDebit">
+        <property name="bankaccountmode" type="string"/>
+        <property name="bankcountry" type="string" />
+        <property name="bankaccount" type="string" />
+        <property name="bankcode" type="string" />
         <property name="iban" type="string" />
         <property name="bic" type="string" />
         <property name="mandateIdentification" type="string" />

@@ -9,7 +9,9 @@ namespace Spryker\Yves\Payone\Form\DataProvider;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Yves\Payone\Form\DirectDebitSubForm;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
 class DirectDebitDataProvider implements StepEngineFormDataProviderInterface
@@ -37,7 +39,31 @@ class DirectDebitDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
-        return [];
+        return [
+            DirectDebitSubForm::OPTION_BANK_COUNTRIES => $this->getBankCountries(),
+            DirectDebitSubForm::OPTION_BANK_ACCOUNT_MODE => $this->getBankAccountModes(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBankCountries()
+    {
+        return [
+            Store::getInstance()->getCurrentCountry() => Store::getInstance()->getCurrentCountry()
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBankAccountModes()
+    {
+        return [
+            'BBAN' => 'BBAN',
+            'IBAN/BIC' => 'IBAN/BIC'
+        ];
     }
 
 }
