@@ -9,6 +9,7 @@ namespace Spryker\Yves\Payone\Form\Constraint;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\PayoneConfig;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -28,6 +29,10 @@ class ManageMandateValidator extends ConstraintValidator
 
         /* @var $data \Generated\Shared\Transfer\QuoteTransfer */
         $data = $root->getData();
+
+        if ($data->getPayment()->getPaymentSelection() !== PayoneConfig::PAYMENT_METHOD_DIRECT_DEBIT) {
+            return;
+        }
 
         $validationMessages = $this->manageMandate($data, $constraint);
 
