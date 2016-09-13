@@ -70,8 +70,7 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
 
         $resolver->setDefaults([
             'data_class' => PayonePaymentDirectDebitTransfer::class,
-            SubFormInterface::OPTIONS_FIELD_NAME => [],
-        ]);
+        ])->setRequired(self::OPTIONS_FIELD_NAME);
     }
 
     /**
@@ -254,7 +253,7 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
      */
     protected function createManageMandateConstraint()
     {
-        return new ManageMandate(['payoneClient' => $this->payoneClient]);
+        return new ManageMandate(['payoneClient' => $this->payoneClient, 'groups' => $this->getPropertyPath()]);
     }
 
 }
