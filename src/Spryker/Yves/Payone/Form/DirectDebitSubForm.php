@@ -253,7 +253,7 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
      */
     protected function createManageMandateConstraint()
     {
-        return new ManageMandate(['payoneClient' => $this->payoneClient]);
+        return new ManageMandate(['payoneClient' => $this->payoneClient, 'groups' => $this->getPropertyPath()]);
     }
 
 }
