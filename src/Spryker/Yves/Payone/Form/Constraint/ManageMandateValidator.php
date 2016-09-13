@@ -15,8 +15,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ManageMandateValidator extends ConstraintValidator
 {
-
     /**
+     * {@inheritdoc}
      * @param string $value
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\Discount\Communication\Form\Constraint\QueryString $constraint
      *
@@ -29,10 +29,6 @@ class ManageMandateValidator extends ConstraintValidator
 
         /* @var $data \Generated\Shared\Transfer\QuoteTransfer */
         $data = $root->getData();
-
-        if ($data->getPayment()->getPaymentSelection() !== PayoneConfig::PAYMENT_METHOD_DIRECT_DEBIT) {
-            return;
-        }
 
         $validationMessages = $this->manageMandate($data, $constraint);
 
