@@ -70,8 +70,7 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
 
         $resolver->setDefaults([
             'data_class' => PayonePaymentDirectDebitTransfer::class,
-            SubFormInterface::OPTIONS_FIELD_NAME => [],
-        ]);
+        ])->setRequired(self::OPTIONS_FIELD_NAME);
     }
 
     /**
