@@ -24,6 +24,8 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
 {
 
     const PSEUDO_CARD_PAN = '1234567890123456';
+    const CARD_TYPE = 'V';
+    const CARD_EXPIRE_DATE = '1609';
     const STANDARD_PARAMETER_CLEARING_TYPE = 'cc';
 
     const AUTHORIZATION_CREDIT_CARD_PSEUDO_REQUIRED_PARAMS = [
@@ -37,8 +39,8 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
     const CREDIT_CARD_CHECK_REQUIRED_PARAMS = [
         'aid' => self::STANDARD_PARAMETER_AID,
         'cardpan' => self::PSEUDO_CARD_PAN,
-        'cardtype' => self::PSEUDO_CARD_PAN,
-        'cardexpiredate' => self::PSEUDO_CARD_PAN,
+        'cardtype' => self::CARD_TYPE,
+        'cardexpiredate' => self::CARD_EXPIRE_DATE,
     ];
 
     /**
@@ -75,7 +77,7 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
         $paymentEntity = $this->getPaymentEntityMock();
         $paymentMethodMapper = $this->preparePaymentMethodMapper(new CreditCardPseudo($this->getStoreConfigMock()));
 
-        $orderTransfer = $this->getSalesOrderMock();
+        $orderTransfer = $this->getSalesOrderTransfer();
 
         $requestData = $paymentMethodMapper->mapPaymentToAuthorization($paymentEntity, $orderTransfer)->toArray();
 
@@ -151,7 +153,8 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
         $creditCardTransfer = new PayoneCreditCardTransfer();
         $creditCardTransfer->setAid(static::STANDARD_PARAMETER_AID);
         $creditCardTransfer->setCardPan(static::PSEUDO_CARD_PAN);
-        //$creditCardTransfer->setCardType();
+        $creditCardTransfer->setCardType(static::CARD_TYPE);
+        $creditCardTransfer->setCardExpireDate(static::CARD_EXPIRE_DATE);
 
         $paymentMethodMapper = $this->preparePaymentMethodMapper(new CreditCardPseudo($this->getStoreConfigMock()));
 

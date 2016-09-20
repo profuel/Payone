@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
@@ -14,6 +15,7 @@ use Orm\Zed\Payone\Persistence\SpyPaymentPayoneDetail;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Payone\Business\Key\UrlHmacGenerator;
 use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProvider;
 
 /**
@@ -96,7 +98,7 @@ class AbstractMethodMapperTest extends \PHPUnit_Framework_TestCase
     {
         $paymentMethodMapper->setStandardParameter($this->getStandardParameterMock());
         $paymentMethodMapper->setSequenceNumberProvider($this->getSequenceNumberProviderMock());
-        //$paymentMethodMapper->setUrlHmacGenerator($this->getUrlHmacGeneratorMock());
+        $paymentMethodMapper->setUrlHmacGenerator($this->getUrlHmacGeneratorMock());
 
         return $paymentMethodMapper;
     }
@@ -142,6 +144,11 @@ class AbstractMethodMapperTest extends \PHPUnit_Framework_TestCase
         $salesOrder->method('getBillingAddress')->willReturn($this->getAddressMock());
 
         return $salesOrder;
+    }
+
+    protected function getSalesOrderTransfer()
+    {
+        return new OrderTransfer();
     }
 
     protected function getAddressMock()
@@ -200,6 +207,16 @@ class AbstractMethodMapperTest extends \PHPUnit_Framework_TestCase
         $sequenceNumberProvider->method('getNextSequenceNumber')->willReturn(static::DEFAULT_SEQUENCE_NUMBER);
 
         return $sequenceNumberProvider;
+    }
+
+    protected function getUrlHmacGeneratorMock()
+    {
+        $urlHmacGenerator = $this->getMockBuilder(UrlHmacGenerator::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+
+        return $urlHmacGenerator;
     }
 
 }
