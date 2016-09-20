@@ -7,7 +7,10 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice;
+use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\DirectDebit;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\EWallet;
 
 /**
  * @group Unit
@@ -17,17 +20,19 @@ use Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice;
  * @group Business
  * @group Payment
  * @group MethodMapper
- * @group InvoiceTest
+ * @group EWalletTest
  */
-class InvoiceTest extends AbstractMethodMapperTest
+class EWalletTest extends AbstractMethodMapperTest
 {
+    const STANDARD_PARAMETER_CLEARING_TYPE = 'wlt';
+    const WALLET_TYPE = 'PPE';
 
-    const STANDARD_PARAMETER_CLEARING_TYPE = 'rec';
-
-    const AUTHORIZATION_INVOICE_REQUIRED_PARAMS = [
+    const AUTHORIZATION_E_WALLET_REQUIRED_PARAMS = [
+        'wallettype' => self::WALLET_TYPE
     ];
 
-    const PREAUTHORIZATION_INVOICE_REQUIRED_PARAMS = [
+    const PREAUTHORIZATION_E_WALLET_REQUIRED_PARAMS = [
+        'wallettype' => self::WALLET_TYPE
     ];
 
     /**
@@ -36,7 +41,7 @@ class InvoiceTest extends AbstractMethodMapperTest
     public function testMapPaymentToPreauthorization()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Invoice($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new EWallet($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToPreAuthorization($paymentEntity)->toArray();
 
@@ -50,7 +55,7 @@ class InvoiceTest extends AbstractMethodMapperTest
             $this->assertSame($value, $requestData[$key]);
         }
 
-        foreach (static::PREAUTHORIZATION_INVOICE_REQUIRED_PARAMS as $key => $value) {
+        foreach (static::PREAUTHORIZATION_E_WALLET_REQUIRED_PARAMS as $key => $value) {
             $this->assertArrayHasKey($key, $requestData);
             $this->assertSame($value, $requestData[$key]);
         }
@@ -62,7 +67,7 @@ class InvoiceTest extends AbstractMethodMapperTest
     public function testMapPaymentToAuthorization()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Invoice($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new EWallet($this->getStoreConfigMock()));
 
         $orderTransfer = $this->getSalesOrderTransfer();
 
@@ -78,7 +83,7 @@ class InvoiceTest extends AbstractMethodMapperTest
             $this->assertSame($value, $requestData[$key]);
         }
 
-        foreach (static::AUTHORIZATION_INVOICE_REQUIRED_PARAMS as $key => $value) {
+        foreach (static::AUTHORIZATION_E_WALLET_REQUIRED_PARAMS as $key => $value) {
             $this->assertArrayHasKey($key, $requestData);
             $this->assertSame($value, $requestData[$key]);
         }
@@ -90,7 +95,7 @@ class InvoiceTest extends AbstractMethodMapperTest
     public function testMapPaymentToCapture()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Invoice($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new EWallet($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToCapture($paymentEntity)->toArray();
 
@@ -106,7 +111,7 @@ class InvoiceTest extends AbstractMethodMapperTest
     public function testMapPaymentToRefund()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Invoice($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new EWallet($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToRefund($paymentEntity)->toArray();
 
@@ -122,7 +127,7 @@ class InvoiceTest extends AbstractMethodMapperTest
     public function testMapPaymentToDebit()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Invoice($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new EWallet($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToDebit($paymentEntity)->toArray();
 
@@ -138,6 +143,8 @@ class InvoiceTest extends AbstractMethodMapperTest
     protected function getPaymentPayoneDetailMock()
     {
         $paymentPayoneDetail = parent::getPaymentPayoneDetailMock();
+
+        $paymentPayoneDetail->method('getType')->willReturn(static::WALLET_TYPE);
 
         return $paymentPayoneDetail;
     }

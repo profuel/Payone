@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
 use Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\Prepayment;
 
 /**
  * @group Unit
@@ -17,17 +18,14 @@ use Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice;
  * @group Business
  * @group Payment
  * @group MethodMapper
- * @group InvoiceTest
+ * @group PrepaymentTest
  */
-class InvoiceTest extends AbstractMethodMapperTest
+class PrepaymentTest extends AbstractMethodMapperTest
 {
 
-    const STANDARD_PARAMETER_CLEARING_TYPE = 'rec';
+    const STANDARD_PARAMETER_CLEARING_TYPE = 'vor';
 
-    const AUTHORIZATION_INVOICE_REQUIRED_PARAMS = [
-    ];
-
-    const PREAUTHORIZATION_INVOICE_REQUIRED_PARAMS = [
+    const PREAUTHORIZATION_PREPAYMENT_REQUIRED_PARAMS = [
     ];
 
     /**
@@ -36,7 +34,7 @@ class InvoiceTest extends AbstractMethodMapperTest
     public function testMapPaymentToPreauthorization()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Invoice($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Prepayment($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToPreAuthorization($paymentEntity)->toArray();
 
@@ -50,35 +48,7 @@ class InvoiceTest extends AbstractMethodMapperTest
             $this->assertSame($value, $requestData[$key]);
         }
 
-        foreach (static::PREAUTHORIZATION_INVOICE_REQUIRED_PARAMS as $key => $value) {
-            $this->assertArrayHasKey($key, $requestData);
-            $this->assertSame($value, $requestData[$key]);
-        }
-    }
-
-    /**
-     * @return void
-     */
-    public function testMapPaymentToAuthorization()
-    {
-        $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Invoice($this->getStoreConfigMock()));
-
-        $orderTransfer = $this->getSalesOrderTransfer();
-
-        $requestData = $paymentMethodMapper->mapPaymentToAuthorization($paymentEntity, $orderTransfer)->toArray();
-
-        foreach (static::AUTHORIZATION_COMMON_REQUIRED_PARAMS as $key => $value) {
-            $this->assertArrayHasKey($key, $requestData);
-            $this->assertSame($value, $requestData[$key]);
-        }
-
-        foreach (static::AUTHORIZATION_PERSONAL_DATA_REQUIRED_PARAMS as $key => $value) {
-            $this->assertArrayHasKey($key, $requestData);
-            $this->assertSame($value, $requestData[$key]);
-        }
-
-        foreach (static::AUTHORIZATION_INVOICE_REQUIRED_PARAMS as $key => $value) {
+        foreach (static::PREAUTHORIZATION_PREPAYMENT_REQUIRED_PARAMS as $key => $value) {
             $this->assertArrayHasKey($key, $requestData);
             $this->assertSame($value, $requestData[$key]);
         }
@@ -90,7 +60,7 @@ class InvoiceTest extends AbstractMethodMapperTest
     public function testMapPaymentToCapture()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Invoice($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Prepayment($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToCapture($paymentEntity)->toArray();
 
@@ -106,7 +76,7 @@ class InvoiceTest extends AbstractMethodMapperTest
     public function testMapPaymentToRefund()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Invoice($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Prepayment($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToRefund($paymentEntity)->toArray();
 
@@ -122,7 +92,7 @@ class InvoiceTest extends AbstractMethodMapperTest
     public function testMapPaymentToDebit()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Invoice($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new Prepayment($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToDebit($paymentEntity)->toArray();
 

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
@@ -136,21 +137,36 @@ class AbstractMethodMapperTest extends \PHPUnit_Framework_TestCase
         return $paymentPayoneDetail;
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function getSalesOrderMock()
     {
         $salesOrder = $this->getMockBuilder(SpySalesOrder::class)
             ->disableOriginalConstructor()
             ->getMock();
         $salesOrder->method('getBillingAddress')->willReturn($this->getAddressMock());
+        $salesOrder->method('getShippingAddress')->willReturn($this->getAddressMock());
 
         return $salesOrder;
     }
 
+    /**
+     * @return OrderTransfer
+     */
     protected function getSalesOrderTransfer()
     {
-        return new OrderTransfer();
+        $orderTransfer = new OrderTransfer();
+
+        $item = new ItemTransfer();
+        $orderTransfer->setItems(new \ArrayObject([$item]));
+
+        return $orderTransfer;
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function getAddressMock()
     {
         $address = $this->getMockBuilder(SpySalesOrderAddress::class)
@@ -163,6 +179,9 @@ class AbstractMethodMapperTest extends \PHPUnit_Framework_TestCase
         return $address;
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function getCountryMock()
     {
         $country = $this->getMockBuilder(SpyCountry::class)

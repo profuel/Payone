@@ -45,6 +45,7 @@ class DirectDebit extends AbstractMapper
     public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity, OrderTransfer $orderTransfer)
     {
         $authorizationContainer = new AuthorizationContainer();
+        $authorizationContainer = $this->mapPaymentToAbstractAuthorization($paymentEntity, $authorizationContainer);
 
         return $authorizationContainer;
     }
