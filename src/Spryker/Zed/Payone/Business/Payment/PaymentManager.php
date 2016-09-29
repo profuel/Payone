@@ -213,6 +213,7 @@ class PaymentManager implements PaymentManagerInterface
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new AuthorizationResponseContainer($rawResponse);
         $this->updatePaymentAfterAuthorization($paymentEntity, $responseContainer);
+        $this->updatePaymentPayoneDetailAfterAuthorization($paymentEntity, $responseContainer);
         $this->updateApiLogAfterAuthorization($apiLogEntity, $responseContainer);
 
         return $responseContainer;
@@ -423,6 +424,27 @@ class PaymentManager implements PaymentManagerInterface
     {
         $paymentEntity->setTransactionId($responseContainer->getTxid());
         $paymentEntity->save();
+    }
+
+    /**
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer $responseContainer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    protected function updatePaymentPayoneDetailAfterAuthorization(SpyPaymentPayone $paymentEntity, AuthorizationResponseContainer $responseContainer)
+    {
+        if (!$responseContainer->getMandateIdentification()) {
+            return;
+        }
+        $paymentDetail = $paymentEntity->getSpyPaymentPayoneDetail();
+        if (!$paymentDetail) {
+            return;
+        }
+        $paymentDetail->setMandateIdentification($responseContainer->getMandateIdentification());
+        $paymentDetail->save();
     }
 
     /**
