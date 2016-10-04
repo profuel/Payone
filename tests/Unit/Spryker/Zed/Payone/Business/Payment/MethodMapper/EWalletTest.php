@@ -7,9 +7,6 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
-use Generated\Shared\Transfer\PayoneCreditCardTransfer;
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\DirectDebit;
 use Spryker\Zed\Payone\Business\Payment\MethodMapper\EWallet;
 
 /**
@@ -24,6 +21,7 @@ use Spryker\Zed\Payone\Business\Payment\MethodMapper\EWallet;
  */
 class EWalletTest extends AbstractMethodMapperTest
 {
+
     const STANDARD_PARAMETER_CLEARING_TYPE = 'wlt';
     const WALLET_TYPE = 'PPE';
 

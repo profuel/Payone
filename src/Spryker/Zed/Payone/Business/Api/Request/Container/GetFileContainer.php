@@ -42,6 +42,7 @@ class GetFileContainer extends AbstractRequestContainer
 
     /**
      * @param string $file_reference
+     *
      * @return void
      */
     public function setFileReference($file_reference)
@@ -59,6 +60,7 @@ class GetFileContainer extends AbstractRequestContainer
 
     /**
      * @param string $file_type
+     *
      * @return void
      */
     public function setFileType($file_type)
@@ -76,6 +78,7 @@ class GetFileContainer extends AbstractRequestContainer
 
     /**
      * @param string $file_format
+     *
      * @return void
      */
     public function setFileFormat($file_format)

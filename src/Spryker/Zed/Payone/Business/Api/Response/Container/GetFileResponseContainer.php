@@ -25,6 +25,7 @@ class GetFileResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $DATA
+     *
      * @return void
      */
     public function setDATA($DATA)

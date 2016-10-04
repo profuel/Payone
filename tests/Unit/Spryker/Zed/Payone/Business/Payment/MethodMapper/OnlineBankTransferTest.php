@@ -7,10 +7,6 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
-use Generated\Shared\Transfer\PayoneCreditCardTransfer;
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\DirectDebit;
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\EWallet;
 use Spryker\Zed\Payone\Business\Payment\MethodMapper\OnlineBankTransfer;
 
 /**
@@ -25,6 +21,7 @@ use Spryker\Zed\Payone\Business\Payment\MethodMapper\OnlineBankTransfer;
  */
 class OnlineBankTransferTest extends AbstractMethodMapperTest
 {
+
     const STANDARD_PARAMETER_CLEARING_TYPE = 'sb';
     const ONLINE_BANK_TRANSFER_TYPE = 'PNT';
 

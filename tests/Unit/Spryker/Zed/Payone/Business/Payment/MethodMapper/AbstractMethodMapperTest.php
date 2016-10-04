@@ -152,7 +152,7 @@ class AbstractMethodMapperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function getSalesOrderTransfer()
     {
@@ -233,7 +233,6 @@ class AbstractMethodMapperTest extends \PHPUnit_Framework_TestCase
         $urlHmacGenerator = $this->getMockBuilder(UrlHmacGenerator::class)
             ->disableOriginalConstructor()
             ->getMock();
-
 
         return $urlHmacGenerator;
     }

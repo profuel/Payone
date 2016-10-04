@@ -9,12 +9,12 @@ namespace Spryker\Yves\Payone\Form\Constraint;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Payone\PayoneApiConstants;
-use Spryker\Zed\Payone\PayoneConfig;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class ManageMandateValidator extends ConstraintValidator
 {
+
     /**
      * {@inheritdoc}
      * @param string $value

@@ -7,7 +7,6 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice;
 use Spryker\Zed\Payone\Business\Payment\MethodMapper\Prepayment;
 
 /**

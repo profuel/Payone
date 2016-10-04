@@ -15,6 +15,7 @@ class PayoneControllerProvider extends YvesControllerProvider
 
     /**
      * @param \Silex\Application $app
+     *
      * @return void
      */
     protected function defineControllers(Application $app)

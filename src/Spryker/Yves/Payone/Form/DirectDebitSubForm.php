@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Yves\Payone\Form\Constraint\ManageMandate;
-use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;

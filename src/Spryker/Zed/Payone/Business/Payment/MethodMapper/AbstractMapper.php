@@ -156,6 +156,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     /**
      * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer $shippingContainer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $shippingAddressEntity
+     *
      * @return void
      */
     protected function mapShippingAddressToShippingContainer(ShippingContainer $shippingContainer, SpySalesOrderAddress $shippingAddressEntity)
