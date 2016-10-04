@@ -219,7 +219,6 @@ class DirectDebit extends AbstractMapper
         $getFileContainer->setFileReference($getFileTransfer->getReference());
         $getFileContainer->setFileType(PayoneApiConstants::FILE_TYPE_MANDATE);
         $getFileContainer->setFileFormat(PayoneApiConstants::FILE_FORMAT_PDF);
-        $getFileContainer->setLanguage($this->getStandardParameter()->getLanguage());
 
         return $getFileContainer;
     }

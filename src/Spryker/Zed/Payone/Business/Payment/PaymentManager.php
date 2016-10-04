@@ -811,6 +811,10 @@ class PaymentManager implements PaymentManagerInterface
         $paymentDetailEntity->setClearingBankCity($responseContainer->getClearingBankcity());
         $paymentDetailEntity->setClearingBankName($responseContainer->getClearingBankname());
 
+        if ($responseContainer->getMandateIdentification()) {
+            $paymentDetailEntity->setMandateIdentification($responseContainer->getMandateIdentification());
+        }
+
         if ($paymentEntity->getPaymentMethod() == PayoneApiConstants::PAYMENT_METHOD_INVOICE) {
             $paymentDetailEntity->setInvoiceTitle($this->getInvoiceTitle($paymentEntity->getTransactionId()));
         }
