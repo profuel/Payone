@@ -582,6 +582,10 @@ class PaymentManager implements PaymentManagerInterface
         $container->setMid($this->standardParameter->getMid());
         $container->setPortalid($this->standardParameter->getPortalId());
         $container->setMode($this->modeDetector->getMode());
+        $container->setIntegratorName(PayoneApiConstants::INTEGRATOR_NAME_SPRYKER);
+        $container->setIntegratorVersion(PayoneApiConstants::INTEGRATOR_VERSION_3_0_0_BETA);
+        $container->setSolutionName(PayoneApiConstants::SOLUTION_NAME_SPRYKER);
+        $container->setSolutionVersion(PayoneApiConstants::SOLUTION_VERSION_3_0_0_BETA);
     }
 
     /**

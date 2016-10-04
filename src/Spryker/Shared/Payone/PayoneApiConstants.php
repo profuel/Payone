@@ -24,6 +24,16 @@ interface PayoneApiConstants
     const API_VERSION_3_8 = '3.8';
     const API_VERSION_3_9 = '3.9';
 
+    // INTEGRATOR
+
+    const INTEGRATOR_NAME_SPRYKER = 'spryker';
+    const INTEGRATOR_VERSION_3_0_0_BETA = '3.0.0-beta';
+
+    // SOLUTION
+
+    const SOLUTION_NAME_SPRYKER = 'spryker';
+    const SOLUTION_VERSION_3_0_0_BETA = '3.0.0-beta';
+
     // PAYMENT METHODS
 
     // credit/debit card methods
