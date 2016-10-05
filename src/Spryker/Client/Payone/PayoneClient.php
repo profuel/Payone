@@ -27,6 +27,8 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
 {
 
     /**
+     * Prepares credit card check request to bring standard parameters and hash to front-end.
+     *
      * @api
      *
      * @return \Spryker\Client\Payone\ClientApi\Request\CreditCardCheck
@@ -38,6 +40,8 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
     }
 
     /**
+     * Processes and saves transaction status update received from Payone.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $statusUpdateTransfer
@@ -50,6 +54,8 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
     }
 
     /**
+     * Performs GetFile request to Payone API for PDF file download.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
@@ -62,6 +68,8 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
     }
 
     /**
+     * Verifies url HMAC signature and fires 'cancel redirect' event.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneCancelRedirectTransfer $cancelRedirectTransfer
@@ -74,6 +82,9 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
     }
 
     /**
+     * Specification:
+     * - Performs BankAccountCheck request to Payone API.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer $onlinetransferTransfer
@@ -86,6 +97,8 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
     }
 
     /**
+     * Performs ManageMandate request to Payone API.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -118,6 +131,8 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
     }
 
     /**
+     * Fetches payment details for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer
@@ -130,6 +145,8 @@ class PayoneClient extends AbstractClient implements PayoneClientInterface
     }
 
     /**
+     * Performs GetInvoice request to Payone API for PDF file download.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer

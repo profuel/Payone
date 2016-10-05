@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCaptureTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
@@ -26,6 +27,9 @@ interface PayoneFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Saves order payment method data according to quote and checkout response transfer data.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -36,6 +40,9 @@ interface PayoneFacadeInterface
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
+     * Specification:
+     * - Performs payment authorization request to Payone API and updates payment data.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -45,6 +52,9 @@ interface PayoneFacadeInterface
     public function authorizePayment(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Performs payment pre-authorization request to Payone API and updates payment data.
+     * 
      * @api
      *
      * @param int $idPayment
@@ -54,6 +64,9 @@ interface PayoneFacadeInterface
     public function preAuthorizePayment($idPayment);
 
     /**
+     * Specification:
+     * - Performs payment capture request to Payone API.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneCaptureTransfer $captureTransfer
@@ -63,6 +76,9 @@ interface PayoneFacadeInterface
     public function capturePayment(PayoneCaptureTransfer $captureTransfer);
 
     /**
+     * Specification:
+     * - Performs payment debit request to Payone API.
+     * 
      * @api
      *
      * @param int $idPayment
@@ -72,6 +88,9 @@ interface PayoneFacadeInterface
     public function debitPayment($idPayment);
 
     /**
+     * Specification:
+     * - Performs payment refund request to Payone API.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneRefundTransfer $refundTransfer
@@ -81,6 +100,9 @@ interface PayoneFacadeInterface
     public function refundPayment(PayoneRefundTransfer $refundTransfer);
 
     /**
+     * Specification:
+     * - Performs credit card check request to Payone API.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $creditCardData
@@ -90,6 +112,9 @@ interface PayoneFacadeInterface
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData);
 
     /**
+     * Specification:
+     * - Processes and saves transaction status update request received from Payone.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
@@ -99,6 +124,9 @@ interface PayoneFacadeInterface
     public function processTransactionStatusUpdate(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer);
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'APPROVED' response to authorization request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -108,6 +136,9 @@ interface PayoneFacadeInterface
     public function isAuthorizationApproved(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'REDIRECT' response to authorization request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -117,6 +148,9 @@ interface PayoneFacadeInterface
     public function isAuthorizationRedirect(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'APPROVED' response to pre-authorization request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -126,6 +160,9 @@ interface PayoneFacadeInterface
     public function isPreauthorizationApproved(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'REDIRECT' response to pre-authorization request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -135,6 +172,21 @@ interface PayoneFacadeInterface
     public function isPreauthorizationRedirect(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'ERROR' response for pre-authorization request for given order.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPreAuthorizationError(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     * - Checks if API logs contain 'ERROR' response to authorization request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -144,6 +196,9 @@ interface PayoneFacadeInterface
     public function isAuthorizationError(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'APPROVED' response to capture request for given order.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -153,6 +208,9 @@ interface PayoneFacadeInterface
     public function isCaptureApproved(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'ERROR' response to capture request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -162,6 +220,9 @@ interface PayoneFacadeInterface
     public function isCaptureError(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'APPROVED' response to refund request for given order.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -171,6 +232,9 @@ interface PayoneFacadeInterface
     public function isRefundApproved(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'ERROR' response to refund request for given order.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -180,6 +244,9 @@ interface PayoneFacadeInterface
     public function isRefundError(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Checks if refund is possible for given order.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -189,6 +256,9 @@ interface PayoneFacadeInterface
     public function isRefundPossible(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Checks if used payment method references stored iban/bic data for given order.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -198,6 +268,9 @@ interface PayoneFacadeInterface
     public function isPaymentDataRequired(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Checks if there are unprocessed transaction status logs for given order/item.
+     * 
      * @api
      *
      * @param int $idSalesOrder
@@ -208,6 +281,9 @@ interface PayoneFacadeInterface
     public function isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'PAID' status with zero or negative balance.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -218,6 +294,9 @@ interface PayoneFacadeInterface
     public function isPaymentPaid($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'PAID' status with negative balance.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -228,6 +307,9 @@ interface PayoneFacadeInterface
     public function isPaymentOverpaid($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'UNDERPAID' status.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -238,6 +320,22 @@ interface PayoneFacadeInterface
     public function isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'REFUND' status.
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
+    public function isPaymentRefund($idSalesOrder, $idSalesOrderItem);
+
+    /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'APPOINTED' status.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -248,6 +346,9 @@ interface PayoneFacadeInterface
     public function isPaymentAppointed($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item is not in 'PAID', 'APPOINTED' or 'UNDERPAID' status.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -258,6 +359,9 @@ interface PayoneFacadeInterface
     public function isPaymentOther($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'CAPTURE' status.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -268,6 +372,9 @@ interface PayoneFacadeInterface
     public function isPaymentCapture($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * Specification:
+     * - Handles redirects and errors after order placement.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -278,6 +385,9 @@ interface PayoneFacadeInterface
     public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
+     * Specification:
+     * - Gets payment logs (both api and transaction status) for specific orders in chronological order.
+     * 
      * @api
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
@@ -287,15 +397,21 @@ interface PayoneFacadeInterface
     public function getPaymentLogs(ObjectCollection $orders);
 
     /**
+     * Specification:
+     * - Gets payment details for given order.
+     * 
      * @api
      *
-     * @param int $idPayment
+     * @param int $idOrder
      *
      * @return \Generated\Shared\Transfer\PaymentDetailTransfer
      */
-    public function getPaymentDetail($idPayment);
+    public function getPaymentDetail($idOrder);
 
     /**
+     * Specification:
+     * - Updates payment details for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PaymentDetailTransfer $paymentData
@@ -306,6 +422,9 @@ interface PayoneFacadeInterface
     public function updatePaymentDetail(PaymentDetailTransfer $paymentData, $idOrder);
 
     /**
+     * Specification:
+     * - Performs bank account check request to Payone API.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
@@ -315,6 +434,9 @@ interface PayoneFacadeInterface
     public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer);
 
     /**
+     * Specification:
+     * - Performs manage mandate request to Payone API.
+     * 
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $bankAccountCheckTransfer
@@ -324,6 +446,9 @@ interface PayoneFacadeInterface
     public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer);
 
     /**
+     * Specification:
+     * - Performs GetFile request to Payone API for PDF file download.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
@@ -331,5 +456,17 @@ interface PayoneFacadeInterface
      * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
      */
     public function getFile(PayoneGetFileTransfer $getFileTransfer);
+
+    /**
+     * Specification:
+     * - Performs GetInvoice request to Payone API for PDF file download.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getFileTransfer
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetInvoiceResponseContainer
+     */
+    public function getInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer);
 
 }
