@@ -30,10 +30,7 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
     public function inject(ContainerInterface $container)
     {
         $payoneSubFormsPlugin = new PayoneSubFormsPlugin();
-        $cartClientClosure = $container->raw(CheckoutDependencyProvider::CLIENT_CART);
-        $cartClient = $cartClientClosure();
-        $quoteTransfer = $cartClient->getQuote();
-        $paymentMethodsSubForms = $payoneSubFormsPlugin->getPaymentMethodsSubForms($quoteTransfer);
+        $paymentMethodsSubForms = $payoneSubFormsPlugin->getPaymentMethodsSubForms();
         $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) use ($paymentMethodsSubForms) {
             foreach ($paymentMethodsSubForms as $paymentMethodsSubForm) {
                 $paymentSubForms->add($paymentMethodsSubForm);

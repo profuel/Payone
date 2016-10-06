@@ -17,50 +17,34 @@ class ChSubFormsCreator extends AbstractSubFormsCreator implements SubFormsCreat
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface[]
      */
-    public function createPaymentMethodsSubForms(QuoteTransfer $quoteTransfer)
+    public function createPaymentMethodsSubForms()
     {
         return [
-            PaymentTransfer::PAYONE_CREDIT_CARD => $this->createPayoneCreditCardSubFormPlugin($quoteTransfer),
-            PaymentTransfer::PAYONE_DIRECT_DEBIT => $this->createPayoneDirectDebitSubFormPlugin($quoteTransfer),
-            PaymentTransfer::PAYONE_PRE_PAYMENT => $this->createPayonePrePaymentSubFormPlugin($quoteTransfer),
-            PaymentTransfer::PAYONE_INVOICE => $this->createPayoneInvoiceSubFormPlugin($quoteTransfer),
-            PaymentTransfer::PAYONE_E_WALLET => $this->createEWalletSubFormPlugin($quoteTransfer),
-            PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER => $this->createPayonePostfinanceEfinanceOnlineTransferSubFormPlugin($quoteTransfer),
-            PaymentTransfer::PAYONE_POSTFINANCE_CARD_ONLINE_TRANSFER => $this->createPayonePostfinanceCardOnlineTransferSubFormPlugin($quoteTransfer),
-            PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER => $this->createPayoneInstantOnlineTransferSubFormPlugin($quoteTransfer),
+            PaymentTransfer::PAYONE_CREDIT_CARD => $this->createPayoneCreditCardSubFormPlugin(),
+            PaymentTransfer::PAYONE_DIRECT_DEBIT => $this->createPayoneDirectDebitSubFormPlugin(),
+            PaymentTransfer::PAYONE_PRE_PAYMENT => $this->createPayonePrePaymentSubFormPlugin(),
+            PaymentTransfer::PAYONE_INVOICE => $this->createPayoneInvoiceSubFormPlugin(),
+            PaymentTransfer::PAYONE_E_WALLET => $this->createEWalletSubFormPlugin(),
+            PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER => $this->createPayonePostfinanceEfinanceOnlineTransferSubFormPlugin(),
+            PaymentTransfer::PAYONE_POSTFINANCE_CARD_ONLINE_TRANSFER => $this->createPayonePostfinanceCardOnlineTransferSubFormPlugin(),
+            PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER => $this->createPayoneInstantOnlineTransferSubFormPlugin(),
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Spryker\Yves\Payone\Plugin\PayoneEpsOnlineTransferSubFormPlugin
+     * @return PayonePostfinanceEfinanceOnlineTransferSubFormPlugin
      */
-    protected function createPayoneEPSOnlineTransferSubFormPlugin(QuoteTransfer $quoteTransfer)
-    {
-        return new PayoneEpsOnlineTransferSubFormPlugin();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Spryker\Yves\Payone\Plugin\PayonePostfinanceEfinanceOnlineTransferSubFormPlugin
-     */
-    protected function createPayonePostfinanceEfinanceOnlineTransferSubFormPlugin(QuoteTransfer $quoteTransfer)
+    protected function createPayonePostfinanceEfinanceOnlineTransferSubFormPlugin()
     {
         return new PayonePostfinanceEfinanceOnlineTransferSubFormPlugin();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Yves\Payone\Plugin\PayonePostfinanceCardOnlineTransferSubFormPlugin
      */
-    protected function createPayonePostfinanceCardOnlineTransferSubFormPlugin(QuoteTransfer $quoteTransfer)
+    protected function createPayonePostfinanceCardOnlineTransferSubFormPlugin()
     {
         return new PayonePostfinanceCardOnlineTransferSubFormPlugin();
     }

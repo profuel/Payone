@@ -13,10 +13,8 @@ interface SubFormsCreatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface[]
      */
-    public function createPaymentMethodsSubForms(QuoteTransfer $quoteTransfer);
+    public function createPaymentMethodsSubForms();
 
 }

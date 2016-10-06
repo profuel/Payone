@@ -8,7 +8,6 @@
 namespace Unit\Spryker\Yves\Payone\Dependency\Injector;
 
 use Generated\Shared\Transfer\PaymentTransfer;
-use Spryker\Client\Cart\CartClient;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Payone\Dependency\Injector\CheckoutDependencyInjector;
@@ -66,9 +65,6 @@ class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
         };
         $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER] = function () {
             return new StepHandlerPluginCollection();
-        };
-        $container[CheckoutDependencyProvider::CLIENT_CART] = function () {
-            return new CartClient();
         };
 
         return $container;

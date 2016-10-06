@@ -19,61 +19,49 @@ abstract class AbstractSubFormsCreator
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer
-     *
      * @return \Spryker\Yves\Payone\Plugin\PayoneCreditCardSubFormPlugin
      */
-    protected function createPayoneCreditCardSubFormPlugin(QuoteTransfer $quoteTransfer)
+    protected function createPayoneCreditCardSubFormPlugin()
     {
         return new PayoneCreditCardSubFormPlugin();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Yves\Payone\Plugin\PayoneDirectDebitSubFormPlugin
      */
-    protected function createPayoneDirectDebitSubFormPlugin(QuoteTransfer $quoteTransfer)
+    protected function createPayoneDirectDebitSubFormPlugin()
     {
         return new PayoneDirectDebitSubFormPlugin();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Yves\Payone\Plugin\PayonePrePaymentSubFormPlugin
      */
-    protected function createPayonePrePaymentSubFormPlugin(QuoteTransfer $quoteTransfer)
+    protected function createPayonePrePaymentSubFormPlugin()
     {
         return new PayonePrePaymentSubFormPlugin();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Yves\Payone\Plugin\PayoneInvoiceSubFormPlugin
      */
-    protected function createPayoneInvoiceSubFormPlugin(QuoteTransfer $quoteTransfer)
+    protected function createPayoneInvoiceSubFormPlugin()
     {
         return new PayoneInvoiceSubFormPlugin();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Yves\Payone\Plugin\PayoneEWalletSubFormPlugin
      */
-    protected function createEWalletSubFormPlugin(QuoteTransfer $quoteTransfer)
+    protected function createEWalletSubFormPlugin()
     {
         return new PayoneEWalletSubFormPlugin();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Yves\Payone\Plugin\PayoneInstantOnlineTransferSubFormPlugin
      */
-    protected function createPayoneInstantOnlineTransferSubFormPlugin(QuoteTransfer $quoteTransfer)
+    protected function createPayoneInstantOnlineTransferSubFormPlugin()
     {
         return new PayoneInstantOnlineTransferSubFormPlugin();
     }

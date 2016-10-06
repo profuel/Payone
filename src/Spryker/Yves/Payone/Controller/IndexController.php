@@ -11,9 +11,8 @@ use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
-use Pyz\Yves\Checkout\Plugin\Provider\CheckoutControllerProvider;
-use Pyz\Yves\Customer\Plugin\Provider\CustomerControllerProvider;
 use Spryker\Yves\Application\Controller\AbstractController;
+use Spryker\Yves\Payone\Plugin\Provider\PayoneControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -54,7 +53,7 @@ class IndexController extends AbstractController
         $customerTransfer = $customerClient->getCustomer();
 
         if (!$customerTransfer) {
-            return $this->redirectResponseInternal(CustomerControllerProvider::ROUTE_LOGIN);
+            return $this->redirectResponseInternal(PayoneControllerProvider::ROUTE_LOGIN);
         }
 
         $getFileTransfer = new PayoneGetFileTransfer();
@@ -85,7 +84,7 @@ class IndexController extends AbstractController
         $customerTransfer = $customerClient->getCustomer();
 
         if (!$customerTransfer) {
-            return $this->redirectResponseInternal(CustomerControllerProvider::ROUTE_LOGIN);
+            return $this->redirectResponseInternal(PayoneControllerProvider::ROUTE_LOGIN);
         }
 
         $getInvoiceTransfer = new PayoneGetInvoiceTransfer();
@@ -123,7 +122,7 @@ class IndexController extends AbstractController
             $response = $this->getClient()->cancelRedirect($cancelRedirectTransfer);
         }
 
-        return $this->redirectResponseInternal(CheckoutControllerProvider::CHECKOUT_PAYMENT);
+        return $this->redirectResponseInternal(PayoneControllerProvider::CHECKOUT_PAYMENT);
     }
 
     /**
