@@ -7,6 +7,18 @@
 
 namespace Spryker\Zed\Payone\Communication\Plugin\Log;
 
+use Propel\Runtime\Collection\ObjectCollection;
+
 interface PaymentLogReceiverPluginInterface
 {
+
+    /**
+     * This plugin fetches log entries for given orders.
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
+     *
+     * @return \Generated\Shared\Transfer\PayonePaymentLogTransfer[]
+     */
+    public function getPaymentLogs(ObjectCollection $orders);
+
 }

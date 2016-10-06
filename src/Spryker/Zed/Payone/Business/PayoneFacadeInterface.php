@@ -453,7 +453,7 @@ interface PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
      *
-     * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer
      */
     public function getFile(PayoneGetFileTransfer $getFileTransfer);
 
