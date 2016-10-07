@@ -12,12 +12,12 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Payone\ClientApi\Call\CreditCardCheck;
 use Spryker\Client\Payone\ClientApi\HashGenerator;
 use Spryker\Client\Payone\ClientApi\HashProvider;
-use Spryker\Client\Payone\ClientApi\Mode\ModeDetector;
-use Spryker\Client\Payone\PayoneDependencyProvider;
 use Spryker\Client\Payone\Zed\PayoneStub;
 use Spryker\Shared\Config;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Shared\Payone\PayoneConstants;
+use Spryker\Zed\Payone\Business\Mode\ModeDetector;
+use Spryker\Zed\Payone\PayoneConfig;
 
 class PayoneFactory extends AbstractFactory
 {
@@ -49,7 +49,15 @@ class PayoneFactory extends AbstractFactory
      */
     protected function createModeDetector()
     {
-        return new ModeDetector();
+        return new ModeDetector($this->createBundleConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Payone\PayoneConfig
+     */
+    protected function createBundleConfig()
+    {
+        return new PayoneConfig();
     }
 
     /**
