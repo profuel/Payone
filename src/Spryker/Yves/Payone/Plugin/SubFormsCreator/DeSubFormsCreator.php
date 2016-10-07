@@ -8,7 +8,6 @@
 namespace Spryker\Yves\Payone\Plugin\SubFormsCreator;
 
 use Generated\Shared\Transfer\PaymentTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Payone\Plugin\PayoneGiropayOnlineTransferSubFormPlugin;
 
 class DeSubFormsCreator extends AbstractSubFormsCreator implements SubFormsCreatorInterface

@@ -12,6 +12,7 @@ use Spryker\Yves\Application\Plugin\Provider\YvesControllerProvider;
 
 class PayoneControllerProvider extends YvesControllerProvider
 {
+
     const ROUTE_LOGIN = 'login';
     const CHECKOUT_PAYMENT = 'checkout-payment';
 

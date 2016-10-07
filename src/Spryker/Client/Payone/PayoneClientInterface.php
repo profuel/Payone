@@ -20,7 +20,7 @@ interface PayoneClientInterface
 
     /**
      * Prepares credit card check request to bring standard parameters and hash to front-end.
-     * 
+     *
      * @api
      *
      * @return \Spryker\Client\Payone\ClientApi\Request\CreditCardCheck
@@ -29,7 +29,7 @@ interface PayoneClientInterface
 
     /**
      * Processes and saves transaction status update received from Payone.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $statusUpdateTransfer
@@ -40,7 +40,7 @@ interface PayoneClientInterface
 
     /**
      * Performs GetFile request to Payone API for PDF file download.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer

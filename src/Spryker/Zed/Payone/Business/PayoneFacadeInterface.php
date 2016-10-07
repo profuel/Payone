@@ -29,7 +29,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Saves order payment method data according to quote and checkout response transfer data.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -42,7 +42,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Performs payment authorization request to Payone API and updates payment data.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -54,7 +54,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Performs payment pre-authorization request to Payone API and updates payment data.
-     * 
+     *
      * @api
      *
      * @param int $idPayment
@@ -78,7 +78,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Performs payment debit request to Payone API.
-     * 
+     *
      * @api
      *
      * @param int $idPayment
@@ -102,7 +102,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Performs credit card check request to Payone API.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $creditCardData
@@ -114,7 +114,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Processes and saves transaction status update request received from Payone.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
@@ -198,7 +198,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Checks if API logs contain 'APPROVED' response to capture request for given order.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -222,7 +222,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Checks if API logs contain 'APPROVED' response to refund request for given order.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -234,7 +234,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Checks if API logs contain 'ERROR' response to refund request for given order.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -246,7 +246,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Checks if refund is possible for given order.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -258,7 +258,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Checks if used payment method references stored iban/bic data for given order.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -270,7 +270,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Checks if there are unprocessed transaction status logs for given order/item.
-     * 
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -387,7 +387,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Gets payment logs (both api and transaction status) for specific orders in chronological order.
-     * 
+     *
      * @api
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
@@ -399,7 +399,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Gets payment details for given order.
-     * 
+     *
      * @api
      *
      * @param int $idOrder
@@ -424,7 +424,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Performs bank account check request to Payone API.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
@@ -436,7 +436,7 @@ interface PayoneFacadeInterface
     /**
      * Specification:
      * - Performs manage mandate request to Payone API.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $bankAccountCheckTransfer

@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Payone\Plugin\SubFormsCreator;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Payone\Plugin\PayoneCreditCardSubFormPlugin;
 use Spryker\Yves\Payone\Plugin\PayoneDirectDebitSubFormPlugin;
 use Spryker\Yves\Payone\Plugin\PayoneEWalletSubFormPlugin;

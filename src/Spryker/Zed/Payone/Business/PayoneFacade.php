@@ -21,7 +21,6 @@ use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
@@ -32,7 +31,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * Specification:
      * - Saves order payment method data according to quote and checkout response transfer data.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -48,7 +47,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * Specification:
      * - Performs payment authorization request to Payone API and updates payment data.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -63,7 +62,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * Specification:
      * - Performs payment pre-authorization request to Payone API and updates payment data.
-     * 
+     *
      * @api
      *
      * @param int $idPayment
@@ -93,7 +92,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * Specification:
      * - Performs payment debit request to Payone API.
-     * 
+     *
      * @api
      *
      * @param int $idPayment
@@ -108,7 +107,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * Specification:
      * - Performs payment refund request to Payone API.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneRefundTransfer $refundTransfer
@@ -150,7 +149,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * Specification:
      * - Performs manage mandate request to Payone API.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $bankAccountCheckTransfer
@@ -273,7 +272,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * Specification:
      * - Checks if API logs contain 'ERROR' response for pre-authorization request for given order.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -363,7 +362,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * Specification:
      * - Checks if refund is possible for given order.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -378,7 +377,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * Specification:
      * - Checks if used payment method references stored iban/bic data for given order.
-     * 
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -429,7 +428,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * Specification:
      * - Checks if first unprocessed transaction status log record for given order/item has 'PAID' status with negative balance.
-     * 
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -570,7 +569,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * Specification:
      * - Gets payment details for given order.
-     * 
+     *
      * @api
      *
      * @param int $idOrder

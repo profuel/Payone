@@ -36,7 +36,7 @@ class PayoneConfig extends AbstractBundleConfig
 
     /**
      * Fetches API request mode from config (could be 'live' or 'test').
-     * 
+     *
      * @return string
      */
     public function getMode()
@@ -87,7 +87,7 @@ class PayoneConfig extends AbstractBundleConfig
 
     /**
      * Fetches reference string to identify Payone payment.
-     * 
+     *
      * @param \Generated\Shared\Transfer\PayonePaymentTransfer $paymentTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *

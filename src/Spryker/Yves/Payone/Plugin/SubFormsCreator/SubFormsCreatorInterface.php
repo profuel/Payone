@@ -7,8 +7,6 @@
 
 namespace Spryker\Yves\Payone\Plugin\SubFormsCreator;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-
 interface SubFormsCreatorInterface
 {
 
