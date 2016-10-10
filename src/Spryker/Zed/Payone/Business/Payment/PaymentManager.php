@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
 use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
+use Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
@@ -316,7 +317,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer
      */
     public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer)
     {
@@ -328,13 +329,18 @@ class PaymentManager implements PaymentManagerInterface
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new BankAccountCheckResponseContainer($rawResponse);
 
-        return $responseContainer;
+        $bankAccountCheckTransfer->setErrorCode($responseContainer->getErrorcode());
+        $bankAccountCheckTransfer->setCustomerErrorMessage($responseContainer->getCustomermessage());
+        $bankAccountCheckTransfer->setStatus($responseContainer->getStatus());
+        $bankAccountCheckTransfer->setInternalErrorMessage($responseContainer->getErrormessage());
+
+        return $bankAccountCheckTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $manageMandateTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
      */
     public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer)
     {
@@ -342,16 +348,26 @@ class PaymentManager implements PaymentManagerInterface
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT);
         $requestContainer = $paymentMethodMapper->mapManageMandate($manageMandateTransfer);
         $this->setStandardParameter($requestContainer);
+
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new ManageMandateResponseContainer($rawResponse);
 
-        return $responseContainer;
+        $manageMandateTransfer->setErrorCode($responseContainer->getErrorcode());
+        $manageMandateTransfer->setCustomerErrorMessage($responseContainer->getCustomermessage());
+        $manageMandateTransfer->setStatus($responseContainer->getStatus());
+        $manageMandateTransfer->setInternalErrorMessage($responseContainer->getErrormessage());
+        $manageMandateTransfer->setMandateIdentification($responseContainer->getMandateIdentification());
+        $manageMandateTransfer->setMandateText($responseContainer->getMandateText());
+        $manageMandateTransfer->setIban($responseContainer->getIban());
+        $manageMandateTransfer->setBic($responseContainer->getBic());
+
+        return $manageMandateTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
      */
     public function getFile(PayoneGetFileTransfer $getFileTransfer)
     {
@@ -372,13 +388,19 @@ class PaymentManager implements PaymentManagerInterface
             $this->setAccessDeniedError($responseContainer);
         }
 
-        return $responseContainer;
+        $getFileTransfer->setRawResponse($responseContainer->getRawResponse());
+        $getFileTransfer->setStatus($responseContainer->getStatus());
+        $getFileTransfer->setErrorCode($responseContainer->getErrorcode());
+        $getFileTransfer->setCustomerErrorMessage($responseContainer->getCustomermessage());
+        $getFileTransfer->setInternalErrorMessage($responseContainer->getErrormessage());
+
+        return $getFileTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetInvoiceResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
      */
     public function getInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer)
     {
@@ -399,7 +421,12 @@ class PaymentManager implements PaymentManagerInterface
             $this->setAccessDeniedError($responseContainer);
         }
 
-        return $responseContainer;
+        $getInvoiceTransfer->setRawResponse($responseContainer->getRawResponse());
+        $getInvoiceTransfer->setStatus($responseContainer->getStatus());
+        $getInvoiceTransfer->setErrorCode($responseContainer->getErrorcode());
+        $getInvoiceTransfer->setInternalErrorMessage($responseContainer->getErrormessage());
+
+        return $getInvoiceTransfer;
     }
 
     /**
@@ -655,7 +682,7 @@ class PaymentManager implements PaymentManagerInterface
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
-     * @return \Generated\Shared\Transfer\PayonePaymentLogTransfer[]
+     * @return \Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer
      */
     public function getPaymentLogs(ObjectCollection $orders)
     {
@@ -683,7 +710,13 @@ class PaymentManager implements PaymentManagerInterface
 
         ksort($logs);
 
-        return $logs;
+        $payonePaymentLogCollectionTransfer = new PayonePaymentLogCollectionTransfer();
+
+        foreach ($logs as $log) {
+            $payonePaymentLogCollectionTransfer->addPaymentLogs($log);
+        }
+
+        return $payonePaymentLogCollectionTransfer;
     }
 
     /**

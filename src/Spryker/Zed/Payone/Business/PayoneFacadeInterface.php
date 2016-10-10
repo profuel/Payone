@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Payone\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
@@ -18,7 +19,6 @@ use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
@@ -119,7 +119,7 @@ interface PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
+     * @return \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer
      */
     public function processTransactionStatusUpdate(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer);
 
@@ -390,11 +390,11 @@ interface PayoneFacadeInterface
      *
      * @api
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection $orders
+     * @param \Generated\Shared\Transfer\OrderCollectionTransfer $orderCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\PayonePaymentLogTransfer[]
+     * @return \Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer
      */
-    public function getPaymentLogs(ObjectCollection $orders);
+    public function getPaymentLogs(OrderCollectionTransfer $orders);
 
     /**
      * Specification:
@@ -441,7 +441,7 @@ interface PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $bankAccountCheckTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
      */
     public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer);
 
@@ -453,7 +453,7 @@ interface PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
      */
     public function getFile(PayoneGetFileTransfer $getFileTransfer);
 
@@ -465,7 +465,7 @@ interface PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getFileTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetInvoiceResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
      */
     public function getInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer);
 

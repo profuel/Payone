@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Payone\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
@@ -19,7 +20,6 @@ use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -52,11 +52,11 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
+     * @return void
      */
     public function authorizePayment(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createPaymentManager()->authorizePayment($orderTransfer);
+        $this->getFactory()->createPaymentManager()->authorizePayment($orderTransfer);
     }
 
     /**
@@ -67,11 +67,11 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param int $idPayment
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
+     * @return void
      */
     public function preAuthorizePayment($idPayment)
     {
-        return $this->getFactory()->createPaymentManager()->preAuthorizePayment($idPayment);
+        $this->getFactory()->createPaymentManager()->preAuthorizePayment($idPayment);
     }
 
     /**
@@ -82,11 +82,11 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneCaptureTransfer $captureTransfer
      *
-     * @return Api\Response\Container\CaptureResponseContainer
+     * @return void
      */
     public function capturePayment(PayoneCaptureTransfer $captureTransfer)
     {
-        return $this->getFactory()->createPaymentManager()->capturePayment($captureTransfer);
+        $this->getFactory()->createPaymentManager()->capturePayment($captureTransfer);
     }
 
     /**
@@ -97,11 +97,11 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param int $idPayment
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer
+     * @return void
      */
     public function debitPayment($idPayment)
     {
-        return $this->getFactory()->createPaymentManager()->debitPayment($idPayment);
+        $this->getFactory()->createPaymentManager()->debitPayment($idPayment);
     }
 
     /**
@@ -112,11 +112,11 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneRefundTransfer $refundTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer
+     * @return void
      */
     public function refundPayment(PayoneRefundTransfer $refundTransfer)
     {
-        return $this->getFactory()->createPaymentManager()->refundPayment($refundTransfer);
+        $this->getFactory()->createPaymentManager()->refundPayment($refundTransfer);
     }
 
     /**
@@ -127,11 +127,11 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $creditCardData
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
+     * @return void
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData)
     {
-        return $this->getFactory()->createPaymentManager()->creditCardCheck($creditCardData);
+        $this->getFactory()->createPaymentManager()->creditCardCheck($creditCardData);
     }
 
     /**
@@ -139,7 +139,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer
      */
     public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer)
     {
@@ -154,7 +154,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $bankAccountCheckTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
      */
     public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer)
     {
@@ -169,7 +169,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
      */
     public function getFile(PayoneGetFileTransfer $getFileTransfer)
     {
@@ -184,7 +184,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getFileTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetInvoiceResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
      */
     public function getInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer)
     {
@@ -199,14 +199,17 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
+     * @return \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer
      */
     public function processTransactionStatusUpdate(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer)
     {
         $transactionManager = $this->getFactory()->createTransactionStatusManager();
         $transactionTransfer = $this->getFactory()->createTransactionStatusUpdateRequest($transactionStatusUpdateTransfer);
+        $response = $transactionManager->processTransactionStatusUpdate($transactionTransfer);
+        $transactionStatusUpdateTransfer->setIsSuccess($response->isSuccess());
+        $transactionStatusUpdateTransfer->setResponse($response->getStatus() . ($response->getErrorMessage() ? ': ' . $response->getErrorMessage() : ''));
 
-        return $transactionManager->processTransactionStatusUpdate($transactionTransfer);
+        return $transactionStatusUpdateTransfer;
     }
 
     /**
@@ -557,12 +560,13 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @api
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection $orders
+     * @param \Generated\Shared\Transfer\OrderCollectionTransfer $orderCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\PayonePaymentLogTransfer[]
+     * @return \Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer
      */
-    public function getPaymentLogs(ObjectCollection $orders)
+    public function getPaymentLogs(OrderCollectionTransfer $orderCollectionTransfer)
     {
+        $orders = $orderCollectionTransfer->getOrders();
         return $this->getFactory()->createPaymentManager()->getPaymentLogs($orders);
     }
 

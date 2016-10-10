@@ -248,6 +248,7 @@
         <property name="reference" type="string" />
         <property name="reminderlevel" type="string" />
         <property name="response" type="string" />
+        <property name="isSuccess" type="bool" />
     </transfer>
 
     <transfer name="PayonePaymentLog">
@@ -261,6 +262,14 @@
         <property name="price" type="string" />
 
         <property name="createdAt" type="string" />
+    </transfer>
+
+    <transfer name="PayonePaymentLogCollection">
+        <property name="paymentLogs" type="PayonePaymentLog[]" />
+    </transfer>
+
+    <transfer name="OrderCollection">
+        <property name="orders" type="Order[]" />
     </transfer>
 
     <transfer name="PayoneGetFile">

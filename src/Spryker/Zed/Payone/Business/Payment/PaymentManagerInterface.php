@@ -75,35 +75,35 @@ interface PaymentManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer
      */
     public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $manageMandateTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
      */
     public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
      */
     public function getFile(PayoneGetFileTransfer $getFileTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetInvoiceResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
      */
     public function getInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer);
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer
      */
     public function getPaymentLogs(ObjectCollection $orders);
 
