@@ -47,7 +47,6 @@ function init(config) {
 
     var $bankAccountModeBban = $form.find(config.bankAccountModeBbanInput);
     $bankAccountModeBban.change(function() {
-        console.log('change BBAN');
         $form.find(config.bankAccountInput).prop('disabled', false);
         $form.find(config.bankCodeInput).prop('disabled', false);
         $form.find(config.ibanInput).prop('disabled', true);
@@ -56,7 +55,6 @@ function init(config) {
 
     var $bankAccountModeIbanBic = $form.find(config.bankAccountModeIbanBicInput);
     $bankAccountModeIbanBic.change(function() {
-        console.log('change IBAN/BIC');
         $form.find(config.bankAccountInput).prop('disabled', true);
         $form.find(config.bankCodeInput).prop('disabled', true);
         $form.find(config.ibanInput).prop('disabled', false);

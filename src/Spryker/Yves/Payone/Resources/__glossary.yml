@@ -122,3 +122,11 @@ Payone_giropay_online_transfer.BIC:
   translations:
     en_US: 'BIC'
     de_DE: 'BIC'
+payment.payone.online_bank_transfer:
+  translations:
+    de_DE: 'Payone Online-Überweisung'
+    en_US: 'Payone Online Bank Transfer'
+payment.payone.instant-online-transfer:
+  translations:
+    de_DE: 'Payone Sofort-Überweisung'
+    en_US: 'Payone Instant Bank Transfer'
