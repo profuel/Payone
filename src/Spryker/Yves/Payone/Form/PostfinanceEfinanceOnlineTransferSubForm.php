@@ -20,6 +20,14 @@ class PostfinanceEfinanceOnlineTransferSubForm extends OnlineTransferSubForm
     /**
      * @return string
      */
+    public function getName()
+    {
+        return PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER;
+    }
+
+    /**
+     * @return string
+     */
     public function getPropertyPath()
     {
         return PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER;
