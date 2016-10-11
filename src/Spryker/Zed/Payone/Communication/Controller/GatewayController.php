@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
