@@ -13,6 +13,7 @@ interface PayoneConstants
     const COUNTRY_AT = 'AT';
     const COUNTRY_DE = 'DE';
     const COUNTRY_NL = 'NL';
+    const COUNTRY_CH = 'CH';
 
     const PROVIDER_NAME = 'Payone';
     const PAYONE = 'PAYONE';

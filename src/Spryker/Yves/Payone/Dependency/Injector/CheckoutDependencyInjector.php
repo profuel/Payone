@@ -30,10 +30,7 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
     public function inject(ContainerInterface $container)
     {
         $payoneSubFormsPlugin = new PayoneSubFormsPlugin();
-        $cartClientClosure = $container->raw(CheckoutDependencyProvider::CLIENT_CART);
-        $cartClient = $cartClientClosure();
-        $quoteTransfer = $cartClient->getQuote();
-        $paymentMethodsSubForms = $payoneSubFormsPlugin->getPaymentMethodsSubForms($quoteTransfer);
+        $paymentMethodsSubForms = $payoneSubFormsPlugin->getPaymentMethodsSubForms();
         $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) use ($paymentMethodsSubForms) {
             foreach ($paymentMethodsSubForms as $paymentMethodsSubForm) {
                 $paymentSubForms->add($paymentMethodsSubForm);
@@ -54,6 +51,8 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
             $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_POSTFINANCE_EFINANCE_ONLINE_TRANSFER);
             $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_POSTFINANCE_CARD_ONLINE_TRANSFER);
             $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER);
+            $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_PRE_PAYMENT);
+            $paymentMethodHandler->add($payoneHandlerPlugin, PaymentTransfer::PAYONE_INVOICE);
 
             return $paymentMethodHandler;
         });

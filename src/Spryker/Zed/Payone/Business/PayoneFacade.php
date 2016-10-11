@@ -8,19 +8,18 @@
 namespace Spryker\Zed\Payone\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCaptureTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
-use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -30,6 +29,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Saves order payment method data according to quote and checkout response transfer data.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -43,75 +45,93 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Performs payment authorization request to Payone API and updates payment data.
+     *
      * @api
      *
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
+     * @return void
      */
-    public function authorizePayment($idPayment)
+    public function authorizePayment(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createPaymentManager()->authorizePayment($idPayment);
+        $this->getFactory()->createPaymentManager()->authorizePayment($orderTransfer);
     }
 
     /**
+     * Specification:
+     * - Performs payment pre-authorization request to Payone API and updates payment data.
+     *
      * @api
      *
      * @param int $idPayment
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
+     * @return void
      */
     public function preAuthorizePayment($idPayment)
     {
-        return $this->getFactory()->createPaymentManager()->preAuthorizePayment($idPayment);
+        $this->getFactory()->createPaymentManager()->preAuthorizePayment($idPayment);
     }
 
     /**
+     * Specification:
+     * - Performs payment capture request to Payone API.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneCaptureTransfer $captureTransfer
      *
-     * @return Api\Response\Container\CaptureResponseContainer
+     * @return void
      */
     public function capturePayment(PayoneCaptureTransfer $captureTransfer)
     {
-        return $this->getFactory()->createPaymentManager()->capturePayment($captureTransfer);
+        $this->getFactory()->createPaymentManager()->capturePayment($captureTransfer);
     }
 
     /**
+     * Specification:
+     * - Performs payment debit request to Payone API.
+     *
      * @api
      *
      * @param int $idPayment
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer
+     * @return void
      */
     public function debitPayment($idPayment)
     {
-        return $this->getFactory()->createPaymentManager()->debitPayment($idPayment);
+        $this->getFactory()->createPaymentManager()->debitPayment($idPayment);
     }
 
     /**
+     * Specification:
+     * - Performs payment refund request to Payone API.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneRefundTransfer $refundTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer
+     * @return void
      */
     public function refundPayment(PayoneRefundTransfer $refundTransfer)
     {
-        return $this->getFactory()->createPaymentManager()->refundPayment($refundTransfer);
+        $this->getFactory()->createPaymentManager()->refundPayment($refundTransfer);
     }
 
     /**
+     * Specification:
+     * - Performs credit card check request to Payone API.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $creditCardData
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
+     * @return void
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData)
     {
-        return $this->getFactory()->createPaymentManager()->creditCardCheck($creditCardData);
+        $this->getFactory()->createPaymentManager()->creditCardCheck($creditCardData);
     }
 
     /**
@@ -119,7 +139,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer
      */
     public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer)
     {
@@ -127,11 +147,14 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Performs manage mandate request to Payone API.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $bankAccountCheckTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
      */
     public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer)
     {
@@ -139,11 +162,14 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Performs GetFile request to Payone API for PDF file download.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
      */
     public function getFile(PayoneGetFileTransfer $getFileTransfer)
     {
@@ -151,21 +177,45 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Performs GetInvoice request to Payone API for PDF file download.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getFileTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
+     */
+    public function getInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer)
+    {
+        return $this->getFactory()->createPaymentManager()->getInvoice($getInvoiceTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Processes and saves transaction status update request received from Payone.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
+     * @return \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer
      */
     public function processTransactionStatusUpdate(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer)
     {
         $transactionManager = $this->getFactory()->createTransactionStatusManager();
         $transactionTransfer = $this->getFactory()->createTransactionStatusUpdateRequest($transactionStatusUpdateTransfer);
+        $response = $transactionManager->processTransactionStatusUpdate($transactionTransfer);
+        $transactionStatusUpdateTransfer->setIsSuccess($response->isSuccess());
+        $transactionStatusUpdateTransfer->setResponse($response->getStatus() . ($response->getErrorMessage() ? ': ' . $response->getErrorMessage() : ''));
 
-        return $transactionManager->processTransactionStatusUpdate($transactionTransfer);
+        return $transactionStatusUpdateTransfer;
     }
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'APPROVED' response for authorization request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -178,6 +228,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'REDIRECT' response for authorization request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -190,6 +243,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'APPROVED' response for pre-authorization request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -202,6 +258,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'REDIRECT' response for pre-authorization request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -214,6 +273,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'ERROR' response for pre-authorization request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -226,6 +288,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'ERROR' response for authorization request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -238,6 +303,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'APPROVED' response to capture request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -250,6 +318,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'ERROR' response to capture request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -262,6 +333,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'APPROVED' response to refund request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -274,6 +348,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if API logs contain 'ERROR' response to refund request for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -286,6 +363,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if refund is possible for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -298,6 +378,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if used payment method references stored iban/bic data for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -310,18 +393,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
-     * @api
+     * Specification:
+     * - Checks if there are unprocessed transaction status logs for given order/item.
      *
-     * @param \Generated\Shared\Transfer\PayonePaymentTransfer $payment
-     *
-     * @return \Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer
-     */
-    public function getAuthorizationResponse(PayonePaymentTransfer $payment)
-    {
-        return $this->getFactory()->createApiLogFinder()->getAuthorizationResponse($payment);
-    }
-
-    /**
      * @api
      *
      * @param int $idSalesOrder
@@ -337,6 +411,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'PAID' status with zero or negative balance.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -352,6 +429,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'PAID' status with negative balance.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -367,6 +447,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'UNDERPAID' status.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -382,6 +465,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'REFUND' status.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -397,6 +483,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'APPOINTED' status.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -412,6 +501,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item is not in 'PAID', 'APPOINTED' or 'UNDERPAID' status.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -427,6 +519,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if first unprocessed transaction status log record for given order/item has 'CAPTURE' status.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -442,6 +537,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Handles redirects and errors after order placement.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -457,18 +555,25 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Gets payment logs (both api and transaction status) for specific orders in chronological order.
+     *
      * @api
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection $orders
+     * @param \Generated\Shared\Transfer\OrderCollectionTransfer $orderCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\PayonePaymentLogTransfer[]
+     * @return \Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer
      */
-    public function getPaymentLogs(ObjectCollection $orders)
+    public function getPaymentLogs(OrderCollectionTransfer $orderCollectionTransfer)
     {
+        $orders = $orderCollectionTransfer->getOrders();
         return $this->getFactory()->createPaymentManager()->getPaymentLogs($orders);
     }
 
     /**
+     * Specification:
+     * - Gets payment details for given order.
+     *
      * @api
      *
      * @param int $idOrder
@@ -481,6 +586,9 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Updates payment details for given order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PaymentDetailTransfer $paymentData

@@ -5,9 +5,10 @@
 
 'use strict';
 
+var $ = require('jquery');
+
 function init(config) {
     var $form = $(config.formSelector);
-
     $form.submit(function(ev) {
         window.processPayoneResponse = function(response) {
             console.log(response);
@@ -21,7 +22,6 @@ function init(config) {
                 alert(response.customermessage);
             }
         };
-
         if ($(config.currentPaymentMethodSelector).val() === 'payoneCreditCard') {
             ev.preventDefault();
             var clientApiConfig = JSON.parse($form.find(config.clientApiConfigInput).val());
@@ -47,7 +47,6 @@ function init(config) {
 
     var $bankAccountModeBban = $form.find(config.bankAccountModeBbanInput);
     $bankAccountModeBban.change(function() {
-        console.log('change BBAN');
         $form.find(config.bankAccountInput).prop('disabled', false);
         $form.find(config.bankCodeInput).prop('disabled', false);
         $form.find(config.ibanInput).prop('disabled', true);
@@ -56,7 +55,6 @@ function init(config) {
 
     var $bankAccountModeIbanBic = $form.find(config.bankAccountModeIbanBicInput);
     $bankAccountModeIbanBic.change(function() {
-        console.log('change IBAN/BIC');
         $form.find(config.bankAccountInput).prop('disabled', true);
         $form.find(config.bankCodeInput).prop('disabled', true);
         $form.find(config.ibanInput).prop('disabled', false);

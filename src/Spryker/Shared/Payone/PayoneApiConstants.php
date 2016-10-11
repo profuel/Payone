@@ -43,11 +43,6 @@ interface PayoneApiConstants
     // e-wallet methods
     const PAYMENT_METHOD_E_WALLET = 'payment.payone.e_wallet';
 
-    /**
-     * @deprecated //TODO: To be removed
-     */
-    const PAYMENT_METHOD_PAYPAL = 'payment.payone.paypal';
-
     // bank account based methods
     const PAYMENT_METHOD_DIRECT_DEBIT = 'payment.payone.direct_debit';
     const PAYMENT_METHOD_INVOICE = 'payment.payone.invoice';
@@ -56,33 +51,6 @@ interface PayoneApiConstants
 
     // online transfer methods
     const PAYMENT_METHOD_ONLINE_BANK_TRANSFER = 'payment.payone.online_bank_transfer';
-
-    /**
-     * @deprecated //TODO: To be removed
-     */
-    const PAYMENT_METHOD_SOFORT_UEBERWEISUNG = 'payment.payone.sofort_ueberweisung';
-    /**
-     * @deprecated //TODO: To be removed
-     */
-    const PAYMENT_METHOD_EPS = 'payment.payone.eps';
-    /**
-     * @deprecated //TODO: To be removed
-     */
-    const PAYMENT_METHOD_POST_FINANCE_CARD = 'payment.payone.post_finance_card';
-    /**
-     * @deprecated //TODO: To be removed
-     */
-    const PAYMENT_METHOD_POST_FINANCE_EFINANCE = 'payment.payone.post_finance_efinance';
-    /**
-     * @deprecated //TODO: To be removed
-     */
-    const PAYMENT_METHOD_GIROPAY = 'payment.payone.giropay';
-
-    // financing methods
-    const PAYMENT_METHOD_COMMERZ_FINANCE = 'payment.payone.commerz_finance';
-
-    // gesicherter rechnunskauf
-    const PAYMENT_METHOD_BILLSAVE = 'payment.payone.billsave';
 
     // CLEARING TYPE
 
@@ -315,5 +283,10 @@ interface PayoneApiConstants
     // FILE FORMAT
 
     const FILE_FORMAT_PDF = 'PDF';
+
+    // INVOICE TITLE PREFIX
+
+    const INVOICE_TITLE_PREFIX_INVOICE = 'RG';
+    const INVOICE_TITLE_PREFIX_CREDIT_NOTE = 'GT';
 
 }

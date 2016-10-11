@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payone\Communication\Plugin\Oms\Command;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -26,28 +27,33 @@ class RefundPlugin extends AbstractPayonePlugin implements CommandByOrderInterfa
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
-     * @return array Array
+     * @return array
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $refundTransfer = new PayoneRefundTransfer();
+        $payoneRefundTransfer = new PayoneRefundTransfer();
 
-        $orderTransfer = $this->getOrderTransfer($orderEntity);
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->fromArray($orderEntity->toArray(), true);
 
-        $refundTransfer->setAmount($orderTransfer->getTotals()->getGrandTotal() * -1);
+        $refundTransfer = $this->getFactory()
+            ->getRefundFacade()
+            ->calculateRefund($orderItems, $orderEntity);
+
+        $payoneRefundTransfer->setAmount($refundTransfer->getAmount() * -1);
 
         $paymentPayoneEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
 
         $payonePaymentTransfer = new PayonePaymentTransfer();
         $payonePaymentTransfer->fromArray($paymentPayoneEntity->toArray(), true);
 
-        $refundTransfer->setPayment($payonePaymentTransfer);
-        $refundTransfer->setUseCustomerdata(PayoneApiConstants::USE_CUSTOMER_DATA_YES);
+        $payoneRefundTransfer->setPayment($payonePaymentTransfer);
+        $payoneRefundTransfer->setUseCustomerdata(PayoneApiConstants::USE_CUSTOMER_DATA_YES);
 
         $narrativeText = $this->getFactory()->getConfig()->getNarrativeText($orderItems, $orderEntity, $data);
-        $refundTransfer->setNarrativeText($narrativeText);
+        $payoneRefundTransfer->setNarrativeText($narrativeText);
 
-        $this->getFacade()->refundPayment($refundTransfer);
+        $this->getFacade()->refundPayment($payoneRefundTransfer);
 
         return [];
     }

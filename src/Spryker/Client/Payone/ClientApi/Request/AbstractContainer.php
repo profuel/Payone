@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Payone\ClientApi\Request;
 
+use Spryker\Shared\Library\Json;
+
 abstract class AbstractContainer implements ContainerInterface
 {
 
@@ -50,7 +52,7 @@ abstract class AbstractContainer implements ContainerInterface
      */
     public function toJson()
     {
-        return json_encode($this->toArray());
+        return Json::encode($this->toArray());
     }
 
 }

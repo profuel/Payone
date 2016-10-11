@@ -124,7 +124,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
 
         if (count($responseRaw) === 0) {
             return $result;
-        } elseif ($responseRaw[0] === '%PDF-1.4') {
+        } elseif (strpos($responseRaw[0], '%PDF-') !== false) {
             return ['rawResponse' => base64_encode(implode("\n", array_values($responseRaw)))];
         }
 

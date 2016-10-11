@@ -38,12 +38,14 @@ class DirectDebit extends AbstractMapper
 
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer
      */
-    public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity)
+    public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity, OrderTransfer $orderTransfer)
     {
         $authorizationContainer = new AuthorizationContainer();
+        $authorizationContainer = $this->mapPaymentToAbstractAuthorization($paymentEntity, $authorizationContainer);
 
         return $authorizationContainer;
     }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Payone\Plugin;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
@@ -28,15 +27,13 @@ class PayoneSubFormsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer
-     *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface[]
      */
-    public function getPaymentMethodsSubForms(QuoteTransfer $quoteTransfer)
+    public function getPaymentMethodsSubForms()
     {
         $subFormsCreator = $this->pluginCountryFactory->createSubFormsCreator(Store::getInstance()->getCurrentCountry());
 
-        $paymentMethodsSubForms = $subFormsCreator->createPaymentMethodsSubForms($quoteTransfer);
+        $paymentMethodsSubForms = $subFormsCreator->createPaymentMethodsSubForms();
 
         return $paymentMethodsSubForms;
     }

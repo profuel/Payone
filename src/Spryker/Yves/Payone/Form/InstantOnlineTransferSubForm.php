@@ -21,6 +21,14 @@ class InstantOnlineTransferSubForm extends OnlineTransferSubForm
     /**
      * @return string
      */
+    public function getName()
+    {
+        return PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER;
+    }
+
+    /**
+     * @return string
+     */
     public function getPropertyPath()
     {
         return PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER;
@@ -28,24 +36,8 @@ class InstantOnlineTransferSubForm extends OnlineTransferSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
-     * @return void
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $this->addOnlineBankTransferType($builder, $options)
-            ->addBankCountry($builder, $options)
-            ->addBankAccount($builder)
-            ->addBankCode($builder)
-            ->addIBAN($builder)
-            ->addBIC($builder);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return \Spryker\Yves\Payone\Form\EPSOnlineTransferSubForm
+     * @return \Spryker\Yves\Payone\Form\EpsOnlineTransferSubForm
      */
     public function addOnlineBankTransferType(FormBuilderInterface $builder, array $options)
     {

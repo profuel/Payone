@@ -31,8 +31,12 @@ class PayoneConfig extends AbstractBundleConfig
     const PAYMENT_METHOD_POSTFINANCE_EFINANCE_ONLINE_TRANSFER = 'payonePostfinanceEfinanceOnlineTransfer';
     const PAYMENT_METHOD_POSTFINANCE_CARD_ONLINE_TRANSFER = 'payonePostfinanceCardOnlineTransfer';
     const PAYMENT_METHOD_PRZELEWY24_ONLINE_TRANSFER = 'payonePrzelewy24OnlineTransfer';
+    const PAYMENT_METHOD_PRE_PAYMENT = 'payonePrePayment';
+    const PAYMENT_METHOD_INVOICE = 'payoneInvoice';
 
     /**
+     * Fetches API request mode from config (could be 'live' or 'test').
+     *
      * @return string
      */
     public function getMode()
@@ -43,6 +47,8 @@ class PayoneConfig extends AbstractBundleConfig
     }
 
     /**
+     * Fetches default value for sequencenumber request parameter.
+     *
      * @return string
      */
     public function getEmptySequenceNumber()
@@ -53,6 +59,8 @@ class PayoneConfig extends AbstractBundleConfig
     }
 
     /**
+     * Fetches parameters that are common for all requests to Payone API.
+     *
      * @return \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     public function getRequestStandardParameter()
@@ -78,6 +86,8 @@ class PayoneConfig extends AbstractBundleConfig
     }
 
     /**
+     * Fetches reference string to identify Payone payment.
+     *
      * @param \Generated\Shared\Transfer\PayonePaymentTransfer $paymentTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
@@ -89,6 +99,8 @@ class PayoneConfig extends AbstractBundleConfig
     }
 
     /**
+     * Fetches text for account statements.
+     *
      * @param array $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
@@ -109,6 +121,8 @@ class PayoneConfig extends AbstractBundleConfig
     }
 
     /**
+     * Returns path to glossary translations file.
+     *
      * @return string
      */
     public function getTranslationFilePath()

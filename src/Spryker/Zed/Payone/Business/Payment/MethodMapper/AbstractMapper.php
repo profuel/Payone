@@ -141,11 +141,22 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
         $personalContainer->setCountry($billingAddressEntity->getCountry()->getIso2Code());
         $personalContainer->setFirstName($billingAddressEntity->getFirstName());
         $personalContainer->setLastName($billingAddressEntity->getLastName());
+        $personalContainer->setSalutation($billingAddressEntity->getSalutation());
+        $personalContainer->setCompany($billingAddressEntity->getCompany());
+        $personalContainer->setStreet(implode(' ', [$billingAddressEntity->getAddress1(), $billingAddressEntity->getAddress2()]));
+        $personalContainer->setAddressAddition($billingAddressEntity->getAddress3());
+        $personalContainer->setZip($billingAddressEntity->getZipCode());
+        $personalContainer->setCity($billingAddressEntity->getCity());
+        $personalContainer->setState($billingAddressEntity->getRegion());
+        $personalContainer->setEmail($billingAddressEntity->getEmail());
+        $personalContainer->setTelephoneNumber($billingAddressEntity->getPhone());
+        $personalContainer->setLanguage($this->getStandardParameter()->getLanguage());
     }
 
     /**
      * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer $shippingContainer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $shippingAddressEntity
+     *
      * @return void
      */
     protected function mapShippingAddressToShippingContainer(ShippingContainer $shippingContainer, SpySalesOrderAddress $shippingAddressEntity)

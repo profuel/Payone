@@ -3,22 +3,35 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Function": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Function": "tests/"
     }
   },
   "require": {
     "spryker/application": "^2.0.0",
-    "spryker/guzzle": "^2.0.0",
+    "spryker/checkout": "^2.0.0",
+    "spryker/config": "^2.0.0",
+    "spryker/country": "^2.0.0",
+    "spryker/customer": "^2.0.0",
+    "spryker/glossary": "^2.0.0",
+    "spryker/guzzle": "^2.1.0",
+    "spryker/installer": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
+    "spryker/messenger": "^2.1.0",
     "spryker/oms": "^2.0.0 || ^3.0.0",
+    "spryker/payment": "^2.0.0",
     "spryker/propel": "^2.2.0",
+    "spryker/refund": "^3.0.0",
     "spryker/sales": "^2.0.0",
-    "spryker/symfony": "^2.0.0"
+    "spryker/silex": "^2.0.0",
+    "spryker/step-engine": "^1.2.0",
+    "spryker/symfony": "^2.0.0",
+    "spryker/transfer": "^2.0.0",
+    "spryker/zed-request": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Payone bundle",
   "license": "proprietary",
@@ -26,10 +39,16 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

@@ -10,9 +10,11 @@ namespace Spryker\Zed\Payone\Business;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder;
 use Spryker\Zed\Payone\Business\Api\Adapter\Http\Guzzle;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
+use Spryker\Zed\Payone\Business\Internal\Installer;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
 use Spryker\Zed\Payone\Business\Key\HashProvider;
 use Spryker\Zed\Payone\Business\Key\UrlHmacGenerator;
@@ -167,8 +169,6 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @todo move implementation to PayoneConfig
-     *
      * @return array
      */
     protected function getAvailablePaymentMethods()
@@ -277,6 +277,30 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
         $prepayment = new Prepayment($storeConfig);
 
         return $prepayment;
+    }
+
+    /**
+     * @return \Spryker\Zed\Payone\Dependency\Facade\PayoneToGlossaryInterface
+     */
+    protected function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(PayoneDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     *
+     * @return \Spryker\Zed\Ratepay\Business\Internal\Install
+     */
+    public function createInstaller(MessengerInterface $messenger)
+    {
+        $installer = new Installer(
+            $this->getGlossaryFacade(),
+            $this->getConfig()
+        );
+        $installer->setMessenger($messenger);
+
+        return $installer;
     }
 
 }

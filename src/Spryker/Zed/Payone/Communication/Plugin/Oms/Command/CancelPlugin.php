@@ -25,13 +25,12 @@ class CancelPlugin extends AbstractPayonePlugin implements CommandByOrderInterfa
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
-     * @return array $returnArray
+     * @return array
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
         $captureTransfer = new PayoneCaptureTransfer();
 
-        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity */
         $paymentTransfer = new PayonePaymentTransfer();
         $paymentTransfer->setFkSalesOrder($orderEntity->getSpyPaymentPayones()->getFirst()->getFkSalesOrder());
         $captureTransfer->setPayment($paymentTransfer);

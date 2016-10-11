@@ -51,6 +51,30 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @api
      *
+     * @param string $invoiceTitle
+     * @param int $customerId
+     *
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
+     */
+    public function createPaymentByInvoiceTitleAndCustomerIdQuery($invoiceTitle, $customerId)
+    {
+        $query = $this->getFactory()->createPaymentPayoneQuery();
+        $query->useSpySalesOrderQuery()
+            ->filterByFkCustomer($customerId)
+            ->endUse()
+            ->useSpyPaymentPayoneDetailQuery()
+            ->filterByInvoiceTitle($invoiceTitle)
+            ->endUse()
+            ->useSpyPaymentPayoneApiLogQuery()
+            ->filterByStatus(PayoneApiConstants::RESPONSE_TYPE_APPROVED)
+            ->endUse();
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
      * @param string $fileReference
      * @param int $customerId
      *
@@ -128,14 +152,14 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @api
      *
-     * @param int $paymentId
+     * @param int $orderId
      *
      * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
      */
-    public function createPaymentById($paymentId)
+    public function createPaymentById($orderId)
     {
         $query = $this->getFactory()->createPaymentPayoneQuery();
-        $query->findByFkSalesOrder($paymentId);
+        $query->findByFkSalesOrder($orderId);
 
         return $query;
     }

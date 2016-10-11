@@ -90,6 +90,8 @@ class TransactionStatusUpdateManager
         $entity->setReceivable($request->getReceivable());
         $entity->setReminderLevel($request->getReminderlevel());
 
+        $entity->setRawRequest($request);
+
         $entity->save();
     }
 
@@ -395,8 +397,6 @@ class TransactionStatusUpdateManager
     /**
      * @param int $idSalesOrderItem
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog $statusLog
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

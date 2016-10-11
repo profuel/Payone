@@ -24,7 +24,7 @@ class PrePaymentForm extends AbstractPayoneSubForm
      */
     public function getName()
     {
-        return self::PAYMENT_PROVIDER . '_' . self::PAYMENT_METHOD;
+        return PaymentTransfer::PAYONE_PRE_PAYMENT;
     }
 
     /**
@@ -74,9 +74,17 @@ class PrePaymentForm extends AbstractPayoneSubForm
      *
      * @return $this
      */
-    protected function addHiddenInputs(FormBuilderInterface $builder)
+    protected function addLabel(FormBuilderInterface $builder)
     {
-        // TODO: provide implementation
+        $builder->add(
+            self::FIELD_PAYMENT_METHOD,
+            'hidden',
+            [
+                'label' => false,
+                'required' => false,
+                'data' => []
+            ]
+        );
 
         return $this;
     }

@@ -17,7 +17,7 @@ class PayoneGiropayOnlineTransferSubFormPlugin extends AbstractPlugin implements
 {
 
     /**
-     * @return \Spryker\Yves\Payone\Form\EPSOnlineTransferSubForm
+     * @return \Spryker\Yves\Payone\Form\EpsOnlineTransferSubForm
      */
     public function createSubForm()
     {
@@ -25,7 +25,7 @@ class PayoneGiropayOnlineTransferSubFormPlugin extends AbstractPlugin implements
     }
 
     /**
-     * @return \Spryker\Yves\Payone\Form\DataProvider\EPSOnlineTransferDataProvider
+     * @return \Spryker\Yves\Payone\Form\DataProvider\EpsOnlineTransferDataProvider
      */
     public function createSubFormDataProvider()
     {

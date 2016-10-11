@@ -9,6 +9,7 @@ namespace Spryker\Yves\Payone\Form\DataProvider;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\Payone\Form\InstantOnlineTransferSubForm;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
@@ -49,10 +50,7 @@ class InstantOnlineTransferDataProvider implements StepEngineFormDataProviderInt
     protected function getBankCountries()
     {
         return [
-            'DE' => 'Germany',
-            'AT' => 'Austria',
-            'CH' => 'Switzerland',
-            'NL' => 'Netherlands',
+            Store::getInstance()->getCurrentCountry() => Store::getInstance()->getCurrentCountry()
         ];
     }
 

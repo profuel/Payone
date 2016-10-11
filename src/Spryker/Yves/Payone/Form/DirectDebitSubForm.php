@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Yves\Payone\Form\Constraint\ManageMandate;
-use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -40,7 +39,7 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
      */
     public function getName()
     {
-        return self::PAYMENT_PROVIDER . '_' . self::PAYMENT_METHOD;
+        return PaymentTransfer::PAYONE_DIRECT_DEBIT;
     }
 
     /**
@@ -70,8 +69,7 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
 
         $resolver->setDefaults([
             'data_class' => PayonePaymentDirectDebitTransfer::class,
-            SubFormInterface::OPTIONS_FIELD_NAME => [],
-        ]);
+        ])->setRequired(self::OPTIONS_FIELD_NAME);
     }
 
     /**
@@ -254,7 +252,7 @@ class DirectDebitSubForm extends AbstractPayoneSubForm
      */
     protected function createManageMandateConstraint()
     {
-        return new ManageMandate(['payoneClient' => $this->payoneClient]);
+        return new ManageMandate(['payoneClient' => $this->payoneClient, 'groups' => $this->getPropertyPath()]);
     }
 
 }

@@ -10,13 +10,14 @@ namespace Spryker\Zed\Payone\Business\Payment;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
+use Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
@@ -32,6 +33,7 @@ use Spryker\Zed\Payone\Business\Api\Call\CreditCardCheck;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
 use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
@@ -41,6 +43,7 @@ use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\GetInvoiceResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use Spryker\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
@@ -170,15 +173,15 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
-    public function authorizePayment($idPayment)
+    public function authorizePayment(OrderTransfer $orderTransfer)
     {
-        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $paymentEntity = $this->getPaymentEntity($orderTransfer->getIdSalesOrder());
         $paymentMethodMapper = $this->getPaymentMethodMapper($paymentEntity);
-        $requestContainer = $paymentMethodMapper->mapPaymentToAuthorization($paymentEntity);
+        $requestContainer = $paymentMethodMapper->mapPaymentToAuthorization($paymentEntity, $orderTransfer);
         $responseContainer = $this->performAuthorizationRequest($paymentEntity, $requestContainer);
 
         return $responseContainer;
@@ -213,8 +216,8 @@ class PaymentManager implements PaymentManagerInterface
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new AuthorizationResponseContainer($rawResponse);
         $this->updatePaymentAfterAuthorization($paymentEntity, $responseContainer);
-        $this->updatePaymentPayoneDetailAfterAuthorization($paymentEntity, $responseContainer);
         $this->updateApiLogAfterAuthorization($apiLogEntity, $responseContainer);
+        $this->updatePaymentDetailAfterAuthorization($paymentEntity, $responseContainer);
 
         return $responseContainer;
     }
@@ -230,13 +233,13 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param int $idPayment
+     * @param int $orderId
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
-    protected function getPaymentEntity($idPayment)
+    protected function getPaymentEntity($orderId)
     {
-        return $this->queryContainer->createPaymentById($idPayment)->findOne();
+        return $this->queryContainer->createPaymentById($orderId)->findOne();
     }
 
     /**
@@ -251,6 +254,12 @@ class PaymentManager implements PaymentManagerInterface
 
         $requestContainer = $paymentMethodMapper->mapPaymentToCapture($paymentEntity);
         $requestContainer->setAmount($captureTransfer->getAmount());
+
+        if (!empty($captureTransfer->getSettleaccount())) {
+            $businnessContainer = new BusinessContainer();
+            $businnessContainer->setSettleAccount($captureTransfer->getSettleaccount());
+            $requestContainer->setBusiness($businnessContainer);
+        }
 
         $this->setStandardParameter($requestContainer);
 
@@ -308,7 +317,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer
      */
     public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer)
     {
@@ -320,13 +329,18 @@ class PaymentManager implements PaymentManagerInterface
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new BankAccountCheckResponseContainer($rawResponse);
 
-        return $responseContainer;
+        $bankAccountCheckTransfer->setErrorCode($responseContainer->getErrorcode());
+        $bankAccountCheckTransfer->setCustomerErrorMessage($responseContainer->getCustomermessage());
+        $bankAccountCheckTransfer->setStatus($responseContainer->getStatus());
+        $bankAccountCheckTransfer->setInternalErrorMessage($responseContainer->getErrormessage());
+
+        return $bankAccountCheckTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $manageMandateTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
      */
     public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer)
     {
@@ -334,16 +348,26 @@ class PaymentManager implements PaymentManagerInterface
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_DIRECT_DEBIT);
         $requestContainer = $paymentMethodMapper->mapManageMandate($manageMandateTransfer);
         $this->setStandardParameter($requestContainer);
+
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new ManageMandateResponseContainer($rawResponse);
 
-        return $responseContainer;
+        $manageMandateTransfer->setErrorCode($responseContainer->getErrorcode());
+        $manageMandateTransfer->setCustomerErrorMessage($responseContainer->getCustomermessage());
+        $manageMandateTransfer->setStatus($responseContainer->getStatus());
+        $manageMandateTransfer->setInternalErrorMessage($responseContainer->getErrormessage());
+        $manageMandateTransfer->setMandateIdentification($responseContainer->getMandateIdentification());
+        $manageMandateTransfer->setMandateText($responseContainer->getMandateText());
+        $manageMandateTransfer->setIban($responseContainer->getIban());
+        $manageMandateTransfer->setBic($responseContainer->getBic());
+
+        return $manageMandateTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
      */
     public function getFile(PayoneGetFileTransfer $getFileTransfer)
     {
@@ -364,7 +388,59 @@ class PaymentManager implements PaymentManagerInterface
             $this->setAccessDeniedError($responseContainer);
         }
 
-        return $responseContainer;
+        $getFileTransfer->setRawResponse($responseContainer->getRawResponse());
+        $getFileTransfer->setStatus($responseContainer->getStatus());
+        $getFileTransfer->setErrorCode($responseContainer->getErrorcode());
+        $getFileTransfer->setCustomerErrorMessage($responseContainer->getCustomermessage());
+        $getFileTransfer->setInternalErrorMessage($responseContainer->getErrormessage());
+
+        return $getFileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
+     */
+    public function getInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer)
+    {
+        $responseContainer = new GetInvoiceResponseContainer();
+        $paymentEntity = $this->findPaymentByInvoiceTitleAndCustomerId(
+            $getInvoiceTransfer->getReference(),
+            $getInvoiceTransfer->getCustomerId()
+        );
+
+        if ($paymentEntity) {
+            /** @var \Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice $paymentMethodMapper */
+            $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper(PayoneApiConstants::PAYMENT_METHOD_INVOICE);
+            $requestContainer = $paymentMethodMapper->mapGetInvoice($getInvoiceTransfer);
+            $this->setStandardParameter($requestContainer);
+            $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
+            $responseContainer->init($rawResponse);
+        } else {
+            $this->setAccessDeniedError($responseContainer);
+        }
+
+        $getInvoiceTransfer->setRawResponse($responseContainer->getRawResponse());
+        $getInvoiceTransfer->setStatus($responseContainer->getStatus());
+        $getInvoiceTransfer->setErrorCode($responseContainer->getErrorcode());
+        $getInvoiceTransfer->setInternalErrorMessage($responseContainer->getErrormessage());
+
+        return $getInvoiceTransfer;
+    }
+
+    /**
+     * @param int $transactionId
+     *
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetInvoiceResponseContainer
+     */
+    public function getInvoiceTitle($transactionId)
+    {
+        return implode('-', [
+            PayoneApiConstants::INVOICE_TITLE_PREFIX_INVOICE,
+            $transactionId,
+            0
+        ]);
     }
 
     /**
@@ -416,35 +492,12 @@ class PaymentManager implements PaymentManagerInterface
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer $responseContainer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function updatePaymentAfterAuthorization(SpyPaymentPayone $paymentEntity, AuthorizationResponseContainer $responseContainer)
     {
         $paymentEntity->setTransactionId($responseContainer->getTxid());
         $paymentEntity->save();
-    }
-
-    /**
-     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
-     * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer $responseContainer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return void
-     */
-    protected function updatePaymentPayoneDetailAfterAuthorization(SpyPaymentPayone $paymentEntity, AuthorizationResponseContainer $responseContainer)
-    {
-        if (!$responseContainer->getMandateIdentification()) {
-            return;
-        }
-        $paymentDetail = $paymentEntity->getSpyPaymentPayoneDetail();
-        if (!$paymentDetail) {
-            return;
-        }
-        $paymentDetail->setMandateIdentification($responseContainer->getMandateIdentification());
-        $paymentDetail->save();
     }
 
     /**
@@ -455,6 +508,17 @@ class PaymentManager implements PaymentManagerInterface
     protected function findPaymentByTransactionId($transactionId)
     {
         return $this->queryContainer->createPaymentByTransactionIdQuery($transactionId)->findOne();
+    }
+
+    /**
+     * @param string $invoiceTitle
+     * @param int $customerId
+     *
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
+     */
+    protected function findPaymentByInvoiceTitleAndCustomerId($invoiceTitle, $customerId)
+    {
+        return $this->queryContainer->createPaymentByInvoiceTitleAndCustomerIdQuery($invoiceTitle, $customerId)->findOne();
     }
 
     /**
@@ -471,8 +535,6 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer $container
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog
      */
@@ -498,8 +560,6 @@ class PaymentManager implements PaymentManagerInterface
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
      * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer $responseContainer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function updateApiLogAfterAuthorization(SpyPaymentPayoneApiLog $apiLogEntity, AuthorizationResponseContainer $responseContainer)
@@ -512,14 +572,14 @@ class PaymentManager implements PaymentManagerInterface
         $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
         $apiLogEntity->setRedirectUrl($responseContainer->getRedirecturl());
         $apiLogEntity->setSequenceNumber(0);
+
+        $apiLogEntity->setRawResponse(json_encode($responseContainer->toArray()));
         $apiLogEntity->save();
     }
 
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
      * @param \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer $responseContainer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -530,14 +590,14 @@ class PaymentManager implements PaymentManagerInterface
         $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
         $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
         $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
+
+        $apiLogEntity->setRawResponse(json_encode($responseContainer->toArray()));
         $apiLogEntity->save();
     }
 
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
      * @param \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer $responseContainer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -548,14 +608,14 @@ class PaymentManager implements PaymentManagerInterface
         $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
         $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
         $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
+
+        $apiLogEntity->setRawResponse(json_encode($responseContainer->toArray()));
         $apiLogEntity->save();
     }
 
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
      * @param \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer $responseContainer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -566,6 +626,8 @@ class PaymentManager implements PaymentManagerInterface
         $apiLogEntity->setErrorMessageInternal($responseContainer->getErrormessage());
         $apiLogEntity->setErrorMessageUser($responseContainer->getCustomermessage());
         $apiLogEntity->setErrorCode($responseContainer->getErrorcode());
+
+        $apiLogEntity->setRawResponse(json_encode($responseContainer->toArray()));
         $apiLogEntity->save();
     }
 
@@ -620,7 +682,7 @@ class PaymentManager implements PaymentManagerInterface
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
-     * @return \Generated\Shared\Transfer\PayonePaymentLogTransfer[]
+     * @return \Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer
      */
     public function getPaymentLogs(ObjectCollection $orders)
     {
@@ -648,7 +710,13 @@ class PaymentManager implements PaymentManagerInterface
 
         ksort($logs);
 
-        return $logs;
+        $payonePaymentLogCollectionTransfer = new PayonePaymentLogCollectionTransfer();
+
+        foreach ($logs as $log) {
+            $payonePaymentLogCollectionTransfer->addPaymentLogs($log);
+        }
+
+        return $payonePaymentLogCollectionTransfer;
     }
 
     /**
@@ -697,7 +765,7 @@ class PaymentManager implements PaymentManagerInterface
         // Return early if we don't need the iban or bic data
         $paymentMethod = $paymentTransfer->getPaymentMethod();
         $whiteList = [
-            PayoneApiConstants::PAYMENT_METHOD_PAYPAL,
+            PayoneApiConstants::PAYMENT_METHOD_E_WALLET,
             PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO,
         ];
 
@@ -753,6 +821,36 @@ class PaymentManager implements PaymentManagerInterface
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
         $paymentDetailEntity->fromArray($paymentDataTransfer->toArray());
+
+        $paymentDetailEntity->save();
+    }
+
+    /**
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer $responseContainer
+     *
+     * @return void
+     */
+    protected function updatePaymentDetailAfterAuthorization(SpyPaymentPayone $paymentEntity, AuthorizationResponseContainer $responseContainer)
+    {
+        $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
+
+        $paymentDetailEntity->setClearingBankAccountHolder($responseContainer->getClearingBankaccountholder());
+        $paymentDetailEntity->setClearingBankCountry($responseContainer->getClearingBankcountry());
+        $paymentDetailEntity->setClearingBankAccount($responseContainer->getClearingBankaccount());
+        $paymentDetailEntity->setClearingBankCode($responseContainer->getClearingBankcode());
+        $paymentDetailEntity->setClearingBankIban($responseContainer->getClearingBankiban());
+        $paymentDetailEntity->setClearingBankBic($responseContainer->getClearingBankbic());
+        $paymentDetailEntity->setClearingBankCity($responseContainer->getClearingBankcity());
+        $paymentDetailEntity->setClearingBankName($responseContainer->getClearingBankname());
+
+        if ($responseContainer->getMandateIdentification()) {
+            $paymentDetailEntity->setMandateIdentification($responseContainer->getMandateIdentification());
+        }
+
+        if ($paymentEntity->getPaymentMethod() == PayoneApiConstants::PAYMENT_METHOD_INVOICE) {
+            $paymentDetailEntity->setInvoiceTitle($this->getInvoiceTitle($paymentEntity->getTransactionId()));
+        }
 
         $paymentDetailEntity->save();
     }

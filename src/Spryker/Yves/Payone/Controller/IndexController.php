@@ -9,10 +9,10 @@ namespace Spryker\Yves\Payone\Controller;
 
 use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
-use Pyz\Yves\Checkout\Plugin\Provider\CheckoutControllerProvider;
-use Pyz\Yves\Customer\Plugin\Provider\CustomerControllerProvider;
 use Spryker\Yves\Application\Controller\AbstractController;
+use Spryker\Yves\Payone\Plugin\Provider\PayoneControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -53,16 +53,48 @@ class IndexController extends AbstractController
         $customerTransfer = $customerClient->getCustomer();
 
         if (!$customerTransfer) {
-            return $this->redirectResponseInternal(CustomerControllerProvider::ROUTE_LOGIN);
+            return $this->redirectResponseInternal(PayoneControllerProvider::ROUTE_LOGIN);
         }
 
         $getFileTransfer = new PayoneGetFileTransfer();
         $getFileTransfer->setReference($request->query->get('id'));
         $getFileTransfer->setCustomerId($customerTransfer->getIdCustomer());
+
         $response = $this->getClient()->getFile($getFileTransfer);
 
         if ($response->getStatus() === 'ERROR') {
             return $this->viewResponse(['errormessage' => $response->getCustomerErrorMessage()]);
+        }
+
+        $callback = function () use ($response) {
+            echo base64_decode($response->getRawResponse());
+        };
+
+        return $this->streamedResponse($callback, 200, ["Content-type" => "application/pdf"]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function getInvoiceAction(Request $request)
+    {
+        $customerClient = $this->getFactory()->createCustomerClient();
+        $customerTransfer = $customerClient->getCustomer();
+
+        if (!$customerTransfer) {
+            return $this->redirectResponseInternal(PayoneControllerProvider::ROUTE_LOGIN);
+        }
+
+        $getInvoiceTransfer = new PayoneGetInvoiceTransfer();
+        $getInvoiceTransfer->setReference($request->query->get('id'));
+        $getInvoiceTransfer->setCustomerId($customerTransfer->getIdCustomer());
+
+        $response = $this->getClient()->getInvoice($getInvoiceTransfer);
+
+        if ($response->getStatus() === 'ERROR') {
+            return $this->viewResponse(['errormessage' => $response->getInternalErrorMessage()]);
         }
 
         $callback = function () use ($response) {
@@ -90,7 +122,7 @@ class IndexController extends AbstractController
             $response = $this->getClient()->cancelRedirect($cancelRedirectTransfer);
         }
 
-        return $this->redirectResponseInternal(CheckoutControllerProvider::CHECKOUT_PAYMENT);
+        return $this->redirectResponseInternal(PayoneControllerProvider::CHECKOUT_PAYMENT);
     }
 
     /**

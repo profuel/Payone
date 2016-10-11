@@ -35,6 +35,16 @@
         <column name="bic" type="VARCHAR" size="11"/>
 
         <column name="mandate_identification" type="VARCHAR" size="35"/>
+        <column name="invoice_title" type="VARCHAR" size="16"/>
+
+        <column name="clearing_bank_account_holder" type="VARCHAR" size="35"/>
+        <column name="clearing_bank_country" type="VARCHAR" size="2"/>
+        <column name="clearing_bank_account" type="VARCHAR" size="26"/>
+        <column name="clearing_bank_code" type="VARCHAR" size="11"/>
+        <column name="clearing_bank_iban" type="VARCHAR" size="35"/>
+        <column name="clearing_bank_bic" type="VARCHAR" size="11"/>
+        <column name="clearing_bank_city" type="VARCHAR" size="50"/>
+        <column name="clearing_bank_name" type="VARCHAR" size="50"/>
 
         <column name="type" type="VARCHAR" size="3"/>
 
@@ -66,6 +76,7 @@
         <column name="redirect_url" type="LONGVARCHAR"/>
 
         <column name="raw_request" type="LONGVARCHAR"/>
+        <column name="raw_response" type="LONGVARCHAR"/>
 
         <foreign-key name="spy_payment_payone_api_log-fk_payment_payone" foreignTable="spy_payment_payone">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
@@ -105,6 +116,8 @@
         <foreign-key name="spy_payment_payone_transaction_status_log-fk_payment_payone" foreignTable="spy_payment_payone">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
         </foreign-key>
+
+        <column name="raw_request" type="LONGVARCHAR"/>
 
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_payment_payone_transaction_status_log_pk_seq"/>

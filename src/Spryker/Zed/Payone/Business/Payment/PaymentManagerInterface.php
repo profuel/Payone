@@ -9,12 +9,12 @@ namespace Spryker\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -45,11 +45,11 @@ interface PaymentManagerInterface
     public function debitPayment($idPayment);
 
     /**
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
-    public function authorizePayment($idPayment);
+    public function authorizePayment(OrderTransfer $orderTransfer);
 
     /**
      * @param int $idPayment
@@ -75,28 +75,35 @@ interface PaymentManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer $bankAccountCheckTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\BankAccountCheckResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer
      */
     public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $manageMandateTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
      */
     public function manageMandate(PayoneManageMandateTransfer $manageMandateTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\GetFileResponseContainer
+     * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
      */
     public function getFile(PayoneGetFileTransfer $getFileTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
+     */
+    public function getInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer);
+
+    /**
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer
      */
     public function getPaymentLogs(ObjectCollection $orders);
 

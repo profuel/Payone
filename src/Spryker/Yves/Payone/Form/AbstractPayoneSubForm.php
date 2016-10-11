@@ -20,7 +20,7 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
 
     const PAYMENT_PROVIDER = PayoneConstants::PROVIDER_NAME;
 
-    const FIELD_PRE_PAYMENT_METHOD = 'paymentMethod';
+    const FIELD_PAYMENT_METHOD = 'paymentMethod';
     const FIELD_PAYONE_CREDENTIALS_MID = 'payone_mid';
     const FIELD_PAYONE_CREDENTIALS_AID = 'payone_aid';
     const FIELD_PAYONE_CREDENTIALS_PORTAL_ID = 'payone_portal_id';
@@ -39,28 +39,6 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
     public function __construct(PayoneClientInterface $payoneClient)
     {
         $this->payoneClient = $payoneClient;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addLabel(FormBuilderInterface $builder)
-    {
-        $builder->add(
-            self::FIELD_PRE_PAYMENT_METHOD,
-            'choice',
-            [
-                'label'    => false,
-                'required' => true,
-                'choices' => [
-                    'prepayment' => 'Pre Payment'
-                ]
-            ]
-        );
-
-        return $this;
     }
 
     /**

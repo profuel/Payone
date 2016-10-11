@@ -21,6 +21,14 @@ class GiropayOnlineTransferSubForm extends OnlineTransferSubForm
     /**
      * @return string
      */
+    public function getName()
+    {
+        return PaymentTransfer::PAYONE_GIROPAY_ONLINE_TRANSFER;
+    }
+
+    /**
+     * @return string
+     */
     public function getPropertyPath()
     {
         return PaymentTransfer::PAYONE_GIROPAY_ONLINE_TRANSFER;
@@ -36,14 +44,14 @@ class GiropayOnlineTransferSubForm extends OnlineTransferSubForm
     {
         parent::buildForm($builder, $options);
 
-        $this->addIBAN($builder)
-            ->addBIC($builder);
+        $this->addIban($builder)
+            ->addBic($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Yves\Payone\Form\EPSOnlineTransferSubForm
+     * @return \Spryker\Yves\Payone\Form\EpsOnlineTransferSubForm
      */
     public function addOnlineBankTransferType(FormBuilderInterface $builder, array $options)
     {

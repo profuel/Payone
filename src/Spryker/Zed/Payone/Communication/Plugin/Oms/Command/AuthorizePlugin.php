@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Payone\Communication\Plugin\Oms\Command;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 
@@ -16,7 +15,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
+class AuthorizePlugin extends AbstractPayonePlugin implements CommandByOrderInterface
 {
 
     /**
@@ -24,13 +23,12 @@ class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
-     * @return array $returnArray
+     * @return array
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity */
-        $paymentEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
-        $this->getFacade()->authorizePayment($paymentEntity->getFkSalesOrder());
+        $orderTransfer = $this->getOrderTransfer($orderEntity);
+        $this->getFacade()->authorizePayment($orderTransfer);
 
         return [];
     }

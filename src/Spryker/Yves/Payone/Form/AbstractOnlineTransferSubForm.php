@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Payone\Form;
 
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayonePaymentOnlinetransferTransfer;
 use Spryker\Shared\Payone\PayoneConstants;
@@ -39,7 +40,7 @@ abstract class AbstractOnlineTransferSubForm extends AbstractPayoneSubForm
      */
     public function getName()
     {
-        return static::PAYMENT_PROVIDER . '_' . static::PAYMENT_METHOD;
+        return PaymentTransfer::PAYONE_ONLINE_TRANSFER;
     }
 
     /**
@@ -61,7 +62,7 @@ abstract class AbstractOnlineTransferSubForm extends AbstractPayoneSubForm
 
         $resolver->setDefaults([
             'data_class' => PayonePaymentOnlinetransferTransfer::class,
-            'constraints'=> [
+            'constraints' => [
                 // Add Callback constraint for bank account check in ancestor classes
                 // new Callback(['methods' => [[$this, 'checkBankAccount']]])
             ],

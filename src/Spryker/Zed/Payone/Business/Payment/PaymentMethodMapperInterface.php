@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payone\Business\Payment;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Spryker\Zed\Payone\Business\Key\UrlHmacGenerator;
@@ -43,10 +44,11 @@ interface PaymentMethodMapperInterface
 
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer
      */
-    public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity);
+    public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity, OrderTransfer $orderTransfer);
 
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity

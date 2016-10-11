@@ -10,14 +10,15 @@ namespace Spryker\Zed\Payone\Communication\Controller;
 use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
 use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
 use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+use Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
@@ -33,11 +34,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function statusUpdateAction(PayoneTransactionStatusUpdateTransfer $transactionStatus)
     {
-        $response = $this->getFacade()->processTransactionStatusUpdate($transactionStatus);
+        $transactionStatus = $this->getFacade()->processTransactionStatusUpdate($transactionStatus);
 
         $transactionId = $transactionStatus->getTxid();
-        $this->triggerEventsOnSuccess($response, $transactionId, $transactionStatus->toArray());
-        $transactionStatus->setResponse($response->getStatus());
+        $this->triggerEventsOnSuccess($transactionId, $transactionStatus->toArray());
 
         return $transactionStatus;
     }
@@ -55,33 +55,33 @@ class GatewayController extends AbstractGatewayController
             $this->getFactory()->getConfig()->getRequestStandardParameter()->getKey()
         );
 
-        if ($cancelRedirectTransfer->getUrlHmac() == $hash) {
+        if ($cancelRedirectTransfer->getUrlHmac() === $hash) {
             $orderItems = SpySalesOrderItemQuery::create()
                 ->useOrderQuery()
                 ->filterByOrderReference($cancelRedirectTransfer->getOrderReference())
                 ->endUse()
                 ->find();
 
-            $this->getFactory()->getOmsFacade()->triggerEvent('RedirectCancelled', $orderItems, []);
+            $this->getFactory()->getOmsFacade()->triggerEvent('cancel redirect', $orderItems, []);
         }
 
         return $cancelRedirectTransfer;
     }
 
     /**
-     * @param \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse $response
      * @param int $transactionId
      * @param array $dataArray
      *
+     * @internal param TransactionStatusResponse $response
+     *
      * @return void
      */
-    protected function triggerEventsOnSuccess(TransactionStatusResponse $response, $transactionId, array $dataArray)
+    protected function triggerEventsOnSuccess($transactionId, array $dataArray)
     {
-        if (!$response->isSuccess()) {
+        if (!$dataArray['isSuccess']) {
             return;
         }
 
-        //TODO: Refactor as per CD-380
         $orderItems = SpySalesOrderItemQuery::create()
             ->useOrderQuery()
             ->useSpyPaymentPayoneQuery()
@@ -103,12 +103,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function bankAccountCheckAction(PayoneBankAccountCheckTransfer $bankAccountCheck)
     {
-        $response = $this->getFacade()->bankAccountCheck($bankAccountCheck);
-        $bankAccountCheck->setErrorCode($response->getErrorcode());
-        $bankAccountCheck->setCustomerErrorMessage($response->getCustomermessage());
-        $bankAccountCheck->setStatus($response->getStatus());
-        $bankAccountCheck->setInternalErrorMessage($response->getErrormessage());
-        return $bankAccountCheck;
+        return $this->getFacade()->bankAccountCheck($bankAccountCheck);
     }
 
     /**
@@ -118,16 +113,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function manageMandateAction(PayoneManageMandateTransfer $manageMandateTransfer)
     {
-        $response = $this->getFacade()->manageMandate($manageMandateTransfer);
-        $manageMandateTransfer->setErrorCode($response->getErrorcode());
-        $manageMandateTransfer->setCustomerErrorMessage($response->getCustomermessage());
-        $manageMandateTransfer->setStatus($response->getStatus());
-        $manageMandateTransfer->setInternalErrorMessage($response->getErrormessage());
-        $manageMandateTransfer->setMandateIdentification($response->getMandateIdentification());
-        $manageMandateTransfer->setMandateText($response->getMandateText());
-        $manageMandateTransfer->setIban($response->getIban());
-        $manageMandateTransfer->setBic($response->getBic());
-        return $manageMandateTransfer;
+        return $this->getFacade()->manageMandate($manageMandateTransfer);
     }
 
     /**
@@ -137,13 +123,17 @@ class GatewayController extends AbstractGatewayController
      */
     public function getFileAction(PayoneGetFileTransfer $getFileTransfer)
     {
-        $response = $this->getFacade()->getFile($getFileTransfer);
-        $getFileTransfer->setRawResponse($response->getRawResponse());
-        $getFileTransfer->setStatus($response->getStatus());
-        $getFileTransfer->setErrorCode($response->getErrorcode());
-        $getFileTransfer->setCustomerErrorMessage($response->getCustomermessage());
-        $getFileTransfer->setInternalErrorMessage($response->getErrormessage());
-        return $getFileTransfer;
+        return $this->getFacade()->getFile($getFileTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
+     */
+    public function getInvoiceAction(PayoneGetInvoiceTransfer $getInvoiceTransfer)
+    {
+        return $this->getFacade()->getInvoice($getInvoiceTransfer);
     }
 
     /**

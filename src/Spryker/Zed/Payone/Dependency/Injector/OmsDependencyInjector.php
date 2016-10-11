@@ -15,6 +15,7 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\AuthorizePlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CancelPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CapturePlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CaptureWithSettlementPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\PreAuthorizePlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\RefundPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\AuthorizationIsApprovedPlugin;
@@ -23,12 +24,15 @@ use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\AuthorizationIsRedirec
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\CaptureIsApprovedPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsAppointed;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsCapture;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsOverpaid;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsPaid;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsRefund;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreauthorizationIsApprovedPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreauthorizationIsErrorPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreauthorizationIsRedirectPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsUnderPaid;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsApprovedPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsErrorPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsRedirectPlugin;
 use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsApprovedPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsPossiblePlugin;
 
 class OmsDependencyInjector extends AbstractDependencyInjector
 {
@@ -59,6 +63,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
                 ->add(new AuthorizePlugin(), 'Payone/Authorize')
                 ->add(new CancelPlugin(), 'Payone/Cancel')
                 ->add(new CapturePlugin(), 'Payone/Capture')
+                ->add(new CaptureWithSettlementPlugin(), 'Payone/CaptureWithSettlement')
                 ->add(new RefundPlugin(), 'Payone/Refund');
 
             return $commandCollection;
@@ -76,17 +81,20 @@ class OmsDependencyInjector extends AbstractDependencyInjector
     {
         $container->extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
             $conditionCollection
-                ->add(new PreauthorizationIsApprovedPlugin(), 'Payone/PreauthorizationIsApprovedPlugin')
+                ->add(new PreAuthorizationIsApprovedPlugin(), 'Payone/PreAuthorizationIsApprovedPlugin')
                 ->add(new AuthorizationIsApprovedPlugin(), 'Payone/AuthorizationIsApprovedPlugin')
                 ->add(new CaptureIsApprovedPlugin(), 'Payone/CaptureIsApprovedPlugin')
                 ->add(new RefundIsApprovedPlugin(), 'Payone/RefundIsApprovedPlugin')
-                ->add(new PreauthorizationIsErrorPlugin(), 'Payone/PreauthorizationIsErrorPlugin')
+                ->add(new RefundIsPossiblePlugin(), 'Payone/RefundIsPossiblePlugin')
+                ->add(new PreAuthorizationIsErrorPlugin(), 'Payone/PreAuthorizationIsErrorPlugin')
                 ->add(new AuthorizationIsErrorPlugin(), 'Payone/AuthorizationIsErrorPlugin')
-                ->add(new PreauthorizationIsRedirectPlugin(), 'Payone/PreauthorizationIsRedirectPlugin')
+                ->add(new PreAuthorizationIsRedirectPlugin(), 'Payone/PreAuthorizationIsRedirectPlugin')
                 ->add(new AuthorizationIsRedirectPlugin(), 'Payone/AuthorizationIsRedirectPlugin')
                 ->add(new PaymentIsAppointed(), 'Payone/PaymentIsAppointed')
                 ->add(new PaymentIsCapture(), 'Payone/PaymentIsCapture')
                 ->add(new PaymentIsPaid(), 'Payone/PaymentIsPaid')
+                ->add(new PaymentIsUnderPaid(), 'Payone/PaymentIsUnderPaid')
+                ->add(new PaymentIsOverpaid(), 'Payone/PaymentIsOverpaid')
                 ->add(new PaymentIsRefund(), 'Payone/PaymentIsRefund');
 
             return $conditionCollection;

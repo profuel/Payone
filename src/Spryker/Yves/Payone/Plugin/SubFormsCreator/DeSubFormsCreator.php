@@ -8,32 +8,31 @@
 namespace Spryker\Yves\Payone\Plugin\SubFormsCreator;
 
 use Generated\Shared\Transfer\PaymentTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Payone\Plugin\PayoneGiropayOnlineTransferSubFormPlugin;
 
 class DeSubFormsCreator extends AbstractSubFormsCreator implements SubFormsCreatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $params
-     *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface[]
      */
-    public function createPaymentMethodsSubForms(QuoteTransfer $quoteTransfer, $params = [])
+    public function createPaymentMethodsSubForms()
     {
         return [
-            PaymentTransfer::PAYONE_CREDIT_CARD => $this->createPayoneCreditCardSubFormPlugin($quoteTransfer),
-            PaymentTransfer::PAYONE_GIROPAY_ONLINE_TRANSFER => $this->createPayoneGiropayOnlineTransferSubFormPlugin($quoteTransfer),
+            PaymentTransfer::PAYONE_CREDIT_CARD => $this->createPayoneCreditCardSubFormPlugin(),
+            PaymentTransfer::PAYONE_DIRECT_DEBIT => $this->createPayoneDirectDebitSubFormPlugin(),
+            PaymentTransfer::PAYONE_PRE_PAYMENT => $this->createPayonePrePaymentSubFormPlugin(),
+            PaymentTransfer::PAYONE_INVOICE => $this->createPayoneInvoiceSubFormPlugin(),
+            PaymentTransfer::PAYONE_E_WALLET => $this->createEWalletSubFormPlugin(),
+            PaymentTransfer::PAYONE_GIROPAY_ONLINE_TRANSFER => $this->createPayoneGiropayOnlineTransferSubFormPlugin(),
+            PaymentTransfer::PAYONE_INSTANT_ONLINE_TRANSFER => $this->createPayoneInstantOnlineTransferSubFormPlugin(),
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer
-     *
      * @return \Spryker\Yves\Payone\Plugin\PayoneGiropayOnlineTransferSubFormPlugin
      */
-    protected function createPayoneGiropayOnlineTransferSubFormPlugin(QuoteTransfer $quoteTransfer)
+    protected function createPayoneGiropayOnlineTransferSubFormPlugin()
     {
         return new PayoneGiropayOnlineTransferSubFormPlugin();
     }

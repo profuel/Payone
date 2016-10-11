@@ -25,7 +25,7 @@ class EWalletSubForm extends AbstractPayoneSubForm
      */
     public function getName()
     {
-        return self::PAYMENT_PROVIDER . '_' . self::PAYMENT_METHOD;
+        return PaymentTransfer::PAYONE_E_WALLET;
     }
 
     /**
@@ -81,7 +81,7 @@ class EWalletSubForm extends AbstractPayoneSubForm
             self::FIELD_WALLET_TYPE,
             'choice',
             [
-                'label'    => false,
+                'label' => false,
                 'required' => true,
                 'choices' => [
                     'PPE' => 'PayPal'

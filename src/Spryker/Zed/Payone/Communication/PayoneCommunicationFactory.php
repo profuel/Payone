@@ -27,11 +27,19 @@ class PayoneCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payone\Dependency\Facade\PayoneToSalesAggregatorInterface
+     * @return \Spryker\Zed\Payone\Dependency\Facade\PayoneToSalesInterface
      */
-    public function getSalesAggregatorFacade()
+    public function getSalesFacade()
     {
-        return $this->getProvidedDependency(PayoneDependencyProvider::FACADE_SALES_AGGREGATOR);
+        return $this->getProvidedDependency(PayoneDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payone\Dependency\Facade\PayoneToRefundInterface
+     */
+    public function getRefundFacade()
+    {
+        return $this->getProvidedDependency(PayoneDependencyProvider::FACADE_REFUND);
     }
 
     /**

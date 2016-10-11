@@ -11,21 +11,23 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Payone\Form\CreditCardSubForm;
 use Spryker\Yves\Payone\Form\DataProvider\CreditCardDataProvider;
 use Spryker\Yves\Payone\Form\DataProvider\DirectDebitDataProvider;
-use Spryker\Yves\Payone\Form\DataProvider\EPSOnlineTransferDataProvider;
+use Spryker\Yves\Payone\Form\DataProvider\EpsOnlineTransferDataProvider;
 use Spryker\Yves\Payone\Form\DataProvider\EWalletDataProvider;
 use Spryker\Yves\Payone\Form\DataProvider\GiropayOnlineTransferDataProvider;
 use Spryker\Yves\Payone\Form\DataProvider\IdealOnlineTransferDataProvider;
 use Spryker\Yves\Payone\Form\DataProvider\InstantOnlineTransferDataProvider;
+use Spryker\Yves\Payone\Form\DataProvider\InvoiceDataProvider;
 use Spryker\Yves\Payone\Form\DataProvider\PostfinanceCardOnlineTransferDataProvider;
 use Spryker\Yves\Payone\Form\DataProvider\PostfinanceEfinanceOnlineTransferDataProvider;
 use Spryker\Yves\Payone\Form\DataProvider\PrePaymentDataProvider;
 use Spryker\Yves\Payone\Form\DataProvider\Przelewy24OnlineTransferDataProvider;
 use Spryker\Yves\Payone\Form\DirectDebitSubForm;
-use Spryker\Yves\Payone\Form\EPSOnlineTransferSubForm;
+use Spryker\Yves\Payone\Form\EpsOnlineTransferSubForm;
 use Spryker\Yves\Payone\Form\EWalletSubForm;
 use Spryker\Yves\Payone\Form\GiropayOnlineTransferSubForm;
 use Spryker\Yves\Payone\Form\IdealOnlineTransferSubForm;
 use Spryker\Yves\Payone\Form\InstantOnlineTransferSubForm;
+use Spryker\Yves\Payone\Form\InvoiceSubForm;
 use Spryker\Yves\Payone\Form\PostfinanceCardOnlineTransferSubForm;
 use Spryker\Yves\Payone\Form\PostfinanceEfinanceOnlineTransferSubForm;
 use Spryker\Yves\Payone\Form\PrePaymentForm;
@@ -51,6 +53,22 @@ class PayoneFactory extends AbstractFactory
     public function createPrePaymentFormDataProvider()
     {
         return new PrePaymentDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Yves\Payone\Form\InvoiceSubForm
+     */
+    public function createInvoiceSubForm()
+    {
+        return new InvoiceSubForm($this->getPayoneClient());
+    }
+
+    /**
+     * @return \Spryker\Yves\Payone\Form\DataProvider\InvoiceDataProvider
+     */
+    public function createInvoiceSubFormDataProvider()
+    {
+        return new InvoiceDataProvider();
     }
 
     /**
@@ -126,19 +144,19 @@ class PayoneFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Payone\Form\EPSOnlineTransferSubForm
+     * @return \Spryker\Yves\Payone\Form\EpsOnlineTransferSubForm
      */
-    public function createEPSOnlineTransferSubForm()
+    public function createEpsOnlineTransferSubForm()
     {
-        return new EPSOnlineTransferSubForm($this->getPayoneClient());
+        return new EpsOnlineTransferSubForm($this->getPayoneClient());
     }
 
     /**
-     * @return \Spryker\Yves\Payone\Form\DataProvider\EPSOnlineTransferDataProvider
+     * @return \Spryker\Yves\Payone\Form\DataProvider\EpsOnlineTransferDataProvider
      */
-    public function createEPSOnlineTransferSubFormDataProvider()
+    public function createEpsOnlineTransferSubFormDataProvider()
     {
-        return new EPSOnlineTransferDataProvider();
+        return new EpsOnlineTransferDataProvider();
     }
 
     /**
