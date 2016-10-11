@@ -21,6 +21,14 @@ class EpsOnlineTransferSubForm extends OnlineTransferSubForm
     /**
      * @return string
      */
+    public function getName()
+    {
+        return PaymentTransfer::PAYONE_EPS_ONLINE_TRANSFER;
+    }
+
+    /**
+     * @return string
+     */
     public function getPropertyPath()
     {
         return PaymentTransfer::PAYONE_EPS_ONLINE_TRANSFER;

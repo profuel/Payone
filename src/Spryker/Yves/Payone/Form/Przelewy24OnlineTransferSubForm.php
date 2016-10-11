@@ -20,6 +20,14 @@ class Przelewy24OnlineTransferSubForm extends OnlineTransferSubForm
     /**
      * @return string
      */
+    public function getName()
+    {
+        return PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER;
+    }
+
+    /**
+     * @return string
+     */
     public function getPropertyPath()
     {
         return PaymentTransfer::PAYONE_PRZELEWY24_ONLINE_TRANSFER;
