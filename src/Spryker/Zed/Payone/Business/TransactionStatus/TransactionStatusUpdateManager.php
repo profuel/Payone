@@ -355,14 +355,16 @@ class TransactionStatusUpdateManager
             return null;
         }
 
-        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
-        $transactionStatusLog = array_shift($transactionStatusLogs);
+        while (count($transactionStatusLogs)) {
+            /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
+            $transactionStatusLog = array_shift($transactionStatusLogs);
 
-        if ($transactionStatusLog->getStatus() !== $status) {
-            return null;
+            if ($transactionStatusLog->getStatus() == $status) {
+                return $transactionStatusLog;
+            }
         }
 
-        return $transactionStatusLog;
+        return null;
     }
 
     /**
