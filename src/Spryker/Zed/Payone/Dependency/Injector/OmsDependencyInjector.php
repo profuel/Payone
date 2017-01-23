@@ -12,27 +12,27 @@ use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\AuthorizePlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CancelPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CapturePlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CaptureWithSettlementPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\PreAuthorizePlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\RefundPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\AuthorizationIsApprovedPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\AuthorizationIsErrorPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\AuthorizationIsRedirectPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\CaptureIsApprovedPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsAppointed;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsCapture;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsOverpaid;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsPaid;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsRefund;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsUnderPaid;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsApprovedPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsErrorPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsRedirectPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsApprovedPlugin;
-use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsPossiblePlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\AuthorizeCommandPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CancelCommandPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CaptureCommandPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\CaptureWithSettlementCommandPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\PreAuthorizeCommandPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Command\RefundCommandPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\AuthorizationIsApprovedConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\AuthorizationIsErrorConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\AuthorizationIsRedirectConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\CaptureIsApprovedConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsAppointedConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsCaptureConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsOverpaidConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsPaidConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsRefundConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsUnderPaidConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsApprovedConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsErrorConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsRedirectConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsApprovedConditionPlugin;
+use Spryker\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsPossibleConditionPlugin;
 
 class OmsDependencyInjector extends AbstractDependencyInjector
 {
@@ -59,12 +59,12 @@ class OmsDependencyInjector extends AbstractDependencyInjector
     {
         $container->extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
             $commandCollection
-                ->add(new PreAuthorizePlugin(), 'Payone/PreAuthorize')
-                ->add(new AuthorizePlugin(), 'Payone/Authorize')
-                ->add(new CancelPlugin(), 'Payone/Cancel')
-                ->add(new CapturePlugin(), 'Payone/Capture')
-                ->add(new CaptureWithSettlementPlugin(), 'Payone/CaptureWithSettlement')
-                ->add(new RefundPlugin(), 'Payone/Refund');
+                ->add(new PreAuthorizeCommandPlugin(), 'Payone/PreAuthorize')
+                ->add(new AuthorizeCommandPlugin(), 'Payone/Authorize')
+                ->add(new CancelCommandPlugin(), 'Payone/Cancel')
+                ->add(new CaptureCommandPlugin(), 'Payone/Capture')
+                ->add(new CaptureWithSettlementCommandPlugin(), 'Payone/CaptureWithSettlement')
+                ->add(new RefundCommandPlugin(), 'Payone/Refund');
 
             return $commandCollection;
         });
@@ -81,21 +81,21 @@ class OmsDependencyInjector extends AbstractDependencyInjector
     {
         $container->extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
             $conditionCollection
-                ->add(new PreAuthorizationIsApprovedPlugin(), 'Payone/PreAuthorizationIsApprovedPlugin')
-                ->add(new AuthorizationIsApprovedPlugin(), 'Payone/AuthorizationIsApprovedPlugin')
-                ->add(new CaptureIsApprovedPlugin(), 'Payone/CaptureIsApprovedPlugin')
-                ->add(new RefundIsApprovedPlugin(), 'Payone/RefundIsApprovedPlugin')
-                ->add(new RefundIsPossiblePlugin(), 'Payone/RefundIsPossiblePlugin')
-                ->add(new PreAuthorizationIsErrorPlugin(), 'Payone/PreAuthorizationIsErrorPlugin')
-                ->add(new AuthorizationIsErrorPlugin(), 'Payone/AuthorizationIsErrorPlugin')
-                ->add(new PreAuthorizationIsRedirectPlugin(), 'Payone/PreAuthorizationIsRedirectPlugin')
-                ->add(new AuthorizationIsRedirectPlugin(), 'Payone/AuthorizationIsRedirectPlugin')
-                ->add(new PaymentIsAppointed(), 'Payone/PaymentIsAppointed')
-                ->add(new PaymentIsCapture(), 'Payone/PaymentIsCapture')
-                ->add(new PaymentIsPaid(), 'Payone/PaymentIsPaid')
-                ->add(new PaymentIsUnderPaid(), 'Payone/PaymentIsUnderPaid')
-                ->add(new PaymentIsOverpaid(), 'Payone/PaymentIsOverpaid')
-                ->add(new PaymentIsRefund(), 'Payone/PaymentIsRefund');
+                ->add(new PreAuthorizationIsApprovedConditionPlugin(), 'Payone/PreAuthorizationIsApproved')
+                ->add(new AuthorizationIsApprovedConditionPlugin(), 'Payone/AuthorizationIsApproved')
+                ->add(new CaptureIsApprovedConditionPlugin(), 'Payone/CaptureIsApproved')
+                ->add(new RefundIsApprovedConditionPlugin(), 'Payone/RefundIsApproved')
+                ->add(new RefundIsPossibleConditionPlugin(), 'Payone/RefundIsPossible')
+                ->add(new PreAuthorizationIsErrorConditionPlugin(), 'Payone/PreAuthorizationIsError')
+                ->add(new AuthorizationIsErrorConditionPlugin(), 'Payone/AuthorizationIsError')
+                ->add(new PreAuthorizationIsRedirectConditionPlugin(), 'Payone/PreAuthorizationIsRedirect')
+                ->add(new AuthorizationIsRedirectConditionPlugin(), 'Payone/AuthorizationIsRedirect')
+                ->add(new PaymentIsAppointedConditionPlugin(), 'Payone/PaymentIsAppointed')
+                ->add(new PaymentIsCaptureConditionPlugin(), 'Payone/PaymentIsCapture')
+                ->add(new PaymentIsPaidConditionPlugin(), 'Payone/PaymentIsPaid')
+                ->add(new PaymentIsUnderPaidConditionPlugin(), 'Payone/PaymentIsUnderPaid')
+                ->add(new PaymentIsOverpaidConditionPlugin(), 'Payone/PaymentIsOverpaid')
+                ->add(new PaymentIsRefundConditionPlugin(), 'Payone/PaymentIsRefund');
 
             return $conditionCollection;
         });

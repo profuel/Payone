@@ -14,7 +14,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class PaymentIsCapture extends AbstractCondition
+class PaymentNotificationIsAvailableConditionPlugin extends AbstractCondition
 {
 
     /**
@@ -24,8 +24,10 @@ class PaymentIsCapture extends AbstractCondition
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        return $this->getFacade()
-            ->isPaymentCapture($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
+        $result = $this->getFacade()
+            ->isPaymentNotificationAvailable($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
+
+        return $result;
     }
 
 }

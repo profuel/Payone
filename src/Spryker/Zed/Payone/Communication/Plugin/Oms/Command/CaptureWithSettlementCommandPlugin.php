@@ -10,6 +10,7 @@ namespace Spryker\Zed\Payone\Communication\Plugin\Oms\Command;
 use Generated\Shared\Transfer\PayoneCaptureTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 
@@ -17,7 +18,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class CancelPlugin extends AbstractPayonePlugin implements CommandByOrderInterface
+class CaptureWithSettlementCommandPlugin extends AbstractPayonePlugin implements CommandByOrderInterface
 {
 
     /**
@@ -34,7 +35,11 @@ class CancelPlugin extends AbstractPayonePlugin implements CommandByOrderInterfa
         $paymentTransfer = new PayonePaymentTransfer();
         $paymentTransfer->setFkSalesOrder($orderEntity->getSpyPaymentPayones()->getFirst()->getFkSalesOrder());
         $captureTransfer->setPayment($paymentTransfer);
-        $captureTransfer->setAmount(0);
+
+        $orderTransfer = $this->getOrderTransfer($orderEntity);
+
+        $captureTransfer->setAmount($orderTransfer->getTotals()->getGrandTotal());
+        $captureTransfer->setSettleaccount(PayoneApiConstants::SETTLE_ACCOUNT_YES);
 
         $this->getFacade()->capturePayment($captureTransfer);
 

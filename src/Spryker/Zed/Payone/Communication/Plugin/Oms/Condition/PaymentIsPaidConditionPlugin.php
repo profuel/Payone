@@ -14,7 +14,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class PaymentIsUnderPaid extends AbstractCondition
+class PaymentIsPaidConditionPlugin extends AbstractCondition
 {
 
     /**
@@ -25,7 +25,7 @@ class PaymentIsUnderPaid extends AbstractCondition
     public function check(SpySalesOrderItem $orderItem)
     {
         return $this->getFacade()
-            ->isPaymentUnderpaid($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
+            ->isPaymentPaid($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
     }
 
 }

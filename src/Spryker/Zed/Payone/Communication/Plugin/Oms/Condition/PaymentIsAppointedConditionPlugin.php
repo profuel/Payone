@@ -14,7 +14,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class PaymentIsAppointed extends AbstractCondition
+class PaymentIsAppointedConditionPlugin extends AbstractCondition
 {
 
     /**

@@ -24,7 +24,7 @@
         </states>
 
         <transitions>
-            <transition happy="true" condition="Payone/AuthorizationIsApprovedPlugin">
+            <transition happy="true" condition="Payone/AuthorizationIsApproved">
                 <source>new</source>
                 <target>authorization pending</target>
                 <event>authorize</event>
@@ -50,13 +50,13 @@
                 <target>paid</target>
             </transition>
 
-            <transition condition="Payone/AuthorizationIsErrorPlugin">
+            <transition condition="Payone/AuthorizationIsError">
                 <source>new</source>
                 <target>invalid</target>
                 <event>authorize</event>
             </transition>
 
-            <transition condition="Payone/AuthorizationIsRedirectPlugin">
+            <transition condition="Payone/AuthorizationIsRedirect">
                 <source>new</source>
                 <target>online transfer pending</target>
                 <event>authorize</event>
@@ -79,7 +79,7 @@
                 <target>authorization appointed</target>
             </transition>
 
-            <transition condition="Payone/CaptureIsApprovedPlugin">
+            <transition condition="Payone/CaptureIsApproved">
                 <source>authorization appointed</source>
                 <target>reservation cancellation pending</target>
                 <event>cancel reservation</event>
@@ -102,13 +102,13 @@
                 <event>wait for item return</event>
             </transition>
 
-            <transition condition="Payone/RefundIsPossiblePlugin">
+            <transition condition="Payone/RefundIsPossible">
                 <source>shipped</source>
                 <target>returned</target>
                 <event>return</event>
             </transition>
 
-            <transition condition="Payone/RefundIsApprovedPlugin">
+            <transition condition="Payone/RefundIsApproved">
                 <source>returned</source>
                 <target>refund pending</target>
                 <event>refund</event>

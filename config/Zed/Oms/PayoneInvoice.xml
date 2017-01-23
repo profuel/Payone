@@ -22,7 +22,7 @@
         </states>
 
         <transitions>
-            <transition condition="Payone/AuthorizationIsApprovedPlugin" happy="true">
+            <transition condition="Payone/AuthorizationIsApproved" happy="true">
                 <source>new</source>
                 <target>authorization pending</target>
                 <event>authorize</event>
@@ -33,7 +33,7 @@
                 <target>authorization appointed</target>
             </transition>
 
-            <transition condition="Payone/CaptureIsApprovedPlugin">
+            <transition condition="Payone/CaptureIsApproved">
                 <source>authorization appointed</source>
                 <target>reservation cancellation pending</target>
                 <event>cancel reservation</event>
@@ -83,7 +83,7 @@
                 <event>return</event>
             </transition>
 
-            <transition condition="Payone/RefundIsApprovedPlugin">
+            <transition condition="Payone/RefundIsApproved">
                 <source>returned</source>
                 <target>refund pending</target>
                 <event>refund</event>

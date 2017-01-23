@@ -25,7 +25,7 @@
         </states>
 
         <transitions>
-            <transition condition="Payone/PreAuthorizationIsApprovedPlugin" happy="true">
+            <transition condition="Payone/PreAuthorizationIsApproved" happy="true">
                 <source>new</source>
                 <target>pre-authorization pending</target>
                 <event>pre-authorize</event>
@@ -69,7 +69,7 @@
                 <event>ship</event>
             </transition>
 
-            <transition condition="Payone/CaptureIsApprovedPlugin" happy="true">
+            <transition condition="Payone/CaptureIsApproved" happy="true">
                 <source>shipped</source>
                 <target>capture pending</target>
                 <event>capture with settlement</event>
@@ -110,7 +110,7 @@
                 <event>return</event>
             </transition>
 
-            <transition condition="Payone/RefundIsApprovedPlugin">
+            <transition condition="Payone/RefundIsApproved">
                 <source>returned</source>
                 <target>refund pending</target>
                 <event>refund</event>

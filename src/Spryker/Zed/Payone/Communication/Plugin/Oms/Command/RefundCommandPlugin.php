@@ -19,7 +19,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class RefundPlugin extends AbstractPayonePlugin implements CommandByOrderInterface
+class RefundCommandPlugin extends AbstractPayonePlugin implements CommandByOrderInterface
 {
 
     /**

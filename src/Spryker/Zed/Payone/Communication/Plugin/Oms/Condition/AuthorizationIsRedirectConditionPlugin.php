@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  */
-class AuthorizationIsRedirectPlugin extends AbstractPlugin
+class AuthorizationIsRedirectConditionPlugin extends AbstractPlugin
 {
 
     const NAME = 'AuthorizationIsRedirectPlugin';

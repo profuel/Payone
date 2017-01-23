@@ -25,7 +25,7 @@
         </states>
 
         <transitions>
-            <transition happy="true" condition="Payone/PreAuthorizationIsApprovedPlugin">
+            <transition happy="true" condition="Payone/PreAuthorizationIsApproved">
                 <source>new</source>
                 <target>pre-authorization pending</target>
                 <event>pre-authorize</event>
@@ -36,13 +36,13 @@
                 <target>pre-authorization appointed</target>
             </transition>
 
-            <transition condition="Payone/PreAuthorizationIsErrorPlugin">
+            <transition condition="Payone/PreAuthorizationIsError">
                 <source>new</source>
                 <target>invalid</target>
                 <event>pre-authorize</event>
             </transition>
 
-            <transition condition="Payone/PreAuthorizationIsRedirectPlugin">
+            <transition condition="Payone/PreAuthorizationIsRedirect">
                 <source>new</source>
                 <target>PayPal checkout</target>
                 <event>pre-authorize</event>
@@ -59,7 +59,7 @@
                 <target>pre-authorization appointed</target>
             </transition>
 
-            <transition condition="Payone/CaptureIsApprovedPlugin">
+            <transition condition="Payone/CaptureIsApproved">
                 <source>pre-authorization appointed</source>
                 <target>reservation cancellation pending</target>
                 <event>cancel reservation</event>
@@ -76,7 +76,7 @@
                 <event>ship</event>
             </transition>
 
-            <transition condition="Payone/CaptureIsApprovedPlugin" happy="true">
+            <transition condition="Payone/CaptureIsApproved" happy="true">
                 <source>shipped</source>
                 <target>capture pending</target>
                 <event>capture</event>
@@ -117,7 +117,7 @@
                 <event>return</event>
             </transition>
 
-            <transition condition="Payone/RefundIsApprovedPlugin">
+            <transition condition="Payone/RefundIsApproved">
                 <source>returned</source>
                 <target>refund pending</target>
                 <event>refund</event>

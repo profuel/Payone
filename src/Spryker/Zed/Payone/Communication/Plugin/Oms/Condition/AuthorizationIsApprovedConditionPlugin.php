@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\OrderTransfer;
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  */
-class RefundIsPossiblePlugin extends AbstractPlugin
+class AuthorizationIsApprovedConditionPlugin extends AbstractPlugin
 {
 
-    const NAME = 'RefundIsPossiblePlugin';
+    const NAME = 'AuthorizationIsApprovedPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -25,7 +25,7 @@ class RefundIsPossiblePlugin extends AbstractPlugin
      */
     protected function callFacade(OrderTransfer $orderTransfer)
     {
-        return $this->getFacade()->isRefundPossible($orderTransfer);
+        return $this->getFacade()->isAuthorizationApproved($orderTransfer);
     }
 
 }

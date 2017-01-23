@@ -27,12 +27,12 @@ interface PayoneApiConstants
     // INTEGRATOR
 
     const INTEGRATOR_NAME_SPRYKER = 'spryker';
-    const INTEGRATOR_VERSION_3_0_0_BETA = '3.0.0-beta';
+    const INTEGRATOR_VERSION_3_0_0 = '3.0.0';
 
     // SOLUTION
 
     const SOLUTION_NAME_SPRYKER = 'spryker';
-    const SOLUTION_VERSION_3_0_0_BETA = '3.0.0-beta';
+    const SOLUTION_VERSION_3_0_0 = '3.0.0';
 
     // PAYMENT METHODS
 

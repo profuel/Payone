@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\OrderTransfer;
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  */
-class AuthorizationIsErrorPlugin extends AbstractPlugin
+class CaptureIsApprovedConditionPlugin extends AbstractPlugin
 {
 
-    const NAME = 'AuthorizationIsErrorPlugin';
+    const NAME = 'CaptureIsApprovedPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -25,7 +25,7 @@ class AuthorizationIsErrorPlugin extends AbstractPlugin
      */
     protected function callFacade(OrderTransfer $orderTransfer)
     {
-        return $this->getFacade()->isAuthorizationError($orderTransfer);
+        return $this->getFacade()->isCaptureApproved($orderTransfer);
     }
 
 }

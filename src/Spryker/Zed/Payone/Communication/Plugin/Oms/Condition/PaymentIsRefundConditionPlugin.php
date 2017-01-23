@@ -14,7 +14,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
-class PaymentIsOverpaid extends AbstractCondition
+class PaymentIsRefundConditionPlugin extends AbstractCondition
 {
 
     /**
@@ -25,7 +25,7 @@ class PaymentIsOverpaid extends AbstractCondition
     public function check(SpySalesOrderItem $orderItem)
     {
         return $this->getFacade()
-            ->isPaymentOverpaid($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
+            ->isPaymentRefund($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
     }
 
 }
