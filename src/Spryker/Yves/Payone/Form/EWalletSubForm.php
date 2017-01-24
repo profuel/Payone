@@ -20,6 +20,8 @@ class EWalletSubForm extends AbstractPayoneSubForm
     const PAYMENT_METHOD = 'e_wallet';
     const FIELD_WALLET_TYPE = 'wallettype';
 
+    const OPTION_WALLET_CHOICES = 'wallet_types';
+
     /**
      * @return string
      */
@@ -67,15 +69,16 @@ class EWalletSubForm extends AbstractPayoneSubForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addWalletType($builder);
+        $this->addWalletType($builder, $options[SubFormInterface::OPTIONS_FIELD_NAME][static::OPTION_WALLET_CHOICES]);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
      *
      * @return $this
      */
-    protected function addWalletType(FormBuilderInterface $builder)
+    protected function addWalletType(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(
             self::FIELD_WALLET_TYPE,
@@ -83,9 +86,7 @@ class EWalletSubForm extends AbstractPayoneSubForm
             [
                 'label' => false,
                 'required' => true,
-                'choices' => [
-                    'PPE' => 'PayPal'
-                ]
+                'choices' => $choices
             ]
         );
 

@@ -9,7 +9,9 @@ namespace Spryker\Yves\Payone\Form\DataProvider;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Yves\Payone\Form\EWalletSubForm;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
 class EWalletDataProvider implements StepEngineFormDataProviderInterface
@@ -38,7 +40,20 @@ class EWalletDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
-        return [];
+        return [
+            EWalletSubForm::OPTION_WALLET_CHOICES => $this->getEWalletTypes()
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEWalletTypes()
+    {
+        return [
+            PayoneApiConstants::E_WALLET_TYPE_PAYPAL => 'PayPal',
+            PayoneApiConstants::E_WALLET_TYPE_PAY_DIRECT => 'Paydirekt'
+        ];
     }
 
 }
