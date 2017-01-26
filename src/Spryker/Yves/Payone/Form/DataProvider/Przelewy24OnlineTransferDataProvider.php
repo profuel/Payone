@@ -49,7 +49,7 @@ class Przelewy24OnlineTransferDataProvider implements StepEngineFormDataProvider
     protected function getBankCountries()
     {
         return [
-            'PL' => 'Poland'
+            'PL' => 'Poland',
         ];
     }
 

@@ -24,10 +24,10 @@ class ManageMandateValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        /* @var $root Form */
+        /** @var \Symfony\Component\Form\Form $root */
         $root = $this->context->getRoot();
 
-        /* @var $data \Generated\Shared\Transfer\QuoteTransfer */
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $data */
         $data = $root->getData();
 
         $validationMessages = $this->manageMandate($data, $constraint);

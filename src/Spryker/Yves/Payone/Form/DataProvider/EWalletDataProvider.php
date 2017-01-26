@@ -41,7 +41,7 @@ class EWalletDataProvider implements StepEngineFormDataProviderInterface
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
         return [
-            EWalletSubForm::OPTION_WALLET_CHOICES => $this->getEWalletTypes()
+            EWalletSubForm::OPTION_WALLET_CHOICES => $this->getEWalletTypes(),
         ];
     }
 
@@ -52,7 +52,7 @@ class EWalletDataProvider implements StepEngineFormDataProviderInterface
     {
         return [
             PayoneApiConstants::E_WALLET_TYPE_PAYPAL => 'PayPal',
-            PayoneApiConstants::E_WALLET_TYPE_PAY_DIRECT => 'Paydirekt'
+            PayoneApiConstants::E_WALLET_TYPE_PAY_DIRECT => 'Paydirekt',
         ];
     }
 

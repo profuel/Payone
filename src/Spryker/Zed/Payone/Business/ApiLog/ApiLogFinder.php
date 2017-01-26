@@ -12,7 +12,7 @@ use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 
-class ApiLogFinder
+class ApiLogFinder implements ApiLogFinderInterface
 {
 
     /**

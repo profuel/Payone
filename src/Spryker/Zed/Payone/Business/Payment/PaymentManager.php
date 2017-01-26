@@ -48,7 +48,7 @@ use Spryker\Zed\Payone\Business\Api\Response\Container\ManageMandateResponseCont
 use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use Spryker\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
-use Spryker\Zed\Payone\Business\Key\UrlHmacGenerator;
+use Spryker\Zed\Payone\Business\Key\HmacGeneratorInterface;
 use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 
@@ -85,7 +85,7 @@ class PaymentManager implements PaymentManagerInterface
     protected $modeDetector;
 
     /**
-     * @var \Spryker\Zed\Payone\Business\Key\HashGenerator
+     * @var \Spryker\Zed\Payone\Business\Key\HmacGeneratorInterface
      */
     protected $hashGenerator;
 
@@ -106,6 +106,7 @@ class PaymentManager implements PaymentManagerInterface
      * @param \Spryker\Zed\Payone\Business\Key\HashGenerator $hashGenerator
      * @param \Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface $sequenceNumberProvider
      * @param \Spryker\Shared\Payone\Dependency\ModeDetectorInterface $modeDetector
+     * @param \Spryker\Zed\Payone\Business\Key\HmacGeneratorInterface $urlHmacGenerator
      */
     public function __construct(
         AdapterInterface $executionAdapter,
@@ -114,7 +115,7 @@ class PaymentManager implements PaymentManagerInterface
         HashGenerator $hashGenerator,
         SequenceNumberProviderInterface $sequenceNumberProvider,
         ModeDetectorInterface $modeDetector,
-        UrlHmacGenerator $urlHmacGenerator
+        HmacGeneratorInterface $urlHmacGenerator
     ) {
 
         $this->executionAdapter = $executionAdapter;
@@ -439,7 +440,7 @@ class PaymentManager implements PaymentManagerInterface
         return implode('-', [
             PayoneApiConstants::INVOICE_TITLE_PREFIX_INVOICE,
             $transactionId,
-            0
+            0,
         ]);
     }
 

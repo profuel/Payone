@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
@@ -15,6 +16,7 @@ use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneDetail;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Payone\Business\Key\UrlHmacGenerator;
 use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProvider;
@@ -29,7 +31,7 @@ use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProvider;
  * @group MethodMapper
  * @group AbstractMethodMapperTest
  */
-class AbstractMethodMapperTest extends \PHPUnit_Framework_TestCase
+class AbstractMethodMapperTest extends PHPUnit_Framework_TestCase
 {
 
     const STANDARD_PARAMETER_AID = '12345';
@@ -40,28 +42,11 @@ class AbstractMethodMapperTest extends \PHPUnit_Framework_TestCase
     const TRANSACTION_ID = '1234567890';
     const AMOUNT_FULL = 100;
     const PAYMENT_REFERENCE = 'TX1234567890abcd';
-    const STANDARD_PARAMETER_CLEARING_TYPE = '';
     const DEFAULT_SEQUENCE_NUMBER = 0;
-
-    const PREAUTHORIZATION_COMMON_REQUIRED_PARAMS = [
-        'aid' => self::STANDARD_PARAMETER_AID,
-        'clearingtype' => self::STANDARD_PARAMETER_CLEARING_TYPE,
-        'reference' => self::PAYMENT_REFERENCE,
-        'amount' => self::AMOUNT_FULL,
-        'currency' => self::STANDARD_PARAMETER_CURRENCY,
-    ];
 
     const PREAUTHORIZATION_PERSONAL_DATA_REQUIRED_PARAMS = [
         'lastname' => self::ADDRESS_LAST_NAME,
         'country' => self::COUNTRY_ISO2CODE,
-    ];
-
-    const AUTHORIZATION_COMMON_REQUIRED_PARAMS = [
-        'aid' => self::STANDARD_PARAMETER_AID,
-        'clearingtype' => self::STANDARD_PARAMETER_CLEARING_TYPE,
-        'reference' => self::PAYMENT_REFERENCE,
-        'amount' => self::AMOUNT_FULL,
-        'currency' => self::STANDARD_PARAMETER_CURRENCY,
     ];
 
     const AUTHORIZATION_PERSONAL_DATA_REQUIRED_PARAMS = [
@@ -159,7 +144,7 @@ class AbstractMethodMapperTest extends \PHPUnit_Framework_TestCase
         $orderTransfer = new OrderTransfer();
 
         $item = new ItemTransfer();
-        $orderTransfer->setItems(new \ArrayObject([$item]));
+        $orderTransfer->setItems(new ArrayObject([$item]));
 
         return $orderTransfer;
     }

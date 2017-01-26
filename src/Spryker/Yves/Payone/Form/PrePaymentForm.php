@@ -82,7 +82,7 @@ class PrePaymentForm extends AbstractPayoneSubForm
             [
                 'label' => false,
                 'required' => false,
-                'data' => []
+                'data' => [],
             ]
         );
 

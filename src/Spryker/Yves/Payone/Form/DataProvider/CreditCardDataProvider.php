@@ -96,7 +96,7 @@ class CreditCardDataProvider implements StepEngineFormDataProviderInterface
             'O' => 'Maestro International',
             'U' => 'Maestro UK',
             'C' => 'Discover',
-            'B' => 'Carte Bleue'
+            'B' => 'Carte Bleue',
         ];
     }
 

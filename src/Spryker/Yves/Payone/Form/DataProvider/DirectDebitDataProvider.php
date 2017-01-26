@@ -51,7 +51,7 @@ class DirectDebitDataProvider implements StepEngineFormDataProviderInterface
     protected function getBankCountries()
     {
         return [
-            Store::getInstance()->getCurrentCountry() => Store::getInstance()->getCurrentCountry()
+            Store::getInstance()->getCurrentCountry() => Store::getInstance()->getCurrentCountry(),
         ];
     }
 
@@ -62,7 +62,7 @@ class DirectDebitDataProvider implements StepEngineFormDataProviderInterface
     {
         return [
             'BBAN' => 'BBAN',
-            'IBAN/BIC' => 'IBAN/BIC'
+            'IBAN/BIC' => 'IBAN/BIC',
         ];
     }
 

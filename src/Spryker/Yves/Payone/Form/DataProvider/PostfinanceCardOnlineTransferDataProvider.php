@@ -49,7 +49,7 @@ class PostfinanceCardOnlineTransferDataProvider implements StepEngineFormDataPro
     protected function getBankCountries()
     {
         return [
-            'CH' => 'Switzerland'
+            'CH' => 'Switzerland',
         ];
     }
 

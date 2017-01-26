@@ -20,9 +20,9 @@ class BankAccountValidator extends ConstraintValidator
      * @param string $value
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Yves\Payone\Form\Constraint\BankAccount $constraint
      *
-     * @return void
-     *
      * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     *
+     * @return void
      */
     public function validate($value, Constraint $constraint)
     {
@@ -34,10 +34,10 @@ class BankAccountValidator extends ConstraintValidator
             return;
         }
 
-        /* @var $root Form */
+        /** @var \Symfony\Component\Form\Form $root */
         $root = $this->context->getRoot();
 
-        /* @var $data \Generated\Shared\Transfer\QuoteTransfer */
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $data */
         $data = $root->getData();
 
         $validationMessages = $this->validateBankAccount($data, $constraint);

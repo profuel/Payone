@@ -56,7 +56,7 @@ abstract class AbstractOnlineTransferDataProvider implements StepEngineFormDataP
             'PFF' => 'PostFinance E-Finance',   // (CH)
             'PFC' => 'PostFinance Card',        // (CH)
             'IDL' => 'iDEAL',                   // (NL)
-            'P24' => 'Przelewy24'               // (P24)
+            'P24' => 'Przelewy24', // (P24)
         ];
     }
 

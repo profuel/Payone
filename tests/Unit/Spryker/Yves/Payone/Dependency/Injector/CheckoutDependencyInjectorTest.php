@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Yves\Payone\Dependency\Injector;
 
 use Generated\Shared\Transfer\PaymentTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Payone\Dependency\Injector\CheckoutDependencyInjector;
@@ -23,7 +24,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
  * @group Injector
  * @group CheckoutDependencyInjectorTest
  */
-class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
+class CheckoutDependencyInjectorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

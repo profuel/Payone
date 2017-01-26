@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Payone\Handler\PayoneHandler;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group Handler
  * @group PayoneHandlerTest
  */
-class PayoneHandlerTest extends \PHPUnit_Framework_TestCase
+class PayoneHandlerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

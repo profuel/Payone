@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Yves\Payone\Form\DataProvider;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Payone\Form\DataProvider\CreditCardDataProvider;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Yves\Payone\Form\DataProvider\CreditCardDataProvider;
  * @group DataProvider
  * @group CreditCardDataProviderTest
  */
-class CreditCardDataProviderTest extends \PHPUnit_Framework_TestCase
+class CreditCardDataProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

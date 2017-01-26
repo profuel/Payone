@@ -7,8 +7,7 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
-use Generated\Shared\Transfer\PayoneCreditCardTransfer;
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\EWallet;
 
 /**
  * @group Unit
@@ -18,29 +17,21 @@ use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
  * @group Business
  * @group Payment
  * @group MethodMapper
- * @group CreditCardPseudoTest
+ * @group EWalletPayDirectTest
  */
-class CreditCardPseudoTest extends AbstractMethodMapperTest
+class EWalletPayDirectTest extends AbstractMethodMapperTest
 {
 
-    const PSEUDO_CARD_PAN = '1234567890123456';
-    const CARD_TYPE = 'V';
-    const CARD_EXPIRE_DATE = '1609';
-    const STANDARD_PARAMETER_CLEARING_TYPE = 'cc';
+    const STANDARD_PARAMETER_CLEARING_TYPE = 'wlt';
 
-    const AUTHORIZATION_CREDIT_CARD_PSEUDO_REQUIRED_PARAMS = [
-        'pseudocardpan' => self::PSEUDO_CARD_PAN,
+    const WALLET_TYPE = 'PDT';
+
+    const AUTHORIZATION_E_WALLET_REQUIRED_PARAMS = [
+        'wallettype' => self::WALLET_TYPE,
     ];
 
-    const PREAUTHORIZATION_CREDIT_CARD_PSEUDO_REQUIRED_PARAMS = [
-        'pseudocardpan' => self::PSEUDO_CARD_PAN,
-    ];
-
-    const CREDIT_CARD_CHECK_REQUIRED_PARAMS = [
-        'aid' => self::STANDARD_PARAMETER_AID,
-        'cardpan' => self::PSEUDO_CARD_PAN,
-        'cardtype' => self::CARD_TYPE,
-        'cardexpiredate' => self::CARD_EXPIRE_DATE,
+    const PREAUTHORIZATION_E_WALLET_REQUIRED_PARAMS = [
+        'wallettype' => self::WALLET_TYPE,
     ];
 
     const PREAUTHORIZATION_COMMON_REQUIRED_PARAMS = [
@@ -65,7 +56,7 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
     public function testMapPaymentToPreauthorization()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new CreditCardPseudo($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new EWallet($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToPreAuthorization($paymentEntity)->toArray();
 
@@ -79,7 +70,7 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
             $this->assertSame($value, $requestData[$key]);
         }
 
-        foreach (static::PREAUTHORIZATION_CREDIT_CARD_PSEUDO_REQUIRED_PARAMS as $key => $value) {
+        foreach (static::PREAUTHORIZATION_E_WALLET_REQUIRED_PARAMS as $key => $value) {
             $this->assertArrayHasKey($key, $requestData);
             $this->assertSame($value, $requestData[$key]);
         }
@@ -91,7 +82,7 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
     public function testMapPaymentToAuthorization()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new CreditCardPseudo($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new EWallet($this->getStoreConfigMock()));
 
         $orderTransfer = $this->getSalesOrderTransfer();
 
@@ -107,7 +98,7 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
             $this->assertSame($value, $requestData[$key]);
         }
 
-        foreach (static::AUTHORIZATION_CREDIT_CARD_PSEUDO_REQUIRED_PARAMS as $key => $value) {
+        foreach (static::AUTHORIZATION_E_WALLET_REQUIRED_PARAMS as $key => $value) {
             $this->assertArrayHasKey($key, $requestData);
             $this->assertSame($value, $requestData[$key]);
         }
@@ -119,7 +110,7 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
     public function testMapPaymentToCapture()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new CreditCardPseudo($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new EWallet($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToCapture($paymentEntity)->toArray();
 
@@ -135,7 +126,7 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
     public function testMapPaymentToRefund()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new CreditCardPseudo($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new EWallet($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToRefund($paymentEntity)->toArray();
 
@@ -151,32 +142,11 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
     public function testMapPaymentToDebit()
     {
         $paymentEntity = $this->getPaymentEntityMock();
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new CreditCardPseudo($this->getStoreConfigMock()));
+        $paymentMethodMapper = $this->preparePaymentMethodMapper(new EWallet($this->getStoreConfigMock()));
 
         $requestData = $paymentMethodMapper->mapPaymentToDebit($paymentEntity)->toArray();
 
         foreach (static::DEBIT_COMMON_REQUIRED_PARAMS as $key => $value) {
-            $this->assertArrayHasKey($key, $requestData);
-            $this->assertSame($value, $requestData[$key]);
-        }
-    }
-
-    /**
-     * @return void
-     */
-    public function testMapCreditCardCheck()
-    {
-        $creditCardTransfer = new PayoneCreditCardTransfer();
-        $creditCardTransfer->setAid(static::STANDARD_PARAMETER_AID);
-        $creditCardTransfer->setCardPan(static::PSEUDO_CARD_PAN);
-        $creditCardTransfer->setCardType(static::CARD_TYPE);
-        $creditCardTransfer->setCardExpireDate(static::CARD_EXPIRE_DATE);
-
-        $paymentMethodMapper = $this->preparePaymentMethodMapper(new CreditCardPseudo($this->getStoreConfigMock()));
-
-        $requestData = $paymentMethodMapper->mapCreditCardCheck($creditCardTransfer)->toArray();
-
-        foreach (static::CREDIT_CARD_CHECK_REQUIRED_PARAMS as $key => $value) {
             $this->assertArrayHasKey($key, $requestData);
             $this->assertSame($value, $requestData[$key]);
         }
@@ -188,7 +158,8 @@ class CreditCardPseudoTest extends AbstractMethodMapperTest
     protected function getPaymentPayoneDetailMock()
     {
         $paymentPayoneDetail = parent::getPaymentPayoneDetailMock();
-        $paymentPayoneDetail->method('getPseudoCardPan')->willReturn(static::PSEUDO_CARD_PAN);
+
+        $paymentPayoneDetail->method('getType')->willReturn(static::WALLET_TYPE);
 
         return $paymentPayoneDetail;
     }

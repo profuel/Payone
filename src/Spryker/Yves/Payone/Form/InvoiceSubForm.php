@@ -82,7 +82,7 @@ class InvoiceSubForm extends AbstractPayoneSubForm
             [
                 'label' => false,
                 'required' => false,
-                'data' => []
+                'data' => [],
             ]
         );
 

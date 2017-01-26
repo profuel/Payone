@@ -50,7 +50,7 @@ class InstantOnlineTransferDataProvider implements StepEngineFormDataProviderInt
     protected function getBankCountries()
     {
         return [
-            Store::getInstance()->getCurrentCountry() => Store::getInstance()->getCurrentCountry()
+            Store::getInstance()->getCurrentCountry() => Store::getInstance()->getCurrentCountry(),
         ];
     }
 

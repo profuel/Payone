@@ -16,7 +16,7 @@ use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 
-class TransactionStatusUpdateManager
+class TransactionStatusUpdateManager implements TransactionStatusUpdateManagerInterface
 {
 
     /**
@@ -315,7 +315,7 @@ class TransactionStatusUpdateManager
      *
      * @return bool
      */
-    private function isPayment($idSalesOrder, $idSalesOrderItem, $status)
+    protected function isPayment($idSalesOrder, $idSalesOrderItem, $status)
     {
         $statusLog = $this->getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status);
         if ($statusLog === null) {
@@ -333,7 +333,7 @@ class TransactionStatusUpdateManager
      *
      * @return bool
      */
-    private function hasUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem)
+    protected function hasUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem)
     {
         $records = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
@@ -347,7 +347,7 @@ class TransactionStatusUpdateManager
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog|null
      */
-    private function getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status)
+    protected function getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status)
     {
         $transactionStatusLogs = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
@@ -373,7 +373,7 @@ class TransactionStatusUpdateManager
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog[]
      */
-    private function getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem)
+    protected function getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem)
     {
         $transactionStatusLogs = $this->queryContainer->createTransactionStatusLogsBySalesOrder($idSalesOrder)->find();
 

@@ -26,11 +26,27 @@ class OnlineBankTransferTest extends AbstractMethodMapperTest
     const ONLINE_BANK_TRANSFER_TYPE = 'PNT';
 
     const AUTHORIZATION_ONLINE_BANK_TRANSFER_REQUIRED_PARAMS = [
-        'onlinebanktransfertype' => self::ONLINE_BANK_TRANSFER_TYPE
+        'onlinebanktransfertype' => self::ONLINE_BANK_TRANSFER_TYPE,
     ];
 
     const PREAUTHORIZATION_ONLINE_BANK_TRANSFER_REQUIRED_PARAMS = [
-        'onlinebanktransfertype' => self::ONLINE_BANK_TRANSFER_TYPE
+        'onlinebanktransfertype' => self::ONLINE_BANK_TRANSFER_TYPE,
+    ];
+
+    const PREAUTHORIZATION_COMMON_REQUIRED_PARAMS = [
+        'aid' => self::STANDARD_PARAMETER_AID,
+        'clearingtype' => self::STANDARD_PARAMETER_CLEARING_TYPE,
+        'reference' => self::PAYMENT_REFERENCE,
+        'amount' => self::AMOUNT_FULL,
+        'currency' => self::STANDARD_PARAMETER_CURRENCY,
+    ];
+
+    const AUTHORIZATION_COMMON_REQUIRED_PARAMS = [
+        'aid' => self::STANDARD_PARAMETER_AID,
+        'clearingtype' => self::STANDARD_PARAMETER_CLEARING_TYPE,
+        'reference' => self::PAYMENT_REFERENCE,
+        'amount' => self::AMOUNT_FULL,
+        'currency' => self::STANDARD_PARAMETER_CURRENCY,
     ];
 
     /**

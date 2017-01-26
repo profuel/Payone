@@ -43,7 +43,7 @@ class PayoneCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payone\Business\Key\UrlHmacGenerator
+     * @return \Spryker\Zed\Payone\Business\Key\HmacGeneratorInterface
      */
     public function createUrlHmacGenerator()
     {

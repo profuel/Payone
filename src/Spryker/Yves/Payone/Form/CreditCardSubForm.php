@@ -66,7 +66,7 @@ class CreditCardSubForm extends AbstractPayoneSubForm
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class' => PayonePaymentCreditCardTransfer::class
+            'data_class' => PayonePaymentCreditCardTransfer::class,
         ])->setRequired(self::OPTIONS_FIELD_NAME);
     }
 
@@ -123,7 +123,7 @@ class CreditCardSubForm extends AbstractPayoneSubForm
             'text',
             [
                 'label' => false,
-                'required' => false
+                'required' => false,
             ]
         );
 
@@ -215,7 +215,7 @@ class CreditCardSubForm extends AbstractPayoneSubForm
             'text',
             [
                 'label' => false,
-                'required' => false
+                'required' => false,
             ]
         );
 
@@ -235,7 +235,7 @@ class CreditCardSubForm extends AbstractPayoneSubForm
             self::FIELD_PSEUDO_CARD_NUMBER,
             'hidden',
             [
-                'label' => false
+                'label' => false,
             ]
         );
 

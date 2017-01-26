@@ -10,7 +10,7 @@ namespace Spryker\Zed\Payone\Business\Api\Call;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
 
-class CreditCardCheck extends AbstractCall
+class CreditCardCheck extends AbstractCall implements CallInterface
 {
 
     /**

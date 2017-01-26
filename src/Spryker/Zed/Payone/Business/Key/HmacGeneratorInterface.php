@@ -7,22 +7,14 @@
 
 namespace Spryker\Zed\Payone\Business\Key;
 
-class UrlHmacGenerator implements HmacGeneratorInterface
+interface HmacGeneratorInterface
 {
-
-    /**
-     * string
-     */
-    const HASH_ALGO = 'sha256';
 
     /**
      * @param string $string
      *
      * @return string
      */
-    public function hash($string, $key)
-    {
-        return hash_hmac(static::HASH_ALGO, $string, $key);
-    }
+    public function hash($string, $key);
 
 }

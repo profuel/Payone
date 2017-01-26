@@ -22,14 +22,14 @@ $config[PayoneConstants::PAYONE] = [
     PayoneConstants::PAYONE_REDIRECT_ERROR_URL => $config[ApplicationConstants::HOST_YVES] . '/checkout/payment',
     PayoneConstants::PAYONE_REDIRECT_BACK_URL => $config[ApplicationConstants::HOST_YVES] . '/payone/regular-redirect-payment-cancellation',
     PayoneConstants::PAYONE_MODE => 'test',
-    PayoneConstants::PAYONE_EMPTY_SEQUENCE_NUMBER => 0
+    PayoneConstants::PAYONE_EMPTY_SEQUENCE_NUMBER => 0,
 ];
 
 $config[KernelConstants::DEPENDENCY_INJECTOR_YVES] = [
     'Checkout' => [
         'DummyPayment',
         'Payone',
-    ]
+    ],
 ];
 
 $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
@@ -38,13 +38,13 @@ $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
     ],
     'Oms' => [
         'Payone'
-    ]
+    ],
 ];
 
 $config[OmsConstants::PROCESS_LOCATION] = [
     OmsConfig::DEFAULT_PROCESS_LOCATION,
     $config[ApplicationConstants::APPLICATION_SPRYKER_ROOT] . '/DummyPayment/config/Zed/Oms',
-    $config[ApplicationConstants::APPLICATION_SPRYKER_ROOT] . '/Payone/config/Zed/Oms'
+    $config[ApplicationConstants::APPLICATION_SPRYKER_ROOT] . '/Payone/config/Zed/Oms',
 ];
 
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [

@@ -68,10 +68,10 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @internal param TransactionStatusResponse $response
+     *
      * @param int $transactionId
      * @param array $dataArray
-     *
-     * @internal param TransactionStatusResponse $response
      *
      * @return void
      */

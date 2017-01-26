@@ -149,7 +149,6 @@ class PayoneToGlossaryBridge implements PayoneToGlossaryInterface
         return $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }
 
-
     /**
      * @api
      *

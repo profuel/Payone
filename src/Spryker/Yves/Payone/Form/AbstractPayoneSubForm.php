@@ -54,7 +54,7 @@ abstract class AbstractPayoneSubForm extends AbstractSubFormType implements SubF
             'hidden',
             [
                 'label' => false,
-                'data' => $formData->toJson()
+                'data' => $formData->toJson(),
             ]
         );
 

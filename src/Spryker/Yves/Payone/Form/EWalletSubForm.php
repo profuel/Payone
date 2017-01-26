@@ -86,7 +86,7 @@ class EWalletSubForm extends AbstractPayoneSubForm
             [
                 'label' => false,
                 'required' => true,
-                'choices' => $choices
+                'choices' => $choices,
             ]
         );
 

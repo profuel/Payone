@@ -3,3 +3,5 @@ modules:
     enabled:
         - Asserts
         - \Payone\Module\Unit
+        - \Testify\Module\Environment
+        - \Config\Module\ConfigInit

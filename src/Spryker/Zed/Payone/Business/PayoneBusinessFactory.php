@@ -76,7 +76,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager
+     * @return \Spryker\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManagerInterface
      */
     public function createTransactionStatusManager()
     {
@@ -88,7 +88,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder
+     * @return \Spryker\Zed\Payone\Business\ApiLog\ApiLogFinderInterface
      */
     public function createApiLogFinder()
     {
@@ -141,7 +141,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payone\Business\Key\UrlHmacGenerator
+     * @return \Spryker\Zed\Payone\Business\Key\HmacGeneratorInterface
      */
     protected function createUrlHmacGenerator()
     {
