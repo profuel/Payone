@@ -27,18 +27,19 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatus
+     * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
      * @return \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer
      */
-    public function statusUpdateAction(PayoneTransactionStatusUpdateTransfer $transactionStatus)
+    public function statusUpdateAction(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer)
     {
-        $transactionStatus = $this->getFacade()->processTransactionStatusUpdate($transactionStatus);
+        $transactionStatusUpdateTransfer = $this
+            ->getFacade()
+            ->processTransactionStatusUpdate($transactionStatusUpdateTransfer);
 
-        $transactionId = $transactionStatus->getTxid();
-        $this->triggerEventsOnSuccess($transactionId, $transactionStatus->toArray());
+        $this->triggerEventsOnSuccess($transactionStatusUpdateTransfer);
 
-        return $transactionStatus;
+        return $transactionStatusUpdateTransfer;
     }
 
     /**
@@ -68,29 +69,27 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param int $transactionId
-     * @param array $dataArray
+     * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
      * @internal param TransactionStatusResponse $response
      *
      * @return void
      */
-    protected function triggerEventsOnSuccess($transactionId, array $dataArray)
-    {
-        if (!$dataArray['isSuccess']) {
+    protected function triggerEventsOnSuccess(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer) {
+        if (!$transactionStatusUpdateTransfer->getIsSuccess()) {
             return;
         }
 
         $orderItems = SpySalesOrderItemQuery::create()
             ->useOrderQuery()
             ->useSpyPaymentPayoneQuery()
-            ->filterByTransactionId($transactionId)
+            ->filterByTransactionId($transactionStatusUpdateTransfer->getTxid())
             ->endUse()
             ->endUse()
             ->find();
         $this->getFactory()->getOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
 
-        if ($dataArray['txaction'] === PayoneConstants::PAYONE_TXACTION_APPOINTED) {
+        if ($transactionStatusUpdateTransfer->getTxaction() === PayoneConstants::PAYONE_TXACTION_APPOINTED) {
             $this->getFactory()->getOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
         }
     }
