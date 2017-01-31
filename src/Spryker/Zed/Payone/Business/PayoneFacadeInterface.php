@@ -439,7 +439,7 @@ interface PayoneFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $bankAccountCheckTransfer
+     * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $manageMandateTransfer
      *
      * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
      */
@@ -463,7 +463,7 @@ interface PayoneFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getFileTransfer
+     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer
      *
      * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
      */

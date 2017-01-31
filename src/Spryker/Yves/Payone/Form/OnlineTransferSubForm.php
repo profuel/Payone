@@ -29,6 +29,7 @@ abstract class OnlineTransferSubForm extends AbstractPayoneSubForm
     const FIELD_ONLINE_BANK_TRANSFER_TYPE = 'onlinebanktransfertype';
     const FIELD_BANK_GROUP_TYPE = 'bankgrouptype';
     const OPTION_ONLINE_BANK_TRANSFER_TYPES = 'online bank transfer types';
+    const OPTION_BANK_COUNTRIES = '';
 
     /**
      * @var \Spryker\Client\Payone\PayoneClient

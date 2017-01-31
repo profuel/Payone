@@ -29,6 +29,7 @@ abstract class AbstractOnlineTransferSubForm extends AbstractPayoneSubForm
     const FIELD_ONLINE_BANK_TRANSFER_TYPE = 'onlinebanktransfertype';
     const FIELD_BANK_GROUP_TYPE = 'bankgrouptype';
     const OPTION_ONLINE_BANK_TRANSFER_TYPES = 'online bank transfer types';
+    const OPTION_BANK_COUNTRIES = '';
 
     /**
      * @var \Spryker\Client\Payone\PayoneClient
@@ -62,10 +63,7 @@ abstract class AbstractOnlineTransferSubForm extends AbstractPayoneSubForm
 
         $resolver->setDefaults([
             'data_class' => PayonePaymentOnlinetransferTransfer::class,
-            'constraints' => [
-                // Add Callback constraint for bank account check in ancestor classes
-                // new Callback(['methods' => [[$this, 'checkBankAccount']]])
-            ],
+            'constraints' => [],
         ])->setRequired(static::OPTIONS_FIELD_NAME);
     }
 

@@ -52,11 +52,11 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function authorizePayment(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createPaymentManager()->authorizePayment($orderTransfer);
+        return $this->getFactory()->createPaymentManager()->authorizePayment($orderTransfer);
     }
 
     /**
@@ -65,13 +65,13 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @api
      *
-     * @param int $idPayment
+     * @param int $idSalesOrder
      *
-     * @return void
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
-    public function preAuthorizePayment($idPayment)
+    public function preAuthorizePayment($idSalesOrder)
     {
-        $this->getFactory()->createPaymentManager()->preAuthorizePayment($idPayment);
+        return $this->getFactory()->createPaymentManager()->preAuthorizePayment($idSalesOrder);
     }
 
     /**
@@ -82,11 +82,11 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneCaptureTransfer $captureTransfer
      *
-     * @return void
+     * @return Api\Response\Container\CaptureResponseContainer
      */
     public function capturePayment(PayoneCaptureTransfer $captureTransfer)
     {
-        $this->getFactory()->createPaymentManager()->capturePayment($captureTransfer);
+        return $this->getFactory()->createPaymentManager()->capturePayment($captureTransfer);
     }
 
     /**
@@ -97,11 +97,11 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param int $idPayment
      *
-     * @return void
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer
      */
     public function debitPayment($idPayment)
     {
-        $this->getFactory()->createPaymentManager()->debitPayment($idPayment);
+        return $this->getFactory()->createPaymentManager()->debitPayment($idPayment);
     }
 
     /**
@@ -112,11 +112,11 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneRefundTransfer $refundTransfer
      *
-     * @return void
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer
      */
     public function refundPayment(PayoneRefundTransfer $refundTransfer)
     {
-        $this->getFactory()->createPaymentManager()->refundPayment($refundTransfer);
+        return $this->getFactory()->createPaymentManager()->refundPayment($refundTransfer);
     }
 
     /**
@@ -127,11 +127,11 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $creditCardData
      *
-     * @return void
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData)
     {
-        $this->getFactory()->createPaymentManager()->creditCardCheck($creditCardData);
+        return $this->getFactory()->createPaymentManager()->creditCardCheck($creditCardData);
     }
 
     /**
@@ -152,7 +152,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $bankAccountCheckTransfer
+     * @param \Generated\Shared\Transfer\PayoneManageMandateTransfer $manageMandateTransfer
      *
      * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
      */
@@ -182,7 +182,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getFileTransfer
+     * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer
      *
      * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
      */

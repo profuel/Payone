@@ -15,6 +15,10 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class BankAccountValidator extends ConstraintValidator
 {
+    const INVALID_STATUSES = [
+        PayoneApiConstants::RESPONSE_TYPE_ERROR,
+        PayoneApiConstants::RESPONSE_TYPE_INVALID
+    ];
 
     /**
      * @param string $value
@@ -59,9 +63,10 @@ class BankAccountValidator extends ConstraintValidator
     protected function validateBankAccount(QuoteTransfer $data, BankAccount $constraint)
     {
         $response = $constraint->getPayoneClient()->bankAccountCheck($data);
-        if ($response->getStatus() === PayoneApiConstants::RESPONSE_TYPE_ERROR || $response->getStatus() === PayoneApiConstants::RESPONSE_TYPE_INVALID) {
+        if (in_array($response->getStatus(), static::INVALID_STATUSES)) {
             return [$response->getCustomerErrorMessage()];
         }
+
         return [];
     }
 

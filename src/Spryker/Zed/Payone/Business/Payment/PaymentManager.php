@@ -189,13 +189,13 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param int $idPayment
+     * @param int $idSalesOrder
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
-    public function preAuthorizePayment($idPayment)
+    public function preAuthorizePayment($idSalesOrder)
     {
-        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $paymentEntity = $this->getPaymentEntity($idSalesOrder);
         $paymentMethodMapper = $this->getPaymentMethodMapper($paymentEntity);
         $requestContainer = $paymentMethodMapper->mapPaymentToPreAuthorization($paymentEntity);
         $responseContainer = $this->performAuthorizationRequest($paymentEntity, $requestContainer);
