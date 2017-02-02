@@ -45,11 +45,6 @@ abstract class AbstractBusinessTest extends Test
     protected $spyPaymentPayone;
 
     /**
-     * @var \Orm\Zed\Payone\Persistence\SpyPaymentPayone
-     */
-    protected $paymentEntity;
-
-    /**
      * @var \Generated\Shared\Transfer\QuoteTransfer
      */
     protected $quoteTransfer;

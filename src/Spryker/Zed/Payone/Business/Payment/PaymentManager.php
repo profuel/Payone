@@ -681,11 +681,11 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * Gets payment logs (both api and transaction status) for specific orders in chronological order.
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection|\ArrayObject $orders
      *
      * @return \Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer
      */
-    public function getPaymentLogs(ObjectCollection $orders)
+    public function getPaymentLogs($orders)
     {
         $apiLogs = $this->queryContainer->createApiLogsByOrderIds($orders)->find()->getData();
 

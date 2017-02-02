@@ -394,7 +394,7 @@ interface PayoneFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer
      */
-    public function getPaymentLogs(OrderCollectionTransfer $orders);
+    public function getPaymentLogs(OrderCollectionTransfer $orderCollectionTransfer);
 
     /**
      * Specification:

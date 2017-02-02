@@ -30,6 +30,11 @@ abstract class AbstractPayoneTest extends AbstractBusinessTest
      */
     protected $spyPayoneTransactionStatusLog;
 
+    /**
+     * @param string $method
+     *
+     * @return void
+     */
     protected function createPayonePayment($method = PayoneApiConstants::PAYMENT_METHOD_INVOICE)
     {
         $this->spyPaymentPayone = (new SpyPaymentPayone())
@@ -40,6 +45,12 @@ abstract class AbstractPayoneTest extends AbstractBusinessTest
         $this->spyPaymentPayone->save();
     }
 
+    /**
+     * @param string $request
+     * @param string $status
+     *
+     * @return SpyPaymentPayoneApiLog
+     */
     protected function createPayoneApiLog(
         $request = PayoneApiConstants::REQUEST_TYPE_AUTHORIZATION,
         $status = PayoneApiConstants::RESPONSE_TYPE_APPROVED
@@ -54,19 +65,35 @@ abstract class AbstractPayoneTest extends AbstractBusinessTest
             ->setPortalId('123')
             ->setSpyPaymentPayone($this->spyPaymentPayone);
         $paymentApiLog->save();
+
+        return $paymentApiLog;
     }
 
+    /**
+     * @param string $iban
+     * @param string $bic
+     *
+     * @return SpyPaymentPayoneDetail
+     */
     protected function createPayonePaymentDetail($iban = '', $bic = '')
     {
-        $paymentApiLog = (new SpyPaymentPayoneDetail())
+        $paymentDetail = (new SpyPaymentPayoneDetail())
             ->setAmount(12345)
             ->setIban($iban)
             ->setBic($bic)
             ->setCurrency('EUR')
             ->setSpyPaymentPayone($this->spyPaymentPayone);
-        $paymentApiLog->save();
+        $paymentDetail->save();
+
+        return $paymentDetail;
     }
 
+    /**
+     * @param string $status
+     * @param int $balance
+     *
+     * @return void
+     */
     protected function createPayoneTransactionStatusLog($status = PayoneApiConstants::RESPONSE_TYPE_APPROVED, $balance = 0)
     {
         $this->spyPayoneTransactionStatusLog = (new SpyPaymentPayoneTransactionStatusLog())
@@ -77,12 +104,19 @@ abstract class AbstractPayoneTest extends AbstractBusinessTest
         $this->spyPayoneTransactionStatusLog->save();
     }
 
+    /**
+     * @param $idOrderItem
+     *
+     * @return SpyPaymentPayoneTransactionStatusLogOrderItem
+     */
     protected function createPayoneTransactionStatusLogItem($idOrderItem)
     {
         $transactionStatusLogOrderItem = (new SpyPaymentPayoneTransactionStatusLogOrderItem())
             ->setSpyPaymentPayoneTransactionStatusLog($this->spyPayoneTransactionStatusLog)
             ->setIdSalesOrderItem($idOrderItem);
         $transactionStatusLogOrderItem->save();
+
+        return $transactionStatusLogOrderItem;
     }
 
 }

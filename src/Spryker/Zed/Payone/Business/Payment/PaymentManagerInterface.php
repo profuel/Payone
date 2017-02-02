@@ -101,11 +101,11 @@ interface PaymentManagerInterface
     public function getInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer);
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection|\ArrayObject $orders
      *
      * @return \Generated\Shared\Transfer\PayonePaymentLogCollectionTransfer
      */
-    public function getPaymentLogs(ObjectCollection $orders);
+    public function getPaymentLogs($orders);
 
     /**
      * @param \Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer
