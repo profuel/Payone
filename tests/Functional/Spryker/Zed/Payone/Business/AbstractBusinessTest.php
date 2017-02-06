@@ -6,6 +6,9 @@
 
 namespace Functional\Spryker\Zed\Payone\Business;
 
+use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
@@ -72,6 +75,7 @@ abstract class AbstractBusinessTest extends Test
         parent::setUp();
 
         $this->setUpSalesOrderTestData();
+        $this->setupQuoteTransfer();
         $this->orderTransfer = $this->getOrderTransfer();
         $this->orderTransfer
             ->setIdSalesOrder($this->orderEntity->getIdSalesOrder());
@@ -263,6 +267,30 @@ abstract class AbstractBusinessTest extends Test
         $bundleItemEntity->save();
 
         return $bundleEntity;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setupQuoteTransfer()
+    {
+        $this->quoteTransfer = (new QuoteTransfer())
+            ->setTotals($this->getTotalsTransfer())
+            ->setBillingAddress($this->getAddressTransfer('billing'))
+            ->setShippingAddress($this->getAddressTransfer('shipping'))
+            ->setCustomer($this->getCustomerTransfer())
+            ->setPayment($this->getPaymentTransfer())
+            ->addItem($this->getItemTransfer(1))
+            ->addItem($this->getItemTransfer(2));
+
+        return $this->quoteTransfer;
+    }
+
+    protected function getPaymentTransfer()
+    {
+        return (new PaymentTransfer())
+            ->setPayone(
+                (new PayonePaymentTransfer()));
     }
 
 }

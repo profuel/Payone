@@ -58,6 +58,7 @@ abstract class AbstractPayoneTest extends AbstractBusinessTest
         $paymentApiLog = (new SpyPaymentPayoneApiLog())
             ->setRequest($request)
             ->setStatus($status)
+            ->setRedirectUrl('redirect url')
             ->setMode(PayoneApiConstants::MODE_TEST)
             ->setTransactionId('213552995')
             ->setMerchantId('32481')

@@ -49,4 +49,16 @@ class PaymentLogTest extends AbstractPayoneTest
         }
     }
 
+    public function testGetPaymentLogsEmpty()
+    {
+        $this->createPayonePayment();
+
+        $orderCollection = (new OrderCollectionTransfer())
+            ->addOrders($this->orderTransfer);
+        $paymentLogCollectionTransfer = $this->payoneFacade->getPaymentLogs($orderCollection);
+
+        $this->assertInstanceOf(PayonePaymentLogCollectionTransfer::class, $paymentLogCollectionTransfer);
+        $this->assertEquals(0, $paymentLogCollectionTransfer->getPaymentLogs()->count());
+    }
+
 }
