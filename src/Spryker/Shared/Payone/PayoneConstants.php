@@ -10,12 +10,6 @@ namespace Spryker\Shared\Payone;
 interface PayoneConstants
 {
 
-    const COUNTRY_AT = 'AT';
-    const COUNTRY_DE = 'DE';
-    const COUNTRY_NL = 'NL';
-    const COUNTRY_CH = 'CH';
-
-    const PROVIDER_NAME = 'Payone';
     const PAYONE = 'PAYONE';
     const PAYONE_CREDENTIALS = 'PAYONE_CREDENTIALS';
     const PAYONE_CREDENTIALS_ENCODING = 'PAYONE_CREDENTIALS_ENCODING';
@@ -35,9 +29,6 @@ interface PayoneConstants
     const PAYONE_MODE_TEST = 'test';
     const PAYONE_MODE_LIVE = 'live';
 
-    /**
-     * Path to bundle glossary file.
-     */
-    const GLOSSARY_FILE_PATH = 'Business/Internal/glossary.yml';
+    const HOST_YVES = 'HOST_YVES';
 
 }
