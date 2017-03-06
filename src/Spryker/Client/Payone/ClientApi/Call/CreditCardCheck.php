@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Payone\ClientApi\Call;
 
-use Spryker\Client\Payone\ClientApi\Request\CreditCardCheck as CreditCardCheckContainer;
+use Spryker\Client\Payone\ClientApi\Request\CreditCardCheckContainer;
 use Spryker\Shared\Payone\PayoneApiConstants;
 
 class CreditCardCheck extends AbstractCall
@@ -35,11 +35,11 @@ class CreditCardCheck extends AbstractCall
     }
 
     /**
-     * @return \Spryker\Client\Payone\ClientApi\Request\CreditCardCheck
+     * @return \Spryker\Client\Payone\ClientApi\Request\CreditCardCheckContainer
      */
     public function mapCreditCardCheckData()
     {
-        $container = new CreditCardCheckContainer();
+        $container = new CreditCardCheckContainer($this->utilEncodingService);
         $this->applyStandardParameter($container);
         $securityKey = $this->standardParameter->getKey();
         $hash = $this->hashGenerator->generateHash($container, $securityKey);

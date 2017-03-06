@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -163,7 +163,8 @@ class PayoneHandler
      */
     protected function getCurrency()
     {
-        return CurrencyManager::getInstance()->getDefaultCurrency()->getIsoCode();
+
+        return Store::getInstance()->getCurrencyIsoCode();
     }
 
     /**

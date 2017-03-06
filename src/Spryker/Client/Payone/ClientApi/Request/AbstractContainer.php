@@ -7,10 +7,24 @@
 
 namespace Spryker\Client\Payone\ClientApi\Request;
 
-use Spryker\Shared\Library\Json;
+use Spryker\Service\UtilEncoding\UtilEncodingService;
 
 abstract class AbstractContainer implements ContainerInterface
 {
+
+    /**
+     * @var \Spryker\Service\UtilEncoding\UtilEncodingService
+     */
+    protected $utilEncodingService;
+
+    /**
+     * AbstractContainer constructor.
+     * @param UtilEncodingService $utilEncodingService
+     */
+    public function __construct(UtilEncodingService $utilEncodingService)
+    {
+        $this->utilEncodingService = $utilEncodingService;
+    }
 
     /**
      * @return array
@@ -52,7 +66,7 @@ abstract class AbstractContainer implements ContainerInterface
      */
     public function toJson()
     {
-        return Json::encode($this->toArray());
+        return $this->utilEncodingService->encodeJson($this->toArray());
     }
 
 }

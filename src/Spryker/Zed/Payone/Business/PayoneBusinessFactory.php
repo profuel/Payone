@@ -10,7 +10,7 @@ namespace Spryker\Zed\Payone\Business;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Psr\Log\LoggerInterface as MessengerInterface;
 use Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder;
 use Spryker\Zed\Payone\Business\Api\Adapter\Http\Guzzle;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
@@ -288,7 +288,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Ratepay\Business\Internal\Install
      */

@@ -14,9 +14,9 @@ use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
 use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayoneManageMandateTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
-use Spryker\Client\ZedRequest\Stub\BaseStub;
+use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
 
-class PayoneStub extends BaseStub
+class PayoneStub extends ZedRequestStub
 {
 
     /**

@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Payone\ClientApi\Request;
 
+use Spryker\Service\UtilEncoding\UtilEncodingService;
+
 abstract class AbstractRequest extends AbstractContainer
 {
 

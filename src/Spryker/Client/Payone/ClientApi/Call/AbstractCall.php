@@ -10,6 +10,7 @@ namespace Spryker\Client\Payone\ClientApi\Call;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Spryker\Client\Payone\ClientApi\HashGeneratorInterface;
 use Spryker\Client\Payone\ClientApi\Request\AbstractRequest;
+use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 
 abstract class AbstractCall
@@ -31,18 +32,26 @@ abstract class AbstractCall
     protected $modeDetector;
 
     /**
+     * @var \Spryker\Service\UtilEncoding\UtilEncodingService
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Generated\Shared\Transfer\PayoneStandardParameterTransfer $standardParameterTransfer
      * @param \Spryker\Client\Payone\ClientApi\HashGeneratorInterface $hashGenerator
      * @param \Spryker\Shared\Payone\Dependency\ModeDetectorInterface $modeDetector
+     * @param \Spryker\Service\UtilEncoding\UtilEncodingService $utilEncodingService
      */
     public function __construct(
         PayoneStandardParameterTransfer $standardParameterTransfer,
         HashGeneratorInterface $hashGenerator,
-        ModeDetectorInterface $modeDetector
+        ModeDetectorInterface $modeDetector,
+        UtilEncodingService $utilEncodingService
     ) {
         $this->standardParameter = $standardParameterTransfer;
         $this->hashGenerator = $hashGenerator;
         $this->modeDetector = $modeDetector;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**

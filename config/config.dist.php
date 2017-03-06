@@ -43,8 +43,8 @@ $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
 
 $config[OmsConstants::PROCESS_LOCATION] = [
     OmsConfig::DEFAULT_PROCESS_LOCATION,
-    $config[ApplicationConstants::APPLICATION_SPRYKER_ROOT] . '/DummyPayment/config/Zed/Oms',
-    $config[ApplicationConstants::APPLICATION_SPRYKER_ROOT] . '/Payone/config/Zed/Oms',
+    $config[KernelConstants::SPRYKER_ROOT] . '/DummyPayment/config/Zed/Oms',
+    $config[KernelConstants::SPRYKER_ROOT] . '/Payone/config/Zed/Oms',
 ];
 
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [

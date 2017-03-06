@@ -13,6 +13,7 @@ use Spryker\Client\Payone\ClientApi\Call\CreditCardCheck;
 use Spryker\Client\Payone\ClientApi\HashGenerator;
 use Spryker\Client\Payone\ClientApi\HashProvider;
 use Spryker\Client\Payone\Zed\PayoneStub;
+use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Shared\Config;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Shared\Payone\PayoneConstants;
@@ -32,7 +33,8 @@ class PayoneFactory extends AbstractFactory
         return new CreditCardCheck(
             $this->createStandardParameter($defaults),
             $this->createHashGenerator(),
-            $this->createModeDetector()
+            $this->createModeDetector(),
+            $this->createUtilEncodingService()
         );
     }
 
@@ -98,6 +100,14 @@ class PayoneFactory extends AbstractFactory
     {
         $zedStub = $this->getProvidedDependency(PayoneDependencyProvider::SERVICE_ZED);
         return new PayoneStub($zedStub);
+    }
+
+    /**
+     * @return \Spryker\Service\UtilEncoding\UtilEncodingService
+     */
+    public function createUtilEncodingService()
+    {
+        return $this->getProvidedDependency(PayoneDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
 }
